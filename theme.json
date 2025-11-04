@@ -1,0 +1,279 @@
+{
+    "version": 3,
+    "settings": {
+        "appearanceTools": true,
+        "layout": {
+            "contentSize": "645px",
+            "wideSize": "1340px"
+        },
+        "color": {
+            "palette": [
+                {
+                    "name": "Primary",
+                    "slug": "primary",
+                    "color": "#3B82F6"
+                },
+                {
+                    "name": "Primary Light",
+                    "slug": "primary-light",
+                    "color": "#60A5FA"
+                },
+                {
+                    "name": "Primary Soft",
+                    "slug": "primary-soft",
+                    "color": "#93C5FD"
+                },
+                {
+                    "name": "Primary Deep",
+                    "slug": "primary-deep",
+                    "color": "#1E3A8A"
+                },
+                {
+                    "name": "Base",
+                    "slug": "base",
+                    "color": "#FFFFFF"
+                },
+                {
+                    "name": "Base Accent",
+                    "slug": "base-accent",
+                    "color": "#E2E8F0"
+                },
+                {
+                    "name": "Tint",
+                    "slug": "tint",
+                    "color": "#F8FAFC"
+                },
+                {
+                    "name": "Contrast",
+                    "slug": "contrast",
+                    "color": "#000000"
+                },
+                {
+                    "name": "Contrast Accent",
+                    "slug": "contrast-accent",
+                    "color": "#64748B"
+                },
+                {
+                    "name": "Outline",
+                    "slug": "outline",
+                    "color": "#BFDBFE"
+                },
+                {
+                    "name": "Outline Contrast",
+                    "slug": "outline-contrast",
+                    "color": "#0A2540"
+                }
+            ]
+        },
+        "spacing": {
+            "defaultSpacingSizes": false,
+            "spacingSizes": [
+                {
+                    "name": "S",
+                    "size": "0.5rem",
+                    "slug": "small"
+                },
+                {
+                    "name": "M",
+                    "size": "1rem",
+                    "slug": "medium"
+                },
+                {
+                    "name": "L",
+                    "size": "1.5rem",
+                    "slug": "large"
+                },
+                {
+                    "name": "XL",
+                    "size": "2rem",
+                    "slug": "x-large"
+                },
+                {
+                    "name": "2XL",
+                    "size": "3rem",
+                    "slug": "xx-large"
+                },
+                {
+                    "name": "3XL",
+                    "size": "4rem",
+                    "slug": "xxx-large"
+                },
+                {
+                    "name": "4XL",
+                    "size": "6rem",
+                    "slug": "xxxx-large"
+                }
+            ],
+            "units": [
+                "%",
+                "px",
+                "em",
+                "rem",
+                "vh",
+                "vw"
+            ]
+        },
+        "typography": {
+            "fluid": true,
+            "writingMode": true,
+            "defaultFontSizes": false,
+            "fontSizes": [
+                {
+                    "name": "XS",
+                    "size": "0.875rem",
+                    "slug": "x-small"
+                },
+                {
+                    "name": "S",
+                    "size": "1rem",
+                    "slug": "small"
+                },
+                {
+                    "name": "M",
+                    "size": "1.125rem",
+                    "slug": "medium"
+                },
+                {
+                    "name": "L",
+                    "size": "1.5rem",
+                    "slug": "large"
+                },
+                {
+                    "name": "XL",
+                    "size": "2rem",
+                    "slug": "x-large"
+                },
+                {
+                    "name": "2XL",
+                    "size": "3rem",
+                    "slug": "xx-large"
+                },
+                {
+                    "name": "3XL",
+                    "size": "4rem",
+                    "slug": "xxx-large"
+                }
+            ],
+            "fontFamilies": [
+                {
+                    "name": "Sans-serif",
+                    "slug": "sans-serif",
+                    "fontFamily": "-apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, Adwaita Sans, Cantarell, Ubuntu, roboto, noto, helvetica, arial, sans-serif",
+                    "fontWeight": "200 800"
+                }
+            ]
+        },
+        "useRootPaddingAwareAlignments": true
+    },
+    "styles": {
+        "css": ":root :where(.is-layout-constrained) > * { margin-block-start: 0; margin-block-end: 24px; }",
+        "typography": {
+            "fontFamily": "var:preset|font-family|sans-serif",
+            "fontSize": "var:preset|font-size|medium"
+        },
+        "color": {
+            "background": "var:preset|color|base",
+            "text": "var:preset|color|contrast"
+        },
+        "spacing": {
+            "blockGap": "24px"
+        },
+        "blocks": {
+            "core/button": {
+                "spacing": {
+                    "margin": {
+                        "top": "0px",
+                        "bottom": "24px"
+                    }
+                },
+                "border": {
+                    "radius": "0"
+                },
+                "color": {
+                    "text": "var:preset|color|base",
+                    "background": "var:preset|color|primary"
+                },
+                "variations": {
+                    "outline": {
+                        "border": {
+                            "color": "var:preset|color|primary",
+                            "radius": "0",
+                            "width": "2px"
+                        },
+                        "color": {
+                            "text": "var:preset|color|primary",
+                            "background": "var:preset|color|base"
+                        }
+                    }
+                }
+            }
+        },
+        "elements": {
+            "h1": {
+                "typography": {
+                    "fontSize": "var:preset|font-size|xx-large"
+                }
+            },
+            "h2": {
+                "typography": {
+                    "fontSize": "var:preset|font-size|x-large"
+                }
+            },
+            "h3": {
+                "typography": {
+                    "fontSize": "var:preset|font-size|large"
+                }
+            },
+            "h4": {
+                "typography": {
+                    "fontSize": "var:preset|font-size|medium"
+                }
+            },
+            "h5": {
+                "typography": {
+                    "fontSize": "var:preset|font-size|small"
+                }
+            },
+            "h6": {
+                "typography": {
+                    "fontSize": "var:preset|font-size|x-small"
+                }
+            },
+            "link": {
+                "color": {
+                    "text": "var:preset|color|contrast"
+                }
+            }
+        }
+    },
+    "customTemplates": [
+        {
+            "name": "blank",
+            "title": "Blank Canvas",
+            "postTypes": [
+                "page",
+                "post"
+            ]
+        },
+        {
+            "name": "full-width",
+            "title": "Full Width",
+            "postTypes": [
+                "page",
+                "post"
+            ]
+        }
+    ],
+    "templateParts": [
+        {
+            "name": "header",
+            "title": "Header",
+            "area": "header"
+        },
+        {
+            "name": "footer",
+            "title": "Footer",
+            "area": "footer"
+        }
+    ]
+}

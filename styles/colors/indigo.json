@@ -1,0 +1,66 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/theme.json",
+    "version": 3,
+    "title": "Indigo",
+    "settings": {
+        "color": {
+            "palette": [
+                {
+                    "name": "Primary",
+                    "slug": "primary",
+                    "color": "#6366F1"
+                },
+                {
+                    "name": "Primary Light",
+                    "slug": "primary-light",
+                    "color": "#818CF8"
+                },
+                {
+                    "name": "Primary Soft",
+                    "slug": "primary-soft",
+                    "color": "#C7D2FE"
+                },
+                {
+                    "name": "Primary Deep",
+                    "slug": "primary-deep",
+                    "color": "#312E81"
+                },
+                {
+                    "name": "Base",
+                    "slug": "base",
+                    "color": "#FFFFFF"
+                },
+                {
+                    "name": "Base Accent",
+                    "slug": "base-accent",
+                    "color": "#E2E8F0"
+                },
+                {
+                    "name": "Tint",
+                    "slug": "tint",
+                    "color": "#F8FAFC"
+                },
+                {
+                    "name": "Contrast",
+                    "slug": "contrast",
+                    "color": "#000000"
+                },
+                {
+                    "name": "Contrast Accent",
+                    "slug": "contrast-accent",
+                    "color": "#64748B"
+                },
+                {
+                    "name": "Outline",
+                    "slug": "outline",
+                    "color": "#E0E7FF"
+                },
+                {
+                    "name": "Outline Contrast",
+                    "slug": "outline-contrast",
+                    "color": "#1E1B4B"
+                }
+            ]
+        }
+    }
+}
