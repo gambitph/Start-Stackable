@@ -166,49 +166,69 @@
         "useRootPaddingAwareAlignments": true
     },
     "styles": {
-        "css": ":root :where(.is-layout-constrained) > * { margin-block-start: 0; margin-block-end: 24px; }",
+        "css": ":root :where(.is-layout-constrained) > * { margin-block-start: 0; margin-block-end: var(--stk-block-margin-bottom, 24px); }",
         "typography": {
             "fontFamily": "var:preset|font-family|sans-serif",
             "fontSize": "var:preset|font-size|medium"
         },
         "color": {
-            "background": "var:preset|color|base",
-            "text": "var:preset|color|contrast"
-        },
-        "spacing": {
-            "blockGap": "24px"
+            "background": "var(--stk-background-color, var(--wp--preset--color--base))",
+            "text": "var(--stk-text-color, var(--wp--preset--color--contrast))"
         },
         "blocks": {
             "core/button": {
                 "spacing": {
-                    "margin": {
-                        "top": "0px",
-                        "bottom": "24px"
-                    }
+                    "padding": "var(--stk-button-padding)"
                 },
+                "color": {
+                    "text": "var(--stk-button-text-color)",
+                    "background": "var(--stk-button-background-color)"
+                },
+                 "border": {
+                    "radius": "var(--stk-button-border-radius)",
+                    "width": "var(--stk-button-border-width)",
+                    "color": "var(--stk-button-border-color)",
+                    "style": "var(--stk-button-border-style)"
+                },
+                "shadow": "var(--stk-button-box-shadow)"
+            },
+            "core/heading": {
+                "color": {
+                    "text": "var(--stk-heading-color)"
+                }
+            },
+            "core/paragraph": {
+                "color": {
+                    "text": "var(--stk-text-color)"
+                }
+            },
+            "core/image": {
                 "border": {
-                    "radius": "0"
+                    "radius": "var(--stk-image-border-radius)"
+                },
+                "shadow": "var(--stk-image-drop-shadow)"
+            }
+        },
+        "elements": {
+            "button": {
+                "spacing": {
+                    "padding": "var:preset|spacing|medium"
                 },
                 "color": {
                     "text": "var:preset|color|base",
                     "background": "var:preset|color|primary"
                 },
-                "variations": {
-                    "outline": {
-                        "border": {
-                            "color": "var:preset|color|primary",
-                            "radius": "0",
-                            "width": "2px"
-                        },
-                        "color": {
-                            "text": "var:preset|color|primary",
-                            "background": "var:preset|color|base"
-                        }
-                    }
+                "border": {
+                    "width": "0px",
+                    "radius": "0px",
+                    "style": "none"
                 }
-            }
-        },
-        "elements": {
+            },
+            "heading": {
+                "color": {
+                    "text": "var:preset|color|contrast"
+                }
+            },
             "h1": {
                 "typography": {
                     "fontSize": "var:preset|font-size|xx-large"
