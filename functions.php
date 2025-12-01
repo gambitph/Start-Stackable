@@ -15,25 +15,15 @@ if ( ! function_exists( 'start_stackable_setup' ) ) {
     add_action( 'after_setup_theme', 'start_stackable_setup' );
 }
 
+function start_stackable_enqueue_styles() {
+    $style_path = get_template_directory_uri() . '/assets/css/design-system.css';
 
-if ( ! function_exists( 'start_stackable_modify_theme_json' ) ) {
-    function start_stackable_modify_theme_json( $theme_json ) {
-        // If Stackable Block Style Inheritance is enabled, return the original theme.json.
-        // This allows Stackable Block style Inheritance to get styles from the "elements" section
-        // for Stackable blocks, while still allowing Stackable Design System to apply styles 
-        // to core blocks through the "blocks" section.
-        if ( ! get_option( 'stackable_disable_block_style_inheritance' )) {
-            return $theme_json;
-        }
+    // Frontend
+    wp_enqueue_style('start-stackable-block-styles', $style_path, [], wp_get_theme()->get('Version'));
 
-        // If disabled, remove the "blocks" styles from theme.json to prevent conflicts.
-        $data = $theme_json->get_data();
-        $data['styles']['blocks'] = [];
-
-        // Return a new WP_Theme_JSON instance with the modified data
-        return new WP_Theme_JSON( $data, 'theme' );
-    }
-
-    add_filter( 'wp_theme_json_data_theme', 'start_stackable_modify_theme_json' );
+    // Editor
+    wp_enqueue_style('start-stackable-styles-editor', $style_path, [], wp_get_theme()->get('Version'));
 }
 
+add_action('wp_enqueue_scripts', 'start_stackable_enqueue_styles');
+add_action('enqueue_block_editor_assets', 'start_stackable_enqueue_styles');

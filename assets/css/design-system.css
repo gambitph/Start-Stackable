@@ -1,0 +1,60 @@
+:is([class*='stk--background-scheme'],
+       [class*='stk--container-scheme'],
+       .stk--has-base-scheme,
+       .stk--has-background-scheme .stk-block-background,
+       .stk--has-container-scheme .stk-container:not(.stk--no-background)) p {
+  color: var(--stk-text-color);
+}
+
+:is([class*='stk--background-scheme'],
+       [class*='stk--container-scheme'],
+       .stk--has-base-scheme,
+       .stk--has-background-scheme .stk-block-background,
+       .stk--has-container-scheme .stk-container:not(.stk--no-background)) .wp-block-heading {
+  color: var(--stk-heading-color);
+}
+
+:is([class*='stk--background-scheme'],
+       [class*='stk--container-scheme'],
+       .stk--has-base-scheme,
+       .stk--has-background-scheme .stk-block-background,
+       .stk--has-container-scheme .stk-container:not(.stk--no-background)) a {
+    color: var(--stk-link-color, var(--theme-link-initial-color, unset));
+}
+
+:is([class*='stk--background-scheme'],
+       [class*='stk--container-scheme'],
+       .stk--has-base-scheme,
+       .stk--has-background-scheme .stk-block-background,
+       .stk--has-container-scheme .stk-container:not(.stk--no-background)) a:hover {
+    color: var(--stk-link-color-hover, var(--stk-link-color, var(--theme-link-hover-color, unset)));
+}
+
+:is([class*='stk--background-scheme'],
+       [class*='stk--container-scheme'],
+       .stk--has-base-scheme,
+       .stk--has-background-scheme .stk-block-background,
+       .stk--has-container-scheme .stk-container:not(.stk--no-background)) .wp-element-button {
+    background: var(--stk-button-background-color);
+    color: var(--stk-button-text-color);
+    padding: var(--stk-button-padding);
+}
+
+:is([class*='stk--background-scheme'],
+       [class*='stk--container-scheme'],
+       .stk--has-base-scheme,
+       .stk--has-background-scheme .stk-block-background,
+       .stk--has-container-scheme .stk-container:not(.stk--no-background)) .wp-element-button:hover {
+    background: var(--stk-button-background-color-hover, var(--stk-button-background-color));
+    color: var(--stk-button-text-color-hover, var(--stk-button-text-color));
+}
+
+:is([class*='stk--background-scheme'],
+       [class*='stk--container-scheme'],
+       .stk--has-base-scheme,
+       .stk--has-background-scheme .stk-block-background,
+       .stk--has-container-scheme .stk-container:not(.stk--no-background)) .is-style-outline .wp-element-button {
+    background:transparent;
+    color: var(--stk-button-background-color);
+    border-color:  var(--stk-button-background-color);
+}
