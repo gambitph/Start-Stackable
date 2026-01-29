@@ -166,7 +166,7 @@
         "useRootPaddingAwareAlignments": true
     },
     "styles": {
-        "css": ":root :where(.is-layout-constrained) > * { margin-block-start: 0; margin-block-end: 24px; }",
+        "css": ":root :where(.is-layout-constrained) > * { margin-block-start: 0; margin-block-end: var(--stk-block-margin-bottom, 24px); } .wp-block-post-template-is-layout-grid > li.wp-block-post { display: flex; } .wp-block-post-template-is-layout-grid > li.wp-block-post > .wp-block-group { flex: 1; } ",
         "typography": {
             "fontFamily": "var:preset|font-family|sans-serif",
             "fontSize": "var:preset|font-size|medium"
@@ -175,40 +175,26 @@
             "background": "var:preset|color|base",
             "text": "var:preset|color|contrast"
         },
-        "spacing": {
-            "blockGap": "24px"
-        },
-        "blocks": {
-            "core/button": {
+        "elements": {
+            "button": {
                 "spacing": {
-                    "margin": {
-                        "top": "0px",
-                        "bottom": "24px"
-                    }
-                },
-                "border": {
-                    "radius": "0"
+                    "padding": "12px 16px"
                 },
                 "color": {
                     "text": "var:preset|color|base",
                     "background": "var:preset|color|primary"
                 },
-                "variations": {
-                    "outline": {
-                        "border": {
-                            "color": "var:preset|color|primary",
-                            "radius": "0",
-                            "width": "2px"
-                        },
-                        "color": {
-                            "text": "var:preset|color|primary",
-                            "background": "var:preset|color|base"
-                        }
-                    }
+                "border": {
+                    "width": "0px",
+                    "radius": "0px",
+                    "style": "none"
                 }
-            }
-        },
-        "elements": {
+            },
+            "heading": {
+                "color": {
+                    "text": "var:preset|color|contrast"
+                }
+            },
             "h1": {
                 "typography": {
                     "fontSize": "var:preset|font-size|xx-large"
