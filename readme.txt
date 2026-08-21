@@ -9,7 +9,25 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 
-Start Stackable is a minimal, high-performance WordPress block theme designed specifically to work hand-in-hand with the Stackable page builder plugin. Built as a blank canvas, this theme provides only the essential structure, allowing Stackable’s powerful design blocks and layout system to take full control.
+Start Stackable is a WordPress block theme: site chrome, blog templates, and a design-token layer (`theme.json`) built to pair with the Stackable plugin.
+
+It works on its own. You can run a blog and pages with core blocks, color style variations, and Full Site Editing.
+
+Install Stackable when you want Site Kits (full-site import), the Design Library, and Stackable blocks. Site Kits snap into this theme’s shell. They are not bundled in this theme zip.
+
+== Frequently Asked Questions ==
+
+= Do I need the Stackable plugin? =
+
+No. The theme is a complete block theme without it. Stackable is recommended for Site Kits and advanced blocks.
+
+= Does this theme include starter sites? =
+
+No. Full-site Site Kits live in the Stackable plugin so this theme stays Theme Directory compliant and usable without extra plugins.
+
+= Can I use another block plugin? =
+
+Yes. Chrome and tokens are core-block / `theme.json`. Stackable is the intended companion, not a hard requirement.
 
 == Changelog ==
 

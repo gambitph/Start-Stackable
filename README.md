@@ -15,7 +15,34 @@
 
 ## Description
 
-Start Stackable is a minimal, high-performance WordPress block theme designed specifically to work hand-in-hand with the Stackable page builder plugin. Built as a blank canvas, this theme provides only the essential structure, allowing Stackable’s powerful design blocks and layout system to take full control.
+Start Stackable is a WordPress block theme: the site shell and token layer for Stackable Site Kits.
+It is a complete theme without the plugin (blog, chrome, `theme.json`).
+With Stackable installed, Site Kits snap into this shell.
+
+## Build
+
+Node **20+**. There is no JS compile step. `npm run build` copies only the WordPress theme files and zips them.
+
+```bash
+npm install
+npm run build
+```
+
+- `build/start-stackable/` is the theme tree (extract this for Theme Directory SVN).
+- `dist/start-stackable-{version}.zip` is the installable zip (root folder `start-stackable/`).
+- PR suffix: `npm run build --suffix=branch-name`.
+
+## Documentation
+
+| Audience | Doc |
+| --- | --- |
+| Agents | [`docs/prd/start-stackable.agents.md`](./docs/prd/start-stackable.agents.md) |
+| Developers | [`docs/prd/start-stackable.md`](./docs/prd/start-stackable.md) |
+| Implementation plan | [`docs/prd/start-stackable.plan.md`](./docs/prd/start-stackable.plan.md) |
+| Acceptance check | [`docs/prd/start-stackable.check.md`](./docs/prd/start-stackable.check.md) |
+| Glossary | [`CONTEXT.md`](./CONTEXT.md) |
+| Site Kits (plugin) | Sibling repo `../Stackable/docs/prd/site-kits.md` |
+| E2E | [`e2e/readme.md`](./e2e/readme.md) |
 
 ## Copyright
 
