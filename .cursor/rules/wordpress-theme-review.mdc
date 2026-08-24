@@ -1,0 +1,22 @@
+---
+description: Theme zip must pass WordPress.org Theme Review as a complete block theme
+alwaysApply: true
+---
+
+# WordPress.org Theme Directory & Theme Review
+
+This theme is intended for the [WordPress Theme Directory](https://wordpress.org/themes/).
+Directory inclusion requires meeting [Theme Review](https://make.wordpress.org/themes/handbook/review/) requirements.
+
+## What this means
+
+- The zip must be a **complete block theme** with Stackable inactive: blog, pages, header/footer, and color variations work.
+- No plugin territory in the theme: custom blocks, shortcodes, CPTs, contact forms, analytics, starter-site/demo importers.
+- No `stackable/*` markup in `templates/`, `parts/`, or `patterns/`.
+- PHP bootstrap file is `functions.php` (not `function.php`). Prefix theme functions with `start_stackable_`.
+- Front-end copyright/branding is the **user's** site, not the theme author brand.
+- Prefer WordPress coding, escaping, i18n (`start-stackable` text domain), and enqueue practices Theme Review enforces.
+- When changing PHP, templates, `theme.json`, or packaging, keep Theme Review green in mind. Fix regressions rather than silencing them without cause.
+
+Skill for block-theme structure: `.cursor/skills/wp-block-themes/`.
+Product law: [`docs/prd/start-stackable.agents.md`](../../docs/prd/start-stackable.agents.md).

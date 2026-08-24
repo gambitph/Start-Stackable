@@ -1,62 +1,202 @@
 # Start Stackable - developer implementation guide
 
 This is the human product guide for the block theme.
-Agents follow [`start-stackable.agents.md`](./start-stackable.agents.md) (same law, shorter).
-To **build** the theme, follow the [implementation plan](./start-stackable.plan.md).
-To **verify** a build, use the [acceptance check](./start-stackable.check.md).
-Site Kits (plugin): `../Stackable/docs/prd/site-kits.md`.
-Import schema: `../Stackable/docs/prd/site-kits.CONTRACT.md`.
-ADRs: [`../adr/0001-theme-is-the-shell.md`](../adr/0001-theme-is-the-shell.md), [`../adr/0002-theme-is-the-default.md`](../adr/0002-theme-is-the-default.md).
+It explains what the theme is, where the repo stands today, how we develop, and the product rules that every change must follow.
+
+Agents follow [`start-stackable.agents.md`](./start-stackable.agents.md) (same product law, shorter, no teaching).
+
+## Start here
+
+This repository is a WordPress **block theme** named Start Stackable.
+A block theme is a theme you edit in the Site Editor.
+Layout lives in HTML templates.
+Colors, fonts, and spacing live in `theme.json`.
+There is almost no classic PHP templating.
+
+The theme is **not finished**.
+What you have now is a working **scaffold**: it activates, the Site Editor opens, and the compile/zip tooling works.
+Default (the designed blog you should see on first activation) is not a product yet.
+
+Work is organized as **phases 0 through 11** in the [implementation plan](./start-stackable.plan.md).
+Phase 0 is done.
+**Your next work is Phase 1** (the design system in `theme.json`).
+Do not skip ahead to headers, patterns, or Site Kit snap-in until that phase's **Done when** is true.
+
+If a word feels loaded (Default, shell, token, canvas, header flag), see [`CONTEXT.md`](../../CONTEXT.md).
+
+## Which doc do I open?
+
+| I want to... | Open |
+| --- | --- |
+| Understand the product and how we work | This file |
+| Implement the next phase | [Implementation plan](./start-stackable.plan.md) |
+| Check whether a phase actually landed | [Acceptance check](./start-stackable.check.md) |
+| Look up a word | [`CONTEXT.md`](../../CONTEXT.md) |
+| Run or add browser tests | [`e2e/readme.md`](../../e2e/readme.md) |
+| See the two big decisions (theme is shell, theme is Default) | [`../adr/`](../adr/) |
+| Work on Site Kits (plugin, not this theme) | Sibling `../Stackable/docs/prd/site-kits.md` |
+
+You do not need the plugin docs, the import contract, or the agent PRD to start Phase 1.
+
+## Block theme in 60 seconds
+
+These are the files you will touch, and what each one is for:
+
+| Location | What it is |
+| --- | --- |
+| `theme.json` | The design system: named colors, font sizes, spacing, content/wide widths, and default styles for headings, buttons, and core blocks. |
+| `styles/colors/` and `styles/typography/` | Optional skins (style variations) that restyle the **same** named colors or fonts. Switching a variation in Site Editor → Styles should restyle the whole site. |
+| `templates/` | One HTML file per kind of page (blog home, single post, page, search, 404, and so on). WordPress picks the file automatically. |
+| `parts/` | Reusable header and footer pieces that templates include. |
+| `patterns/` | Reusable block layouts (post card, header markup, one optional Homepage starter). Empty until Phase 7. |
+| `functions.php` | The only PHP bootstrap WordPress loads from the theme. Must be this filename (not `function.php`). |
+| `src/` | Extra CSS and JS for behavior `theme.json` cannot express (sticky/transparent header). Compiles into `assets/build/`. |
+| `style.css` | Theme identity for WordPress (name, version, tags). It is not where the design system lives. |
+
+**Tokens** are the named values in `theme.json` (for example color `primary`, spacing `large`).
+Templates and patterns must use those names.
+A raw hex or a made-up slug such as `spacing|50` is a bug.
+
+**Do not** put the color palette, type scale, or spacing scale into CSS.
+That belongs in `theme.json`.
+CSS in `src/` is only for things `theme.json` cannot do, such as measuring header height or sticky overlay behavior.
+
+## Current state (you are here)
+
+Snapshot of the tree as of 21 August 2026.
+If the files and this section disagree, trust the files and the [phase checklists](./start-stackable.check.md).
+
+**Phase 0 (bootstrap) is complete.**
+The theme is a valid block theme that activates without a PHP fatal.
+`functions.php` enqueues `assets/build/frontend.*` and adds the body class `stk--is-stackable-theme`.
+`npm run start` compiles `src/` into `assets/build/`.
+Template and part **files** exist.
+Color palette **slugs** and content/wide widths already match the token contract below.
+
+**Phases 1–11 are not done.**
+What you see on `/` is a skeleton blog (site title, a basic post grid, a footer), not the designed Default the product requires.
+
+| Phase | Status | What is true now | What "done" looks like |
+| --- | --- | --- | --- |
+| 0 Bootstrap | Done | Theme activates; compile/zip works | (already met) |
+| 1 Design system | Next | Palette slugs and widths exist; body is the system UI stack; no Plus Jakarta Sans yet; spacing is rem, not `clamp`; almost no shadow/radius/block styles | Site Editor → Styles looks finished: Jakarta headings, system body, shadows, radius |
+| 2 Style variations | Not started | Eight color hue files; empty `styles/typography/`; no dark variation | Color + typography skins, including at least one dark, using the same slugs |
+| 3 Header and footer | Scaffold | Parts exist (title + nav; footer columns); not designed pattern includes | Designed, fresh-install-safe header/footer with no hardcoded Navigation `ref` |
+| 4 First-activation blog | Scaffold | `index.html` is a basic two-column Query Loop | Crafted post cards, designed single/search/404, `/` looks like a product with Hello World |
+| 5 Canvases | Scaffold | `page`, `full-width`, and `blank` files exist; `full-width` still wraps content in padding | Ordinary pages have a title; kit pages are full-bleed with no theme title |
+| 6 Header flags | Stub | JS only sets `--stk-header-height`; no sticky/transparent CSS yet | Sticky, transparent overlay, scroll-to-solid, mobile nav above a hero, plugin off |
+| 7 Patterns | Not started | `patterns/` is empty | Header/footer/post-card/comments + exactly one Homepage starter; no hero/pricing catalog |
+| 8 Woo templates | Not started | No Woo HTML templates | Shop/product/cart/checkout look designed if Woo is active; theme still works if it is not |
+| 9 PHP host | Partial | Setup, enqueue, body class | Dismissible "install Stackable" notice + optional breakpoint handshake |
+| 10 Directory packaging | Not started | No `screenshot.png`; tags incomplete | WP.org zip: screenshot of Default, licenses, honest tags |
+| 11 Snap-in | Not started | Contract is documented only | Plugin can assign `full-width` + header flags without a theme PHP change |
+
+Honest one-liner: this is a **legal scaffold**.
+Default is not designed yet.
+Start at Phase 1.
+
+## How we develop
+
+This is sequential craft, not "pick a random file."
+
+1. **Read this guide** so you know what the theme is allowed to own.
+2. **Open the next unfinished phase** in the [plan](./start-stackable.plan.md).
+   Right now that is Phase 1.
+   Do not skip a phase.
+3. **Implement in the existing seam**, not a parallel system:
+   - look → `theme.json` and `styles/`
+   - layout → `templates/` and `parts/` (later `patterns/`)
+   - behavior `theme.json` cannot express → `src/css/` and `src/js/`
+   - PHP → `functions.php` only, functions prefixed `start_stackable_`
+4. **Stay inside product law** (the rest of this file).
+   Core blocks only in templates, parts, and patterns.
+   No `stackable/*` markup.
+   No `front-page.html`.
+   No demo or Site Kit importer.
+   No second token system in CSS.
+5. **Verify with the matching checklist** in the [acceptance check](./start-stackable.check.md).
+   Each item is pass or fail with a file path, not a vibe.
+6. **Then** add Playwright e2e for surfaces that now exist.
+   Do not add a failing spec for a header, footer, or flag that is not implemented yet.
+   Bug fixes start by reproducing in e2e the way a user would see the bug.
+7. **Package** with `npm run build` when you need an installable zip.
+   Docs, e2e, `.cursor`, `src/`, and `node_modules` stay out of the zip.
+
+Day-to-day commands (Node 20+):
+
+```bash
+npm install          # once
+npm run start        # watch src/ → assets/build/ while editing CSS/JS
+# theme.json, templates, and parts: refresh the site; no compile needed
+npm run test:e2e     # Playwright + WordPress Playground (no Docker)
+npm run compile      # production compile of src/
+npm run build        # compile + zip
+```
+
+A phase is done when its **Done when** line is true and that phase's checkboxes in the acceptance check pass.
+
+## What "done" means for the whole theme
+
+The theme is finished when **every** phase checklist passes, and all of the following stay true:
+
+1. Activate with Stackable **off**, latest posts: `/` shows a designed header, post grid, and footer.
+2. Style variations (color and typography, at least one dark) restyle header, footer, and blog cards.
+3. A WordPress.org reviewer with the plugin deleted can still walk a complete blog.
+4. A Site Kit can depend on the shell primitives in this file without a CSS hack in the plugin.
+5. This repo still contains zero kit HTML, zero custom blocks, and zero importer.
+
+Until then, implement the next phase.
+Do not treat the "ideal theme tree" in the plan as the current tree.
+That tree is the destination.
+
+---
 
 ## What this theme is
 
-Start Stackable is a **block theme**: Full Site Editing, `theme.json`, HTML templates, template parts.
+Start Stackable is two things at once:
 
-It is two things at once:
-
-1. **Default** - a complete, designed site the moment someone activates it from WordPress.org, with Stackable off.
-2. **Shell** - chrome, canvases, tokens, and header flags that Site Kits snap into.
+1. **Default** - a complete, designed site the moment someone activates it from WordPress.org, with the Stackable plugin off.
+2. **Shell** - the header, footer, page canvases, tokens, and header flags that Site Kits later snap into.
 
 The theme must work as a full site on its own.
-Stackable adds Site Kits, Global Design System, Design Library, and block controls you do not get from core WordPress.
+The Stackable plugin (sibling repo `../Stackable`) adds Site Kits, a Global Design System, a Design Library, and block controls you do not get from core WordPress.
 
 WordPress.org will reject a theme that only works with a plugin, or that imports demo sites from inside the theme zip.
-Full-site starter packages live in the companion plugin, not in the theme zip.
+Full-site starter packages live in the companion plugin, not in this theme.
 
-## First-activation and chrome
-
-First activation is a designed blog: templates as pattern includes, header/footer as swappable patterns, and `theme.json` as a design system.
-
-Sticky, transparent, and per-page hide are theme-owned **flags**.
-Do not bake a marketing landing into `home.html`.
-That landing fights Settings → Reading (the posts page inherits it) and duplicates Site Kits.
+Two decisions lock this split: [`0001-theme-is-the-shell.md`](../adr/0001-theme-is-the-shell.md) and [`0002-theme-is-the-default.md`](../adr/0002-theme-is-the-default.md).
 
 ## First activation (Default)
 
-Fresh WordPress shows latest posts.
+Fresh WordPress shows **latest posts**.
 There is no imported page.
 
-`/` must look like a product: designed header, two-column (or equivalent) post grid of crafted cards, designed footer, bundled webfont, tokens.
+`/` must look like a product: designed header, two-column (or equivalent) post grid of crafted cards, designed footer, Plus Jakarta Sans headings, system-stack body, tokens.
 Hello World is enough content.
-WOW is craft, not a fake SaaS homepage.
+The "wow" is craft, not a fake SaaS homepage.
 
 Do **not** ship `front-page.html`.
 `index.html` is the latest-posts front.
-`home.html` is the posts index when the user later sets a static front (same grid, not a marketing page).
+`home.html` is the posts index when the user later sets a static front page under Settings → Reading.
+That posts index must be the same grid, not a marketing landing.
+A marketing `home.html` fights that setting and duplicates what Site Kits already do.
 
-A user can insert the one theme **Homepage** starter pattern onto a page (core blocks) if they want a marketing home without Stackable.
+A user can insert the one theme **Homepage** starter pattern onto a page (core blocks only) if they want a marketing home without Stackable.
 That is DIY, one page, no importer.
 Site Kits replace that job with a full site.
 
+Sticky, transparent, and per-page hide are theme-owned **flags** (behaviors), not extra header layouts.
+See [Header flags](#header-flags-site-kit-requirement).
+
 ## Standalone bar (no plugin)
 
-A user with only this theme can:
+When Default is finished, a user with only this theme can:
 
-- See designed header and footer on first activation (logo/title + navigation, no broken `ref`).
-- Edit chrome in the Site Editor, including swapping header/footer patterns.
+- See designed header and footer on first activation (logo or site title + navigation, no broken Navigation `ref`).
+- Edit the header and footer in the Site Editor, including swapping header/footer patterns.
 - Switch **color and typography** style variations, including at least one dark.
 - Run a blog: home/archive grid, single post (image, meta, comments), search, 404.
-- Choose page canvases: default, full-width (no title), blank (no chrome).
+- Choose page canvases: default, full-width (no title), blank (no header or footer).
 - Insert the one Homepage starter pattern onto a new page.
 - Use core blocks that inherit `theme.json`.
 - If WooCommerce is active: shop/product/cart/checkout/account templates that are not unstyled.
@@ -66,22 +206,22 @@ That gap is the conversion, not a broken empty site.
 
 ## Conversion (no import on activate)
 
-**Directory user, plugin off:** activate → already on Default → optional Styles / starter page → dismissible notice to install Stackable (user-initiated, WordPress.org slug) → plugin catalog.
+**Directory user, plugin off:** activate → already on Default → optional Styles / starter page → dismissible notice to install Stackable (user-initiated, WordPress.org plugin slug) → plugin catalog.
 
 **Stackable already active:** activate theme → notice is gone → user opens Site Kits in plugin admin when they want a kit.
 The catalog may show Default as a **label** ("you are on the theme").
 Clicking Default does not import and does not reset an imported kit.
 Never import on theme or plugin activation.
 
-## Shell vs engine
+## What lives here vs the plugin
 
 | Own in the theme | Own in Stackable |
 | --- | --- |
 | Header/footer parts and shell patterns | `stackable/*` blocks, Design Library sections, kit pages |
 | `theme.json` + color/typography variations | Global Color Schemes, typography presets, Global Block Styles |
-| Sticky / transparent / hide-chrome | Section motion, block sticky, responsive hide on blocks |
+| Sticky / transparent / hide header or footer | Section motion, block sticky, responsive hide on blocks |
 | Blog, Woo, and utility templates | Site Kit wizard, import, design-system side editor |
-| One Homepage starter page (core blocks) | Multi-page kits + menus + GDS |
+| One Homepage starter page (core blocks) | Multi-page kits + menus + Global Design System |
 | Dismissible "install Stackable" notice | Plugin admin, Freemius, REST |
 
 Header **layouts** are template parts (`header`, `header-transparent`, `header-minimal`).
@@ -89,10 +229,12 @@ Header **flags** are behaviors (sticky, transparent, on-scroll solid).
 A kit says: use part X with flags Y.
 Do not create a new part for every combination.
 
+If you find yourself adding a hero, pricing, or testimonial **section** pattern, that work belongs in the plugin Design Library, not here.
+
 ## Token contract
 
-`theme.json` is the contract Stackable already reads (style inheritance, widths, size presets).
-It is also the visual product: fluid type, fluid spacing, shadow presets, radius presets, element and core-block styles, bundled font.
+`theme.json` is the contract the Stackable plugin already reads (style inheritance, widths, size presets).
+It is also the visual product: fluid type, fluid spacing, shadow presets, radius presets, element and core-block styles, Plus Jakarta Sans headings.
 
 Keep these aligned with the plugin's inheritance layer:
 
@@ -103,7 +245,9 @@ Keep these aligned with the plugin's inheritance layer:
 | Palette slugs | `primary`, `primary-light`, `primary-soft`, `primary-deep`, `base`, `base-accent`, `tint`, `contrast`, `contrast-accent`, `outline`, `outline-contrast` |
 | Font size slugs | `x-small` … `xxx-large` as in current `theme.json` (add fluid `min`/`max`) |
 | Spacing slugs | `small` … `xxxx-large` as in current `theme.json` (prefer `clamp`) |
-| `--stk-header-height` | Theme CSS, not `theme.json` (runtime) |
+| Heading font | Plus Jakarta Sans (bundled OFL, slug `plus-jakarta-sans`) on `styles.elements.heading`, site title, and post title |
+| Body font | System UI stack (existing slug `sans-serif`) on `styles.typography.fontFamily` |
+| `--stk-header-height` | Theme CSS/JS, not `theme.json` (measured at runtime) |
 
 Every HTML template and pattern must use these presets.
 Undefined slugs (`spacing|50`, color `secondary`) are bugs.
@@ -111,14 +255,19 @@ Undefined slugs (`spacing|50`, color `secondary`) are bugs.
 Color variations live under `styles/colors/` and override the **same slugs**.
 Typography variations live under `styles/typography/`.
 Do not invent a second palette vocabulary for "industry kits".
-A kit may **select** a shipped variation and/or write a **theme styles overlay** (user Global Styles) plus Stackable GDS.
+A kit may **select** a shipped variation and/or write a **theme styles overlay** (user Global Styles) plus Stackable Global Design System.
 Industry identity lives in the kit package, not in a theme fork.
 
-Font family: bundle a webfont.
-Pick the face during implementation (candidates are in the plan).
-Do not leave the system UI stack as the Default look.
+Font family: **Plus Jakarta Sans** for headings (bundled).
+**System UI stack** for body (the `sans-serif` family already in `theme.json`).
+Do not bundle a second webfont for Default body.
+Cite the Jakarta license in `readme.txt`.
 
 ## Templates and parts
+
+A **template** is the HTML WordPress uses for a kind of view.
+A **part** is a header or footer chunk templates include.
+A **canvas** is how a page’s main content is framed: ordinary page (title OK), full-width (no title, full-bleed), or blank (content only).
 
 | Template | When to use |
 | --- | --- |
@@ -156,13 +305,13 @@ Kits need:
 3. `--stk-header-height` so heroes can pad content below the bar.
 4. Mobile overlay above the hero.
 
-Implement as small theme CSS/JS attached to the header part wrapper.
+Implement as small theme CSS/JS in `src/` attached to the header part wrapper (Phase 6).
 Keep it presentational.
 Per-page flags can be post meta the plugin writes on import, or a class on `body`/`main`.
 Prefer classes the kit contract names (`stk-shell-header-sticky`, `stk-shell-header-transparent`) so import is one write.
 
 Dual logo: two Site Logo blocks or an image pair toggled with the scrolled class.
-Document the class names in the contract if they are part of the public kit API.
+Document the class names in the Site Kit import contract if they are part of the public kit API.
 
 ## Patterns
 
@@ -173,11 +322,18 @@ They are not a second Design Library.
 
 **In the plugin:** heroes, pricing, testimonials, team, FAQ, logos, kit pages.
 
+The plan has the full pattern inventory.
+Do not add those files until you are on Phase 3 (parts) or Phase 7 (catalog + starter).
+
 ## `functions.php`
 
-Rename `function.php` → `functions.php`.
+WordPress only loads **`functions.php`** from the theme root.
+A file named `function.php` is ignored.
+Do not ship `function.php`.
 
-Minimum:
+Compiled extras enqueue from here (`assets/build/frontend.*`, source in `src/`).
+
+Minimum (Phase 9 completes the last two; Phase 0 already has the first two):
 
 - `add_theme_support` for editor styles / responsive embeds / block styles as needed.
 - `body_class` filter → `stk--is-stackable-theme`.
@@ -191,20 +347,24 @@ No import on activate.
 
 ## Directory launch
 
-WP.org reviewers never see Site Kits.
+WordPress.org reviewers never see Site Kits.
 The zip must stand alone: `screenshot.png` that matches Default, designed templates, style variations, `block-patterns` and `style-variations` tags, `e-commerce` only if Woo templates ship, licenses for fonts and images, user (not author) copyright on the front.
 
 `readme.txt` sells the site, not the architecture.
 
 ## Implementation
 
-Phases and file-level steps: [`start-stackable.plan.md`](./start-stackable.plan.md).
-Do not skip a phase's **Done when**.
+Numbered what/how steps per phase: [`start-stackable.plan.md`](./start-stackable.plan.md).
+Skip Phase 0 (done).
+Start at Phase 1 and do the numbered items in order.
+Do not skip a phase's **This phase is done when**.
 
-E2E specs to create: table in [`start-stackable.agents.md`](./start-stackable.agents.md#e2e-create-these).
-Do not add failing specs for unfinished chrome.
+E2E specs to create once a surface exists: table in [`start-stackable.agents.md`](./start-stackable.agents.md#e2e-create-these).
+Do not add failing specs for an unfinished header or footer.
 
 ## Review questions
+
+Use these before you call a change done:
 
 - Would Theme Review still accept this zip with Stackable deleted from the world?
 - Does `/` on a blank latest-posts site look like a product?

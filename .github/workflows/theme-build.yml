@@ -1,0 +1,35 @@
+name: Theme Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: Set the version suffix for the output
+        run: echo VERSION_SUFFIX=${GITHUB_REF_NAME//\//-} >> $GITHUB_ENV
+      - name: Install dependencies and package
+        run: |
+          npm ci
+          npm run build --suffix=${{ env.VERSION_SUFFIX }}
+      - name: Upload theme zip
+        uses: actions/upload-artifact@v4
+        with:
+          name: start-stackable-${{ env.VERSION_SUFFIX }}
+          path: dist/*.zip
+          if-no-files-found: error
+          retention-days: 30

@@ -1,0 +1,13 @@
+node_modules
+.DS_Store
+/build/
+/dist/
+*.zip
+/test-results/
+/playwright-report/
+/playwright-stk/
+/blob-report/
+/playwright/.cache/
+e2e/.auth/
+assets/build/*.map
+

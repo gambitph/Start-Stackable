@@ -1,0 +1,13 @@
+/**
+ * Header flags (Phase 6).
+ *
+ * Honor these classes on `body` or the header wrapper (shell contract):
+ * - .stk-shell-header-sticky
+ * - .stk-shell-header-transparent
+ *
+ * --stk-header-height is set at runtime in src/js/header-flags.js.
+ * Do not put palette, type, or spacing tokens here.
+ */
+:root {
+	--stk-header-height: 0px;
+}

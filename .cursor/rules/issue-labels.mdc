@@ -1,0 +1,68 @@
+---
+description: GitHub issue label taxonomy for triage and classification
+alwaysApply: true
+---
+
+# GitHub Issue Labels
+
+Use this label set when triaging, creating, or updating issues in https://github.com/gambitph/Start-Stackable
+
+Priority, release target, and status belong on the [release project board](https://github.com/orgs/gambitph/projects/2/views/1), not labels.
+
+## Type (exactly one)
+
+| Label | Use for |
+|-------|---------|
+| `bug` | Something broken in the current release |
+| `enhancement` | Improvement to an existing feature |
+| `feature-request` | New header, footer, canvas, token, or workflow |
+| `question` | How-to, support, or unclear reports |
+| `documentation` | Docs, readme, or in-theme help |
+
+## Triage (zero or one, temporary)
+
+| Label | Use for |
+|-------|---------|
+| `needs-reproduction` | Cannot verify; waiting on repro steps |
+| `might-be-fixed` | Likely fixed; checking changelog or codebase |
+| `not-planned` | Valid request, explicitly out of scope |
+| `duplicate` | Same as another issue |
+| `invalid` | Not actionable |
+| `wontfix` | Will not be addressed |
+
+Remove triage labels when closing or confirming status.
+
+## Area (zero or one)
+
+| Label | Use for |
+|-------|---------|
+| `chrome` | Header, footer, sticky/transparent/hide flags |
+| `tokens` | `theme.json`, style variations, widths, spacing |
+| `templates` | Templates, parts, patterns, page canvases |
+| `onboarding` | Recommend-plugin notice, first-run |
+| `compatibility` | WordPress, Site Editor, plugin snap-in |
+| `accessibility` | a11y |
+| `frontend` | Saved markup, CSS, or JS on the site |
+| `performance` | Speed, asset size |
+| `theme-review` | WordPress.org Theme Directory constraints |
+
+## Community (optional)
+
+| Label | Use for |
+|-------|---------|
+| `good first issue` | Good for new contributors |
+| `help wanted` | Extra attention welcome |
+
+## Pull requests
+
+| Label | Use for |
+|-------|---------|
+| `pr: needs review` | Awaiting review |
+| `pr: reviewed` | Reviewed with comments |
+| `pr: good to merge` | Approved |
+
+## Rules
+
+- Apply **one type** label per issue.
+- Apply **at most one** triage label and **at most one** area label.
+- Do **not** use priority or version labels.

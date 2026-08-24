@@ -16,31 +16,38 @@
 ## Description
 
 Start Stackable is a WordPress block theme: the site shell and token layer for Stackable Site Kits.
-It is a complete theme without the plugin (blog, chrome, `theme.json`).
+It is a complete theme without the plugin (blog, header, footer, `theme.json`).
 With Stackable installed, Site Kits snap into this shell.
 
 ## Build
 
-Node **20+**. There is no JS compile step. `npm run build` copies only the WordPress theme files and zips them.
+Node **20+**. Theme extras (header-flag CSS/JS) compile with `@wordpress/scripts`.
+Tokens and layout stay in `theme.json` / HTML templates; do not dump a design system into CSS.
 
 ```bash
 npm install
-npm run build
+npm run start      # watch src/ → assets/build/
+npm run compile    # production compile
+npm run build      # compile + zip
 ```
 
+- `src/` is the edit surface for compiled extras. `assets/build/` is generated.
 - `build/start-stackable/` is the theme tree (extract this for Theme Directory SVN).
 - `dist/start-stackable-{version}.zip` is the installable zip (root folder `start-stackable/`).
 - PR suffix: `npm run build --suffix=branch-name`.
 
 ## Documentation
 
-| Audience | Doc |
+The theme is a working scaffold, not a finished product.
+New to the repo? Start with the developer guide (what it is, current state, how we work, then product rules).
+
+| When | Doc |
 | --- | --- |
-| Agents | [`docs/prd/start-stackable.agents.md`](./docs/prd/start-stackable.agents.md) |
-| Developers | [`docs/prd/start-stackable.md`](./docs/prd/start-stackable.md) |
-| Implementation plan | [`docs/prd/start-stackable.plan.md`](./docs/prd/start-stackable.plan.md) |
-| Acceptance check | [`docs/prd/start-stackable.check.md`](./docs/prd/start-stackable.check.md) |
-| Glossary | [`CONTEXT.md`](./CONTEXT.md) |
+| New here / how we develop | [`docs/prd/start-stackable.md`](./docs/prd/start-stackable.md) |
+| Implement the next phase | [`docs/prd/start-stackable.plan.md`](./docs/prd/start-stackable.plan.md) (Phase 1 is next) |
+| Check a phase | [`docs/prd/start-stackable.check.md`](./docs/prd/start-stackable.check.md) |
+| Word meanings | [`CONTEXT.md`](./CONTEXT.md) |
+| Agents (same law, shorter) | [`docs/prd/start-stackable.agents.md`](./docs/prd/start-stackable.agents.md) |
 | Site Kits (plugin) | Sibling repo `../Stackable/docs/prd/site-kits.md` |
 | E2E | [`e2e/readme.md`](./e2e/readme.md) |
 

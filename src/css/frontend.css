@@ -1,0 +1,5 @@
+/**
+ * Extra CSS theme.json cannot express.
+ * Import partials here so `npm run start` emits one frontend.css.
+ */
+@import "./header-flags.css";

@@ -1,6 +1,6 @@
 # Goal
 
-Start Stackable is the **site shell** for Stackable Site Kits: chrome, templates, `theme.json` tokens, header flags.
+Start Stackable is the **site shell** for Stackable Site Kits: header, footer, templates, `theme.json` tokens, header flags.
 It must be a complete block theme with Stackable off (WordPress.org).
 Site Kit import lives in the plugin, not in this zip.
 

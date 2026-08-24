@@ -1,0 +1,66 @@
+name: E2E Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+# One run per PR or branch. A new push cancels the previous run.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - php_version: '8.3'
+            wp_version: 'latest'
+          - php_version: '7.4'
+            wp_version: '6.7'
+    name: e2e PHP ${{ matrix.php_version }} WP ${{ matrix.wp_version }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: Install dependencies
+        run: npm ci
+      - name: Compile theme extras
+        run: npm run compile
+      - name: Cache Playwright Browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-
+      - name: Install Playwright Browsers
+        timeout-minutes: 15
+        run: |
+          for attempt in 1 2 3; do
+            npx playwright install chromium --with-deps && exit 0
+            echo "Playwright install failed on attempt $attempt"
+            sleep $((attempt * 30))
+          done
+          exit 1
+      - name: Run Playwright e2e suite
+        id: run-playwright-tests
+        env:
+          WP_PHP_VERSION: ${{ matrix.php_version }}
+          WP_VERSION: ${{ matrix.wp_version }}
+        run: npm run test:e2e
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() && steps.run-playwright-tests.outcome == 'failure' }}
+        with:
+          name: playwright-report-php_${{ matrix.php_version }}-wp_${{ matrix.wp_version }}
+          path: playwright-report/
+          overwrite: true
+          retention-days: 30

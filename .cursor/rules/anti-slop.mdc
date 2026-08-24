@@ -1,0 +1,45 @@
+---
+description: Maintainability and anti-slop standards when changing Start Stackable
+alwaysApply: true
+---
+
+# Maintainability & anti-slop
+
+Prefer deepening existing seams over inventing parallel structure.
+Goal: one place to change a behaviour; tokens, header flags, and shell-contract primitives stay single-sourced.
+
+## Before you paste
+
+When adding or extending behaviour, check the nearest sibling first.
+If the change would clone a template, part, token map, header flag, or enqueue, extract or reuse a shared helper **before** adding the nth copy.
+
+## Deepen, don't layer
+
+Keep the runtime spine:
+
+- **Tokens:** `theme.json` presets and `styles/**/*.json` variations that override the same slugs
+- **Chrome and canvases:** `templates/` and `parts/` (header, footer, page/blog/404/search, `full-width`, `blank`)
+- **Theme PHP:** `functions.php` for body class, recommend-plugin notice, and header-flag host
+- **Theme CSS/JS:** only what `theme.json` cannot express (sticky, transparent, header-height token)
+
+New behaviour goes into an existing cluster when one fits.
+Do not add a second token system, a parallel header implementation, custom blocks, shortcodes, or a demo/Site Kit importer.
+
+God-file rule of thumb: prefer extracting a coherent cluster (for example header flags) over growing `functions.php` or a catch-all CSS file with another pasted case.
+
+**Deep** means lots of behaviour behind a small interface at a clear seam (tokens in `theme.json`, flags in one host).
+**Shallow** means a pass-through wrapper whose interface is almost as complex as the implementation.
+Prefer deepening an existing seam over adding another shallow module beside it.
+
+## Single source for shared heuristics
+
+Heuristics that exist in more than one place (token slugs, content/wide widths, header-height CSS, shell-contract primitive names) share one definition of truth.
+Templates and parts reference only `theme.json` presets.
+Do not hand-sync a second color, spacing, or width map "for convenience."
+
+Ship or silence: do not advertise a header flag, canvas, or token in docs or copy unless the theme actually ships it.
+
+## Completion check
+
+Before finishing a change that adds a token, template, part, header flag, or shell-contract primitive: every list/map/template/`theme.json`/PRD surface that must know about it is updated, no phantom names remain, and no new duplicate helper was introduced beside an existing one.
+Keep plugin territory (blocks, Design Library, Site Kit import, Global Design System writes) out of this theme.

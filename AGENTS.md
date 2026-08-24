@@ -10,7 +10,7 @@ The Stackable **plugin** owns blocks, Global Design System, Design Library, and 
 | --- | --- |
 | Glossary | [`CONTEXT.md`](./CONTEXT.md) |
 | Product (agents) | [`docs/prd/start-stackable.agents.md`](./docs/prd/start-stackable.agents.md) |
-| Product (devs) | [`docs/prd/start-stackable.md`](./docs/prd/start-stackable.md) |
+| Product (devs / on-ramp) | [`docs/prd/start-stackable.md`](./docs/prd/start-stackable.md) |
 | Implementation plan | [`docs/prd/start-stackable.plan.md`](./docs/prd/start-stackable.plan.md) |
 | Acceptance check | [`docs/prd/start-stackable.check.md`](./docs/prd/start-stackable.check.md) |
 | Site Kits (plugin, agents) | Sibling repo `../Stackable/docs/prd/site-kits.agents.md` |
@@ -27,7 +27,7 @@ When code and docs disagree, **PRD and contract win** (WordPress.org Theme Revie
 How-it-works maps describe current machinery only. They must not invent product law.
 
 Load [`docs/prd/start-stackable.agents.md`](./docs/prd/start-stackable.agents.md) before changing templates, `theme.json`, header behavior, onboarding, patterns, or theme e2e.
-Use [`docs/prd/start-stackable.plan.md`](./docs/prd/start-stackable.plan.md) when implementing the theme from scratch.
+Use [`docs/prd/start-stackable.plan.md`](./docs/prd/start-stackable.plan.md) when implementing a phase (Phase 0 is done; start at Phase 1).
 Use [`docs/prd/start-stackable.check.md`](./docs/prd/start-stackable.check.md) to verify a finished (or phase-complete) theme without relying on e2e.
 
 Changing a shell-contract **primitive** requires updating the matching PRD/contract surfaces and tests in the same change.
@@ -76,12 +76,14 @@ Skill: `add-changelog`.
 
 ### Packaging
 
-`npm run build` copies only Theme Directory files into `build/start-stackable/` and zips them to `dist/start-stackable-{version}.zip`.
+`npm run start` watches `src/` and compiles into `assets/build/` (`frontend.css`, `frontend.js`, `frontend.asset.php`).
+`npm run compile` is the production compile.
+`npm run build` compiles, then copies only Theme Directory files into `build/start-stackable/` and zips them to `dist/start-stackable-{version}.zip`.
 The zip root folder is `start-stackable/` so WordPress can install it.
 Extract `build/start-stackable/` (or the zip) for WordPress.org theme SVN.
 PR suffix: `npm run build --suffix=branch-name`.
 Script: [`scripts/package.js`](./scripts/package.js).
-Do not put docs, e2e, Cursor files, or `node_modules` in the zip.
+Do not put docs, e2e, Cursor files, `src/`, `webpack.config.js`, or `node_modules` in the zip.
 
 ### Issue tracker
 

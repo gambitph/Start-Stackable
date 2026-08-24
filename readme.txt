@@ -9,7 +9,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 
-Start Stackable is a WordPress block theme: site chrome, blog templates, and a design-token layer (`theme.json`) built to pair with the Stackable plugin.
+Start Stackable is a WordPress block theme: header, footer, blog templates, and a design-token layer (`theme.json`) built to pair with the Stackable plugin.
 
 It works on its own. You can run a blog and pages with core blocks, color style variations, and Full Site Editing.
 

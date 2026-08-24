@@ -1,0 +1,33 @@
+---
+description: Start Stackable GitHub repos, companion plugin, and product boundaries
+alwaysApply: true
+---
+
+# Start Stackable project & repositories
+
+## Release roadmap
+
+Product issues organized by targeted release live on the Stackable Release Roadmap:
+https://github.com/orgs/gambitph/projects/2/views/1
+
+Theme-only work is tracked on this repo's issues: https://github.com/gambitph/Start-Stackable/issues
+
+## Repositories
+
+### This theme
+
+- Theme repo: https://github.com/gambitph/Start-Stackable
+- Block theme shell and `theme.json` token layer for Site Kits.
+- Must remain a complete WordPress.org block theme with Stackable inactive.
+
+### Companion plugin (sibling)
+
+- Free plugin: https://github.com/gambitph/Stackable (local checkout: `../Stackable`)
+- Premium plugin code: https://github.com/bfintal/Stackable-Premium (lives under the plugin's `pro__premium_only/`, not in this theme)
+- Plugin owns blocks, Global Design System, Design Library, and Site Kit import.
+
+## Boundaries
+
+- Do not put plugin features in this theme (custom blocks, shortcodes, CPTs, demo/Site Kit import, Design Library copies, Global Color Scheme UIs).
+- There is no free/premium split in this theme zip.
+- If a Site Kit needs new header or footer behaviour, add the primitive here and extend the shell contract in the same change.

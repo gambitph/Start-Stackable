@@ -1,0 +1,28 @@
+{
+	"name": "start-stackable",
+	"version": "1.0.0",
+	"private": true,
+	"description": "Block theme shell for Stackable Site Kits",
+	"author": "Gambit Technologies Inc.",
+	"license": "GPL-2.0-or-later",
+	"engines": {
+		"node": ">=20"
+	},
+	"scripts": {
+		"start": "wp-scripts start",
+		"compile": "wp-scripts build",
+		"package": "node scripts/package.js",
+		"build": "npm run compile && node scripts/package.js ${npm_config_suffix}",
+		"test": "npm run test:e2e",
+		"test:e2e": "npx playwright test",
+		"test:debug": "npx playwright test --ui"
+	},
+	"devDependencies": {
+		"@playwright/test": "^1.49.1",
+		"@types/node": "^20.17.10",
+		"@wordpress/e2e-test-utils-playwright": "^1.14.0",
+		"@wordpress/scripts": "^34.1.0",
+		"@wp-playground/cli": "^3.1.49",
+		"archiver": "^6.0.2"
+	}
+}

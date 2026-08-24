@@ -1,7 +1,9 @@
 # Architecture
 
 Start Stackable is a WordPress block theme (FSE).
-It is a complete Default site on activate and the **shell** for Stackable Site Kits.
+The **target** is a complete Default site on activate and the **shell** for Stackable Site Kits.
+The repo today is a scaffold toward that target.
+Current phase status and how to implement live in [`prd/start-stackable.md`](./prd/start-stackable.md).
 
 **Glossary:** [`CONTEXT.md`](../CONTEXT.md)
 **PRD (agents):** [`prd/start-stackable.agents.md`](./prd/start-stackable.agents.md)
@@ -11,8 +13,9 @@ It is a complete Default site on activate and the **shell** for Stackable Site K
 
 ```text
  theme.json + styles/              design system (Default)
- templates/ + parts/ + patterns/   canvases, chrome, blog
- functions.php                     body class, recommend plugin, flags host
+ templates/ + parts/ + patterns/   header, footer, canvases, blog
+ src/ → assets/build/              header-flag CSS/JS (theme.json cannot express)
+ functions.php                     enqueue, body class, recommend plugin, flags host
         ▲
         │  CONTRACT snap-in (plugin writes flags / variation / styles overlay)
         │

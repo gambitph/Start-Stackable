@@ -2,7 +2,7 @@
 
 Load this file to **verify** a theme implementation (full build or a named phase).
 Do not use this file to implement.
-Implementation: [`start-stackable.plan.md`](./start-stackable.plan.md).
+New to the repo? Read [`start-stackable.md`](./start-stackable.md) first, then implement via [`start-stackable.plan.md`](./start-stackable.plan.md).
 Law: [`start-stackable.agents.md`](./start-stackable.agents.md).
 
 Work the lists that match the claimed phase.
@@ -35,7 +35,7 @@ Stop if law and the tree disagree; law wins.
 - [ ] No kit importer, no kit wizard, no remote demo fetch, no import on `after_setup_theme` / `after_switch_theme`.
 - [ ] No custom blocks, shortcodes, or CPTs.
 - [ ] Functions prefixed `start_stackable_`; text domain `start-stackable`.
-- [ ] Zip (or `npm run build` output) excludes docs, e2e, `.cursor`, `node_modules`.
+- [ ] Zip (or `npm run build` output) excludes docs, e2e, `.cursor`, `node_modules`, `src/`, `webpack.config.js`.
 
 ---
 
@@ -43,6 +43,8 @@ Stop if law and the tree disagree; law wins.
 
 - [ ] Theme activates without a PHP fatal.
 - [ ] `style.css` has `Theme Name`, `Text Domain: start-stackable`, `Requires at least`.
+- [ ] `npm run start` / `npm run compile` emit `assets/build/frontend.js` and `frontend.css`.
+- [ ] `functions.php` enqueues that bundle when the `.asset.php` file exists.
 
 ---
 
@@ -54,8 +56,9 @@ Stop if law and the tree disagree; law wins.
 - [ ] Spacing uses `clamp` or otherwise does not look like desktop scale on a 375px width.
 - [ ] Shadow presets exist.
 - [ ] Border radius sizes exist.
-- [ ] A bundled webfont is registered via `fontFace` and files live under `assets/fonts/`.
-- [ ] Default body/headings do not use the system UI stack as the only family.
+- [ ] Plus Jakarta Sans is registered via `fontFace` and files live under `assets/fonts/`.
+- [ ] Headings, site title, and post title use slug `plus-jakarta-sans`.
+- [ ] Body (`styles.typography.fontFamily`) uses the system UI stack (slug `sans-serif`).
 - [ ] `styles.elements` covers heading, link, button (including outline).
 - [ ] `styles.blocks` covers button, navigation, site-title, quote, search, query-pagination, post-title at minimum.
 - [ ] `customTemplates` includes `full-width` and `blank`.
@@ -68,11 +71,11 @@ Stop if law and the tree disagree; law wins.
 - [ ] `styles/colors/` files override the **same** palette slugs.
 - [ ] `styles/typography/` has at least two type presets.
 - [ ] At least one dark variation exists and keeps the same slugs.
-- [ ] Switching a variation in Styles would change chrome and blog cards (no hardcoded hex in templates/parts).
+- [ ] Switching a variation in Styles would change header, footer, and blog cards (no hardcoded hex in templates/parts).
 
 ---
 
-## Phase 3 - Chrome
+## Phase 3 - Header and footer
 
 - [ ] `parts/header.html` (and transparent/minimal) are pattern includes or equivalent core-only markup.
 - [ ] `parts/footer.html` and `footer-landing` exist.
