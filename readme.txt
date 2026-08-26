@@ -39,6 +39,14 @@ Yes. Chrome and tokens are core-block / `theme.json`. Stackable is the intended 
 Start Stackable Theme, (C) 2025 Gambit Tehcnologies Inc.
 Start Stackable is distributed under the terms of the GNU GPL.
 
+Plus Jakarta Sans
+Copyright 2020 The Plus Jakarta Sans Project Authors (https://github.com/tokotype/PlusJakartaSans)
+Version: 2.7.1
+License: SIL Open Font License, Version 1.1
+License URI: https://openfontlicense.org
+Source: https://github.com/tokotype/PlusJakartaSans
+Bundled license: assets/fonts/OFL.txt
+
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 2 of the License, or

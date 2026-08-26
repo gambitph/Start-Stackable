@@ -11,7 +11,7 @@ Do not start the next phase until the current one is checked off.
 
 ## How to use this file
 
-1. Confirm you are on the phase marked **do this next** (right now: Phase 1).
+1. Confirm you are on the phase marked **do this next** (right now: Phase 2).
 2. Read that phase's "is for" sentence so you know the job.
 3. Do the numbered items in order.
    Each item has **What** (the outcome) and **How** (the files and edits).
@@ -108,7 +108,7 @@ That is already true.
 
 ## Phase 1 is for making the design system look like a product
 
-**Status:** **do this next.**
+**Status:** done.
 
 **What you are making:** colors, type, spacing, shadows, radius, and default styles for headings/buttons/quotes so a boring core-block page already looks intentional.
 Default type is Plus Jakarta Sans for headings and the system UI stack for body.
@@ -333,7 +333,7 @@ Then work the **Phase 1** list in [`start-stackable.check.md`](./start-stackable
 
 ## Phase 2 is for making "Browse styles" a real product
 
-**Status:** later (after Phase 1).
+**Status:** **do this next.**
 
 **What you are making:** skins the user can switch in Site Editor → Styles.
 Not a second palette with different slug names.

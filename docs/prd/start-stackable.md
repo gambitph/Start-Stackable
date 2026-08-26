@@ -18,8 +18,8 @@ What you have now is a working **scaffold**: it activates, the Site Editor opens
 Default (the designed blog you should see on first activation) is not a product yet.
 
 Work is organized as **phases 0 through 11** in the [implementation plan](./start-stackable.plan.md).
-Phase 0 is done.
-**Your next work is Phase 1** (the design system in `theme.json`).
+Phases 0 and 1 are done.
+**Your next work is Phase 2** (style variations).
 Do not skip ahead to headers, patterns, or Site Kit snap-in until that phase's **Done when** is true.
 
 If a word feels loaded (Default, shell, token, canvas, header flag), see [`CONTEXT.md`](../../CONTEXT.md).
@@ -36,7 +36,7 @@ If a word feels loaded (Default, shell, token, canvas, header flag), see [`CONTE
 | See the two big decisions (theme is shell, theme is Default) | [`../adr/`](../adr/) |
 | Work on Site Kits (plugin, not this theme) | Sibling `../Stackable/docs/prd/site-kits.md` |
 
-You do not need the plugin docs, the import contract, or the agent PRD to start Phase 1.
+You do not need the plugin docs, the import contract, or the agent PRD to start Phase 2.
 
 ## Block theme in 60 seconds
 
@@ -63,23 +63,23 @@ CSS in `src/` is only for things `theme.json` cannot do, such as measuring heade
 
 ## Current state (you are here)
 
-Snapshot of the tree as of 21 August 2026.
+Snapshot of the tree as of 26 August 2026.
 If the files and this section disagree, trust the files and the [phase checklists](./start-stackable.check.md).
 
-**Phase 0 (bootstrap) is complete.**
+**Phases 0 and 1 are complete.**
 The theme is a valid block theme that activates without a PHP fatal.
 `functions.php` enqueues `assets/build/frontend.*` and adds the body class `stk--is-stackable-theme`.
 `npm run start` compiles `src/` into `assets/build/`.
 Template and part **files** exist.
 Color palette **slugs** and content/wide widths already match the token contract below.
 
-**Phases 1–11 are not done.**
+**Phases 2-11 are not done.**
 What you see on `/` is a skeleton blog (site title, a basic post grid, a footer), not the designed Default the product requires.
 
 | Phase | Status | What is true now | What "done" looks like |
 | --- | --- | --- | --- |
 | 0 Bootstrap | Done | Theme activates; compile/zip works | (already met) |
-| 1 Design system | Next | Palette slugs and widths exist; body is the system UI stack; no Plus Jakarta Sans yet; spacing is rem, not `clamp`; almost no shadow/radius/block styles | Site Editor → Styles looks finished: Jakarta headings, system body, shadows, radius |
+| 1 Design system | Done | Palette slugs and widths exist; body is the system UI stack; no Plus Jakarta Sans yet; spacing is rem, not `clamp`; almost no shadow/radius/block styles | Site Editor → Styles looks finished: Jakarta headings, system body, shadows, radius |
 | 2 Style variations | Not started | Eight color hue files; empty `styles/typography/`; no dark variation | Color + typography skins, including at least one dark, using the same slugs |
 | 3 Header and footer | Scaffold | Parts exist (title + nav; footer columns); not designed pattern includes | Designed, fresh-install-safe header/footer with no hardcoded Navigation `ref` |
 | 4 First-activation blog | Scaffold | `index.html` is a basic two-column Query Loop | Crafted post cards, designed single/search/404, `/` looks like a product with Hello World |
@@ -93,7 +93,7 @@ What you see on `/` is a skeleton blog (site title, a basic post grid, a footer)
 
 Honest one-liner: this is a **legal scaffold**.
 Default is not designed yet.
-Start at Phase 1.
+Start at Phase 2.
 
 ## How we develop
 
@@ -101,7 +101,7 @@ This is sequential craft, not "pick a random file."
 
 1. **Read this guide** so you know what the theme is allowed to own.
 2. **Open the next unfinished phase** in the [plan](./start-stackable.plan.md).
-   Right now that is Phase 1.
+   Right now that is Phase 2.
    Do not skip a phase.
 3. **Implement in the existing seam**, not a parallel system:
    - look → `theme.json` and `styles/`
@@ -355,8 +355,8 @@ The zip must stand alone: `screenshot.png` that matches Default, designed templa
 ## Implementation
 
 Numbered what/how steps per phase: [`start-stackable.plan.md`](./start-stackable.plan.md).
-Skip Phase 0 (done).
-Start at Phase 1 and do the numbered items in order.
+Skip Phases 0 and 1 (done).
+Start at Phase 2 and do the numbered items in order.
 Do not skip a phase's **This phase is done when**.
 
 E2E specs to create once a surface exists: table in [`start-stackable.agents.md`](./start-stackable.agents.md#e2e-create-these).

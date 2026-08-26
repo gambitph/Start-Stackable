@@ -13,9 +13,9 @@ ADR: [`../adr/0002-theme-is-the-default.md`](../adr/0002-theme-is-the-default.md
 
 Law below is the **finished** theme.
 The tree is a **scaffold**.
-Phase 0 is done (activates, `functions.php`, `src/` → `assets/build/`).
-Phases 1-11 are not.
-**Next: Phase 1** in the plan (`theme.json` design system).
+Phases 0 and 1 are done (bootstrap and the `theme.json` design system).
+Phases 2-11 are not.
+**Next: Phase 2** in the plan (style variations).
 Do not skip phases.
 Do not treat the file map or template-as-pattern-include as the current tree.
 Fix [gaps](#current-repo-gaps) on the matching phase only.
@@ -114,7 +114,6 @@ Not allowed: a section catalog of heroes, pricing, testimonials, team, FAQ, logo
 Do not take a later gap first.
 Each item is gone or explicitly deferred in an ADR.
 
-- Phase 1: Plus Jakarta Sans headings (bundled) + system-stack body; fluid type; `clamp` spacing; shadows; radius; element/block styles. Palette slugs already match.
 - Phase 2: typography variations; at least one dark. Color hue files exist.
 - Phase 3: header/footer as pattern includes; footer copyright = site name, not a year-only stub.
 - Phase 4: first-activation grid must look designed (not an unstyled Query Loop). Templates must not reference missing slugs (`spacing|50`, color `secondary`).
@@ -124,13 +123,13 @@ Each item is gone or explicitly deferred in an ADR.
 
 ## Implementation sequence
 
-Phase 0 is done; skip it.
+Phases 0 and 1 are done; skip them.
 Follow [`start-stackable.plan.md`](./start-stackable.plan.md) (numbered What/How).
 Do not skip a phase's **This phase is done when**.
 Then run that phase in [`start-stackable.check.md`](./start-stackable.check.md).
 
-1. Design system (`theme.json`, Plus Jakarta Sans headings, system body, shadows, radius, fluid type/spacing, element/block styles). **Start here.**
-2. Style variations.
+1. Design system (`theme.json`, Plus Jakarta Sans headings, system body, shadows, radius, fluid type/spacing, element/block styles).
+2. Style variations. **Start here.**
 3. Header and footer parts + patterns (no `ref`, user copyright).
 4. Blog templates (index/home/archive/search/404/single).
 5. Canvases (`page`, `full-width`, `blank`).
