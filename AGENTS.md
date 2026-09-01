@@ -27,7 +27,7 @@ When code and docs disagree, **PRD and contract win** (WordPress.org Theme Revie
 How-it-works maps describe current machinery only. They must not invent product law.
 
 Load [`docs/prd/start-stackable.agents.md`](./docs/prd/start-stackable.agents.md) before changing templates, `theme.json`, header behavior, onboarding, patterns, or theme e2e.
-Use [`docs/prd/start-stackable.plan.md`](./docs/prd/start-stackable.plan.md) when implementing a phase (Phases 0 and 1 are done; start at Phase 2).
+Use [`docs/prd/start-stackable.plan.md`](./docs/prd/start-stackable.plan.md) when implementing a phase (Phases 0 and 1 are done; Phase 2 is in progress).
 Use [`docs/prd/start-stackable.check.md`](./docs/prd/start-stackable.check.md) to verify a finished (or phase-complete) theme without relying on e2e.
 
 Changing a shell-contract **primitive** requires updating the matching PRD/contract surfaces and tests in the same change.

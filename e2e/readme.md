@@ -53,7 +53,7 @@ THEME_SLUG=start-stackable
 ## CI
 
 `.github/workflows/e2e-tests.yml` runs the suite on `main` pushes and PRs.
-Two corners: latest WP + PHP 8.3, and WP 6.7 (theme `Requires at least`) + PHP 7.4.
+Two corners: latest WP + PHP 8.3, and WP 6.9 (theme `Requires at least`) + PHP 7.4.
 A new push to the same PR or branch cancels the previous E2E run.
 
 ## What is covered

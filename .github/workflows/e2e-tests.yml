@@ -22,7 +22,7 @@ jobs:
           - php_version: '8.3'
             wp_version: 'latest'
           - php_version: '7.4'
-            wp_version: '6.7'
+            wp_version: '6.9'
     name: e2e PHP ${{ matrix.php_version }} WP ${{ matrix.wp_version }}
     steps:
       - uses: actions/checkout@v4

@@ -1,9 +1,9 @@
 # Start Stackable
 **Contributors:** [gambittechnolgies](https://gambit.ph/)
 
-**Requires at least:** 6.7
+**Requires at least:** 6.9
 
-**Tested up to:** 6.8
+**Tested up to:** 7.1
 
 **Requires PHP:** 7.2
 
@@ -44,7 +44,7 @@ New to the repo? Start with the developer guide (what it is, current state, how 
 | When | Doc |
 | --- | --- |
 | New here / how we develop | [`docs/prd/start-stackable.md`](./docs/prd/start-stackable.md) |
-| Implement the next phase | [`docs/prd/start-stackable.plan.md`](./docs/prd/start-stackable.plan.md) (Phase 1 is next) |
+| Continue the current phase | [`docs/prd/start-stackable.plan.md`](./docs/prd/start-stackable.plan.md) (Phase 2 is in progress) |
 | Check a phase | [`docs/prd/start-stackable.check.md`](./docs/prd/start-stackable.check.md) |
 | Word meanings | [`CONTEXT.md`](./CONTEXT.md) |
 | Agents (same law, shorter) | [`docs/prd/start-stackable.agents.md`](./docs/prd/start-stackable.agents.md) |

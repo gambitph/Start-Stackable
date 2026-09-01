@@ -11,7 +11,7 @@ Do not start the next phase until the current one is checked off.
 
 ## How to use this file
 
-1. Confirm you are on the phase marked **do this next** (right now: Phase 2).
+1. Confirm you are on the phase marked **in progress** (right now: Phase 2).
 2. Read that phase's "is for" sentence so you know the job.
 3. Do the numbered items in order.
    Each item has **What** (the outcome) and **How** (the files and edits).
@@ -26,7 +26,7 @@ Word meanings: [`CONTEXT.md`](../../CONTEXT.md).
 
 Constants for every file you add:
 
-- WordPress: `Requires at least` in `style.css` (currently 6.7)
+- WordPress: `Requires at least` in `style.css` (currently 6.9)
 - `theme.json` version: `3`
 - Text domain: `start-stackable`
 - PHP function prefix: `start_stackable_`
@@ -40,8 +40,9 @@ Constants for every file you add:
 | Phase | Status |
 | --- | --- |
 | 0 Bootstrap | **Done.** Skip it. |
-| 1 Design system | **Do this next.** |
-| 2-11 | Later. Do not start these yet. |
+| 1 Design system | **Done.** Skip it. |
+| 2 Style variations | **In progress.** |
+| 3-11 | Later. Do not start these yet. |
 
 The file tree in the [appendix](#appendix-a-finished-zip) is the **destination**.
 It is not what the repo looks like today.
@@ -333,7 +334,7 @@ Then work the **Phase 1** list in [`start-stackable.check.md`](./start-stackable
 
 ## Phase 2 is for making "Browse styles" a real product
 
-**Status:** **do this next.**
+**Status:** **in progress.**
 
 **What you are making:** skins the user can switch in Site Editor → Styles.
 Not a second palette with different slug names.

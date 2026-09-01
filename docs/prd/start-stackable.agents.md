@@ -14,8 +14,9 @@ ADR: [`../adr/0002-theme-is-the-default.md`](../adr/0002-theme-is-the-default.md
 Law below is the **finished** theme.
 The tree is a **scaffold**.
 Phases 0 and 1 are done (bootstrap and the `theme.json` design system).
-Phases 2-11 are not.
-**Next: Phase 2** in the plan (style variations).
+Phase 2 is in progress (style variations).
+Phases 3-11 are not started.
+**Current: Phase 2** in the plan.
 Do not skip phases.
 Do not treat the file map or template-as-pattern-include as the current tree.
 Fix [gaps](#current-repo-gaps) on the matching phase only.

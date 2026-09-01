@@ -19,7 +19,7 @@ Default (the designed blog you should see on first activation) is not a product 
 
 Work is organized as **phases 0 through 11** in the [implementation plan](./start-stackable.plan.md).
 Phases 0 and 1 are done.
-**Your next work is Phase 2** (style variations).
+**The current work is Phase 2** (style variations).
 Do not skip ahead to headers, patterns, or Site Kit snap-in until that phase's **Done when** is true.
 
 If a word feels loaded (Default, shell, token, canvas, header flag), see [`CONTEXT.md`](../../CONTEXT.md).
@@ -73,14 +73,15 @@ The theme is a valid block theme that activates without a PHP fatal.
 Template and part **files** exist.
 Color palette **slugs** and content/wide widths already match the token contract below.
 
-**Phases 2-11 are not done.**
+**Phase 2 is in progress.**
+Phases 3-11 are not started.
 What you see on `/` is a skeleton blog (site title, a basic post grid, a footer), not the designed Default the product requires.
 
 | Phase | Status | What is true now | What "done" looks like |
 | --- | --- | --- | --- |
 | 0 Bootstrap | Done | Theme activates; compile/zip works | (already met) |
-| 1 Design system | Done | Palette slugs and widths exist; body is the system UI stack; no Plus Jakarta Sans yet; spacing is rem, not `clamp`; almost no shadow/radius/block styles | Site Editor → Styles looks finished: Jakarta headings, system body, shadows, radius |
-| 2 Style variations | Not started | Eight color hue files; empty `styles/typography/`; no dark variation | Color + typography skins, including at least one dark, using the same slugs |
+| 1 Design system | Done | Token contract, Jakarta headings, system body, fluid type and spacing, shadows, radius, and core-block styles are implemented | (already met) |
+| 2 Style variations | In progress | Eight color hue files; empty `styles/typography/`; no dark variation | Color + typography skins, including at least one dark, using the same slugs |
 | 3 Header and footer | Scaffold | Parts exist (title + nav; footer columns); not designed pattern includes | Designed, fresh-install-safe header/footer with no hardcoded Navigation `ref` |
 | 4 First-activation blog | Scaffold | `index.html` is a basic two-column Query Loop | Crafted post cards, designed single/search/404, `/` looks like a product with Hello World |
 | 5 Canvases | Scaffold | `page`, `full-width`, and `blank` files exist; `full-width` still wraps content in padding | Ordinary pages have a title; kit pages are full-bleed with no theme title |
@@ -93,7 +94,7 @@ What you see on `/` is a skeleton blog (site title, a basic post grid, a footer)
 
 Honest one-liner: this is a **legal scaffold**.
 Default is not designed yet.
-Start at Phase 2.
+Continue Phase 2.
 
 ## How we develop
 
@@ -356,7 +357,7 @@ The zip must stand alone: `screenshot.png` that matches Default, designed templa
 
 Numbered what/how steps per phase: [`start-stackable.plan.md`](./start-stackable.plan.md).
 Skip Phases 0 and 1 (done).
-Start at Phase 2 and do the numbered items in order.
+Continue Phase 2 and do the numbered items in order.
 Do not skip a phase's **This phase is done when**.
 
 E2E specs to create once a surface exists: table in [`start-stackable.agents.md`](./start-stackable.agents.md#e2e-create-these).
