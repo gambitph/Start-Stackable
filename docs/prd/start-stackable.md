@@ -18,9 +18,9 @@ What you have now is a working **scaffold**: it activates, the Site Editor opens
 Default (the designed blog you should see on first activation) is not a product yet.
 
 Work is organized as **phases 0 through 11** in the [implementation plan](./start-stackable.plan.md).
-Phases 0 and 1 are done.
-**The current work is Phase 2** (style variations).
-Do not skip ahead to headers, patterns, or Site Kit snap-in until that phase's **Done when** is true.
+Phases 0-2 are done.
+**The current work is Phase 3** (header and footer parts plus patterns).
+Do not skip ahead to blog templates, canvases, or Site Kit snap-in until that phase's **Done when** is true.
 
 If a word feels loaded (Default, shell, token, canvas, header flag), see [`CONTEXT.md`](../../CONTEXT.md).
 
@@ -36,7 +36,7 @@ If a word feels loaded (Default, shell, token, canvas, header flag), see [`CONTE
 | See the two big decisions (theme is shell, theme is Default) | [`../adr/`](../adr/) |
 | Work on Site Kits (plugin, not this theme) | Sibling `../Stackable/docs/prd/site-kits.md` |
 
-You do not need the plugin docs, the import contract, or the agent PRD to start Phase 2.
+You do not need the plugin docs or the import contract to start Phase 3.
 
 ## Block theme in 60 seconds
 
@@ -48,7 +48,7 @@ These are the files you will touch, and what each one is for:
 | `styles/colors/` and `styles/typography/` | Optional skins (style variations) that restyle the **same** named colors or fonts. Switching a variation in Site Editor → Styles should restyle the whole site. |
 | `templates/` | One HTML file per kind of page (blog home, single post, page, search, 404, and so on). WordPress picks the file automatically. |
 | `parts/` | Reusable header and footer pieces that templates include. |
-| `patterns/` | Reusable block layouts (post card, header markup, one optional Homepage starter). Empty until Phase 7. |
+| `patterns/` | Reusable block layouts. Phase 3 adds header/footer patterns; later phases add blog atoms, template patterns, and one optional Homepage starter. |
 | `functions.php` | The only PHP bootstrap WordPress loads from the theme. Must be this filename (not `function.php`). |
 | `src/` | Extra CSS and JS for behavior `theme.json` cannot express (sticky/transparent header). Compiles into `assets/build/`. |
 | `style.css` | Theme identity for WordPress (name, version, tags). It is not where the design system lives. |
@@ -63,30 +63,30 @@ CSS in `src/` is only for things `theme.json` cannot do, such as measuring heade
 
 ## Current state (you are here)
 
-Snapshot of the tree as of 26 August 2026.
+Snapshot of the tree as of 1 September 2026.
 If the files and this section disagree, trust the files and the [phase checklists](./start-stackable.check.md).
 
-**Phases 0 and 1 are complete.**
+**Phases 0-2 are complete.**
 The theme is a valid block theme that activates without a PHP fatal.
 `functions.php` enqueues `assets/build/frontend.*` and adds the body class `stk--is-stackable-theme`.
 `npm run start` compiles `src/` into `assets/build/`.
 Template and part **files** exist.
 Color palette **slugs** and content/wide widths already match the token contract below.
 
-**Phase 2 is in progress.**
-Phases 3-11 are not started.
+**Phase 3 is in progress.**
+Phases 4-11 are not started.
 What you see on `/` is a skeleton blog (site title, a basic post grid, a footer), not the designed Default the product requires.
 
 | Phase | Status | What is true now | What "done" looks like |
 | --- | --- | --- | --- |
 | 0 Bootstrap | Done | Theme activates; compile/zip works | (already met) |
 | 1 Design system | Done | Token contract, Jakarta headings, system body, fluid type and spacing, shadows, radius, and core-block styles are implemented | (already met) |
-| 2 Style variations | In progress | Eight color hue files; empty `styles/typography/`; no dark variation | Color + typography skins, including at least one dark, using the same slugs |
-| 3 Header and footer | Scaffold | Parts exist (title + nav; footer columns); not designed pattern includes | Designed, fresh-install-safe header/footer with no hardcoded Navigation `ref` |
+| 2 Style variations | Done | Nine color skins, including Dark, plus Compact and Editorial typography presets use the shared token contract | (already met) |
+| 3 Header and footer | In progress | Five core-only patterns own the shell markup; parts are thin pattern includes | Designed, fresh-install-safe header/footer with no hardcoded Navigation `ref` |
 | 4 First-activation blog | Scaffold | `index.html` is a basic two-column Query Loop | Crafted post cards, designed single/search/404, `/` looks like a product with Hello World |
 | 5 Canvases | Scaffold | `page`, `full-width`, and `blank` files exist; `full-width` still wraps content in padding | Ordinary pages have a title; kit pages are full-bleed with no theme title |
 | 6 Header flags | Stub | JS only sets `--stk-header-height`; no sticky/transparent CSS yet | Sticky, transparent overlay, scroll-to-solid, mobile nav above a hero, plugin off |
-| 7 Patterns | Not started | `patterns/` is empty | Header/footer/post-card/comments + exactly one Homepage starter; no hero/pricing catalog |
+| 7 Patterns | Not started | Header/footer patterns exist; blog atoms and `page-home` do not | Header/footer/post-card/comments + exactly one Homepage starter; no hero/pricing catalog |
 | 8 Woo templates | Not started | No Woo HTML templates | Shop/product/cart/checkout look designed if Woo is active; theme still works if it is not |
 | 9 PHP host | Partial | Setup, enqueue, body class | Dismissible "install Stackable" notice + optional breakpoint handshake |
 | 10 Directory packaging | Not started | No `screenshot.png`; tags incomplete | WP.org zip: screenshot of Default, licenses, honest tags |
@@ -94,7 +94,7 @@ What you see on `/` is a skeleton blog (site title, a basic post grid, a footer)
 
 Honest one-liner: this is a **legal scaffold**.
 Default is not designed yet.
-Continue Phase 2.
+Continue Phase 3.
 
 ## How we develop
 
@@ -102,11 +102,11 @@ This is sequential craft, not "pick a random file."
 
 1. **Read this guide** so you know what the theme is allowed to own.
 2. **Open the next unfinished phase** in the [plan](./start-stackable.plan.md).
-   Right now that is Phase 2.
+   Right now that is Phase 3.
    Do not skip a phase.
 3. **Implement in the existing seam**, not a parallel system:
    - look → `theme.json` and `styles/`
-   - layout → `templates/` and `parts/` (later `patterns/`)
+   - layout → `templates/`, `parts/`, and `patterns/`
    - behavior `theme.json` cannot express → `src/css/` and `src/js/`
    - PHP → `functions.php` only, functions prefixed `start_stackable_`
 4. **Stay inside product law** (the rest of this file).
@@ -356,8 +356,8 @@ The zip must stand alone: `screenshot.png` that matches Default, designed templa
 ## Implementation
 
 Numbered what/how steps per phase: [`start-stackable.plan.md`](./start-stackable.plan.md).
-Skip Phases 0 and 1 (done).
-Continue Phase 2 and do the numbered items in order.
+Skip Phases 0-2 (done).
+Continue Phase 3 and do the numbered items in order.
 Do not skip a phase's **This phase is done when**.
 
 E2E specs to create once a surface exists: table in [`start-stackable.agents.md`](./start-stackable.agents.md#e2e-create-these).

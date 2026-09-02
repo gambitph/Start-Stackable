@@ -64,12 +64,11 @@ opens the editor. Do not listen for console `Block validation` messages.
 
 | Spec | Assertions (shipped now) |
 | --- | --- |
-| `e2e/tests/standalone-activate.spec.ts` | Theme activates from a default theme; admin Themes screen has no PHP error; front page shows header (site title) + footer; no `stackable/` markup; 404 template renders. |
+| `e2e/tests/standalone-activate.spec.ts` | Theme activates from a default theme; the front shows the pattern-backed header, navigation, footer, and user-site copyright; WordPress registers all five shell patterns; Site Editor shows no recovery UI; no `stackable/` markup; 404 template renders. |
+| `e2e/tests/tokens-and-variations.spec.ts` | WordPress discovers the Default token contract, all color variations keep the same palette slugs, Dark recolors the shell and content, and both typography presets change visible front-end type. |
 
 Deferred until those surfaces ship (see [`docs/prd/start-stackable.agents.md`](../docs/prd/start-stackable.agents.md#e2e-create-these)):
 
-- Navigation without stale `ref`
-- `tokens-and-variations.spec.ts`
 - `blog.spec.ts` (`home.html`, `search.html`, post card completeness)
 - `canvases.spec.ts` (`full-width` / `blank` contract)
 - `header-flags.spec.ts`

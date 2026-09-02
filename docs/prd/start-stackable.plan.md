@@ -11,7 +11,7 @@ Do not start the next phase until the current one is checked off.
 
 ## How to use this file
 
-1. Confirm you are on the phase marked **in progress** (right now: Phase 2).
+1. Confirm you are on the phase marked **in progress** (right now: Phase 3).
 2. Read that phase's "is for" sentence so you know the job.
 3. Do the numbered items in order.
    Each item has **What** (the outcome) and **How** (the files and edits).
@@ -41,8 +41,9 @@ Constants for every file you add:
 | --- | --- |
 | 0 Bootstrap | **Done.** Skip it. |
 | 1 Design system | **Done.** Skip it. |
-| 2 Style variations | **In progress.** |
-| 3-11 | Later. Do not start these yet. |
+| 2 Style variations | **Done.** Skip it. |
+| 3 Header and footer | **In progress.** |
+| 4-11 | Later. Do not start these yet. |
 
 The file tree in the [appendix](#appendix-a-finished-zip) is the **destination**.
 It is not what the repo looks like today.
@@ -334,7 +335,7 @@ Then work the **Phase 1** list in [`start-stackable.check.md`](./start-stackable
 
 ## Phase 2 is for making "Browse styles" a real product
 
-**Status:** **in progress.**
+**Status:** done.
 
 **What you are making:** skins the user can switch in Site Editor → Styles.
 Not a second palette with different slug names.
@@ -399,7 +400,7 @@ Then work the **Phase 2** list in the acceptance check.
 
 ## Phase 3 is for designing the header and footer
 
-**Status:** later (after Phase 2).
+**Status:** **in progress.**
 
 **What you are making:** header and footer that look designed on a blank install, and that are safe (no broken menu IDs).
 The intended structure is: markup lives in a **pattern** file, and `parts/*.html` only includes that pattern.
