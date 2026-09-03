@@ -79,6 +79,7 @@ Stop if law and the tree disagree; law wins.
 
 - [ ] `parts/header.html` (and transparent/minimal) are pattern includes or equivalent core-only markup.
 - [ ] `parts/footer.html` and `footer-landing` exist.
+- [ ] Templates resolve header/footer parts from the active theme, including when its folder is renamed or uses different capitalization.
 - [ ] Header contains Site Title or Logo and Navigation without `ref`.
 - [ ] Front-end copyright is not the theme author brand.
 
@@ -90,7 +91,9 @@ Stop if law and the tree disagree; law wins.
 - [ ] `templates/home.html` uses the same grid (posts index when a static front is set).
 - [ ] `templates/archive.html`, `search.html`, `404.html`, `single.html` exist and are designed.
 - [ ] Single includes title, featured image, meta, comments form.
+- [ ] Single keeps ordinary text constrained while wide/full blocks honor their alignment, including mobile gutters without horizontal overflow.
 - [ ] Post cards share an image aspect or height.
+- [ ] Post cards retain an article permalink even without a title or featured image.
 - [ ] On a latest-posts site, `/` would show header + grid + footer without creating a page.
 
 ---

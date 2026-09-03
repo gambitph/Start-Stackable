@@ -21,9 +21,11 @@ jobs:
         include:
           - php_version: '8.3'
             wp_version: 'latest'
+            theme_slug: 'Start-Stackable'
           - php_version: '7.4'
             wp_version: '6.9'
-    name: e2e PHP ${{ matrix.php_version }} WP ${{ matrix.wp_version }}
+            theme_slug: 'start-stackable'
+    name: e2e PHP ${{ matrix.php_version }} WP ${{ matrix.wp_version }} (${{ matrix.theme_slug }})
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -56,6 +58,7 @@ jobs:
         env:
           WP_PHP_VERSION: ${{ matrix.php_version }}
           WP_VERSION: ${{ matrix.wp_version }}
+          THEME_SLUG: ${{ matrix.theme_slug }}
         run: npm run test:e2e
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() && steps.run-playwright-tests.outcome == 'failure' }}
