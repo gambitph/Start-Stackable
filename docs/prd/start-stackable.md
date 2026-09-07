@@ -15,12 +15,12 @@ There is almost no classic PHP templating.
 
 The theme is **not finished**.
 What you have now is a working theme shell: it activates, the Site Editor opens, the header and footer are designed, and the compile/zip tooling works.
-The first-activation blog is being completed now.
+The first-activation blog is complete, and the page canvases are being completed now.
 
 Work is organized as **phases 0 through 11** in the [implementation plan](./start-stackable.plan.md).
-Phases 0-3 are done.
-**The current work is Phase 4** (the first-activation blog and its shared patterns).
-Do not skip ahead to canvases or Site Kit snap-in until that phase's **Done when** is true.
+Phases 0-4 are done.
+**The current work is Phase 5** (the ordinary, full-width, and blank page canvases).
+Do not skip ahead to header flags or Site Kit snap-in until that phase's **Done when** is true.
 
 If a word feels loaded (Default, shell, token, canvas, header flag), see [`CONTEXT.md`](../../CONTEXT.md).
 
@@ -36,7 +36,7 @@ If a word feels loaded (Default, shell, token, canvas, header flag), see [`CONTE
 | See the two big decisions (theme is shell, theme is Default) | [`../adr/`](../adr/) |
 | Work on Site Kits (plugin, not this theme) | Sibling `../Stackable/docs/prd/site-kits.md` |
 
-You do not need the plugin docs or the import contract to start Phase 4.
+You do not need the plugin docs or the import contract to start Phase 5.
 
 ## Block theme in 60 seconds
 
@@ -63,19 +63,19 @@ CSS in `src/` is only for things `theme.json` cannot do, such as measuring heade
 
 ## Current state (you are here)
 
-Snapshot of the tree as of 2 September 2026.
+Snapshot of the tree as of 7 September 2026.
 If the files and this section disagree, trust the files and the [phase checklists](./start-stackable.check.md).
 
-**Phases 0-3 are complete.**
+**Phases 0-4 are complete.**
 The theme is a valid block theme that activates without a PHP fatal.
 `functions.php` enqueues `assets/build/frontend.*` and adds the body class `stk--is-stackable-theme`.
 `npm run start` compiles `src/` into `assets/build/`.
 Template and part **files** exist.
 Color palette **slugs** and content/wide widths already match the token contract below.
 
-**Phase 4 is in progress.**
-Phases 5-11 are not started.
-What you see on `/` is the designed blog shell, with shared cards and matching archive, search, 404, and single-post views.
+**Phase 5 is in progress.**
+Phases 6-11 are not started.
+The ordinary, full-width, and blank canvases now use hidden template patterns and are undergoing acceptance verification.
 
 | Phase | Status | What is true now | What "done" looks like |
 | --- | --- | --- | --- |
@@ -83,8 +83,8 @@ What you see on `/` is the designed blog shell, with shared cards and matching a
 | 1 Design system | Done | Token contract, Jakarta headings, system body, fluid type and spacing, shadows, radius, and core-block styles are implemented | (already met) |
 | 2 Style variations | Done | Nine color skins, including Dark, plus Compact and Editorial typography presets use the shared token contract | (already met) |
 | 3 Header and footer | Done | Five core-only patterns own the shell markup; parts are thin pattern includes | (already met) |
-| 4 First-activation blog | In progress | Shared blog atoms and hidden template patterns own thin blog templates | Crafted post cards, designed single/search/404, and full acceptance verification |
-| 5 Canvases | Scaffold | `page`, `full-width`, and `blank` files exist; `full-width` still wraps content in padding | Ordinary pages have a title; kit pages are full-bleed with no theme title |
+| 4 First-activation blog | Done | Shared blog atoms and hidden template patterns own thin blog templates | (already met) |
+| 5 Canvases | In progress | Hidden canvas patterns own thin `page`, `full-width`, and `blank` templates | Ordinary pages have a title; kit pages are full-bleed with no theme title; blank has no shell |
 | 6 Header flags | Stub | JS only sets `--stk-header-height`; no sticky/transparent CSS yet | Sticky, transparent overlay, scroll-to-solid, mobile nav above a hero, plugin off |
 | 7 Patterns | Not started | Header/footer, blog atoms, and hidden blog template patterns exist; `page-home` does not | Header/footer/post-card/comments + exactly one Homepage starter; no hero/pricing catalog |
 | 8 Woo templates | Not started | No Woo HTML templates | Shop/product/cart/checkout look designed if Woo is active; theme still works if it is not |
@@ -92,9 +92,9 @@ What you see on `/` is the designed blog shell, with shared cards and matching a
 | 10 Directory packaging | Not started | No `screenshot.png`; tags incomplete | WP.org zip: screenshot of Default, licenses, honest tags |
 | 11 Snap-in | Not started | Contract is documented only | Plugin can assign `full-width` + header flags without a theme PHP change |
 
-Honest one-liner: this is a **designed standalone blog shell**.
-Page canvases and plugin integration still come later.
-Continue Phase 4.
+Honest one-liner: this is a **designed standalone blog shell with three page canvases**.
+Header flags and plugin integration still come later.
+Continue Phase 5 acceptance verification.
 
 ## How we develop
 
@@ -102,7 +102,7 @@ This is sequential craft, not "pick a random file."
 
 1. **Read this guide** so you know what the theme is allowed to own.
 2. **Open the next unfinished phase** in the [plan](./start-stackable.plan.md).
-   Right now that is Phase 4.
+   Right now that is Phase 5.
    Do not skip a phase.
 3. **Implement in the existing seam**, not a parallel system:
    - look → `theme.json` and `styles/`
@@ -356,8 +356,8 @@ The zip must stand alone: `screenshot.png` that matches Default, designed templa
 ## Implementation
 
 Numbered what/how steps per phase: [`start-stackable.plan.md`](./start-stackable.plan.md).
-Skip Phases 0-3 (done).
-Continue Phase 4 and do the numbered items in order.
+Skip Phases 0-4 (done).
+Continue Phase 5 and do the numbered items in order.
 Do not skip a phase's **This phase is done when**.
 
 E2E specs to create once a surface exists: table in [`start-stackable.agents.md`](./start-stackable.agents.md#e2e-create-these).

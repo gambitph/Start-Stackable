@@ -11,7 +11,7 @@ Do not start the next phase until the current one is checked off.
 
 ## How to use this file
 
-1. Confirm you are on the phase marked **in progress** (right now: Phase 4).
+1. Confirm you are on the phase marked **in progress** (right now: Phase 5).
 2. Read that phase's "is for" sentence so you know the job.
 3. Do the numbered items in order.
    Each item has **What** (the outcome) and **How** (the files and edits).
@@ -482,7 +482,7 @@ Then work the **Phase 3** list in the acceptance check.
 
 ## Phase 4 is for making `/` look like a designed blog
 
-**Status:** **in progress.**
+**Status:** done.
 
 **What you are making:** first activation "wow" with only Hello World (or a couple of posts).
 `index.html` is the latest-posts front.
@@ -562,7 +562,7 @@ Then work the **Phase 4** list in the acceptance check.
 
 ## Phase 5 is for page canvases (ordinary vs marketing vs blank)
 
-**Status:** later (after Phase 4).
+**Status:** **in progress.**
 
 **What you are making:** three ways a page can sit in the shell.
 Ordinary pages keep a title.

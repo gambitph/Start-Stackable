@@ -13,10 +13,10 @@ ADR: [`../adr/0002-theme-is-the-default.md`](../adr/0002-theme-is-the-default.md
 
 Law below is the **finished** theme.
 The tree is a **scaffold**.
-Phases 0-3 are done (bootstrap, the `theme.json` design system, style variations, and the header/footer shell).
-Phase 4 is in progress (the first-activation blog and its shared patterns).
-Phases 5-11 are not started.
-**Current: Phase 4** in the plan.
+Phases 0-4 are done (bootstrap, the `theme.json` design system, style variations, the header/footer shell, and the first-activation blog).
+Phase 5 is in progress (the ordinary, full-width, and blank page canvases).
+Phases 6-11 are not started.
+**Current: Phase 5** in the plan.
 Do not skip phases.
 Do not treat the file map or template-as-pattern-include as the current tree.
 Fix [gaps](#current-repo-gaps) on the matching phase only.
@@ -101,7 +101,7 @@ Kit Home uses the page's `full-width` template.
 When finished, templates are thin `wp:pattern` includes of template patterns.
 Parts are thin includes of header/footer patterns.
 Parts and Phase 4 blog templates now use pattern includes.
-Page canvases remain inline until Phase 5.
+Phase 5 page canvases now use hidden template patterns and thin template includes.
 
 ## Patterns
 
@@ -116,14 +116,13 @@ Not allowed: a section catalog of heroes, pricing, testimonials, team, FAQ, logo
 Do not take a later gap first.
 Each item is gone or explicitly deferred in an ADR.
 
-- Phase 4: blog atoms, hidden template patterns, and thin blog template includes are implemented; acceptance verification is in progress.
-- Phase 5: `full-width` must drop extra main padding that blocks `alignfull`.
+- Phase 5: canvas patterns and thin templates are implemented; acceptance verification is in progress.
 - Phase 6: sticky / transparent / scroll state in `src/` (height token host already exists).
 - Phase 7-11: pattern catalog incomplete; no Woo templates; no recommend-plugin notice; no `screenshot.png`; snap-in contract on paper only.
 
 ## Implementation sequence
 
-Phases 0-3 are done; skip them.
+Phases 0-4 are done; skip them.
 Follow [`start-stackable.plan.md`](./start-stackable.plan.md) (numbered What/How).
 Do not skip a phase's **This phase is done when**.
 Then run that phase in [`start-stackable.check.md`](./start-stackable.check.md).
@@ -131,8 +130,8 @@ Then run that phase in [`start-stackable.check.md`](./start-stackable.check.md).
 1. Design system (`theme.json`, Plus Jakarta Sans headings, system body, shadows, radius, fluid type/spacing, element/block styles).
 2. Style variations.
 3. Header and footer parts + patterns (no `ref`, user copyright).
-4. Blog templates (index/home/archive/search/404/single). **Current.**
-5. Canvases (`page`, `full-width`, `blank`).
+4. Blog templates (index/home/archive/search/404/single).
+5. Canvases (`page`, `full-width`, `blank`). **Current.**
 6. Header flags.
 7. Shell pattern catalog + one `page-home`.
 8. Woo templates.
