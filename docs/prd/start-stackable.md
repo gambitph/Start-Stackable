@@ -15,12 +15,12 @@ There is almost no classic PHP templating.
 
 The theme is **not finished**.
 What you have now is a working theme shell: it activates, the Site Editor opens, the header and footer are designed, and the compile/zip tooling works.
-The first-activation blog is complete, and the page canvases are being completed now.
+The first-activation blog and page canvases are complete, and header behavior is being completed now.
 
 Work is organized as **phases 0 through 11** in the [implementation plan](./start-stackable.plan.md).
-Phases 0-4 are done.
-**The current work is Phase 5** (the ordinary, full-width, and blank page canvases).
-Do not skip ahead to header flags or Site Kit snap-in until that phase's **Done when** is true.
+Phases 0-5 are done.
+**The current work is Phase 6** (sticky and transparent header behavior).
+Do not skip ahead to the remaining pattern catalog or Site Kit snap-in until that phase's **Done when** is true.
 
 If a word feels loaded (Default, shell, token, canvas, header flag), see [`CONTEXT.md`](../../CONTEXT.md).
 
@@ -36,7 +36,7 @@ If a word feels loaded (Default, shell, token, canvas, header flag), see [`CONTE
 | See the two big decisions (theme is shell, theme is Default) | [`../adr/`](../adr/) |
 | Work on Site Kits (plugin, not this theme) | Sibling `../Stackable/docs/prd/site-kits.md` |
 
-You do not need the plugin docs or the import contract to start Phase 5.
+For Phase 6, keep the public flag class names aligned with the Site Kit import contract.
 
 ## Block theme in 60 seconds
 
@@ -63,19 +63,19 @@ CSS in `src/` is only for things `theme.json` cannot do, such as measuring heade
 
 ## Current state (you are here)
 
-Snapshot of the tree as of 7 September 2026.
+Snapshot of the tree as of 8 September 2026.
 If the files and this section disagree, trust the files and the [phase checklists](./start-stackable.check.md).
 
-**Phases 0-4 are complete.**
+**Phases 0-5 are complete.**
 The theme is a valid block theme that activates without a PHP fatal.
 `functions.php` enqueues `assets/build/frontend.*` and adds the body class `stk--is-stackable-theme`.
 `npm run start` compiles `src/` into `assets/build/`.
 Template and part **files** exist.
 Color palette **slugs** and content/wide widths already match the token contract below.
 
-**Phase 5 is in progress.**
-Phases 6-11 are not started.
-The ordinary, full-width, and blank canvases now use hidden template patterns and are undergoing acceptance verification.
+**Phase 6 is in progress.**
+Phases 7-11 are not started.
+Sticky, transparent, scroll-to-solid, measured height, and mobile overlay behavior are implemented and awaiting consolidated E2E verification.
 
 | Phase | Status | What is true now | What "done" looks like |
 | --- | --- | --- | --- |
@@ -84,17 +84,17 @@ The ordinary, full-width, and blank canvases now use hidden template patterns an
 | 2 Style variations | Done | Nine color skins, including Dark, plus Compact and Editorial typography presets use the shared token contract | (already met) |
 | 3 Header and footer | Done | Five core-only patterns own the shell markup; parts are thin pattern includes | (already met) |
 | 4 First-activation blog | Done | Shared blog atoms and hidden template patterns own thin blog templates | (already met) |
-| 5 Canvases | In progress | Hidden canvas patterns own thin `page`, `full-width`, and `blank` templates | Ordinary pages have a title; kit pages are full-bleed with no theme title; blank has no shell |
-| 6 Header flags | Stub | JS only sets `--stk-header-height`; no sticky/transparent CSS yet | Sticky, transparent overlay, scroll-to-solid, mobile nav above a hero, plugin off |
+| 5 Canvases | Done | Hidden canvas patterns own thin `page`, `full-width`, and `blank` templates | (already met) |
+| 6 Header flags | In progress | Theme CSS/JS honors sticky and transparent flags, applies scroll-to-solid, measures header height, and layers mobile navigation above a hero | Consolidated Phase 1-6 E2E verification |
 | 7 Patterns | Not started | Header/footer, blog atoms, and hidden blog template patterns exist; `page-home` does not | Header/footer/post-card/comments + exactly one Homepage starter; no hero/pricing catalog |
 | 8 Woo templates | Not started | No Woo HTML templates | Shop/product/cart/checkout look designed if Woo is active; theme still works if it is not |
 | 9 PHP host | Partial | Setup, enqueue, body class | Dismissible "install Stackable" notice + optional breakpoint handshake |
 | 10 Directory packaging | Not started | No `screenshot.png`; tags incomplete | WP.org zip: screenshot of Default, licenses, honest tags |
 | 11 Snap-in | Not started | Contract is documented only | Plugin can assign `full-width` + header flags without a theme PHP change |
 
-Honest one-liner: this is a **designed standalone blog shell with three page canvases**.
-Header flags and plugin integration still come later.
-Continue Phase 5 acceptance verification.
+Honest one-liner: this is a **designed standalone shell with page canvases and theme-owned header behavior**.
+Plugin integration still comes later.
+Continue Phase 6 acceptance verification.
 
 ## How we develop
 
@@ -102,7 +102,7 @@ This is sequential craft, not "pick a random file."
 
 1. **Read this guide** so you know what the theme is allowed to own.
 2. **Open the next unfinished phase** in the [plan](./start-stackable.plan.md).
-   Right now that is Phase 5.
+   Right now that is Phase 6.
    Do not skip a phase.
 3. **Implement in the existing seam**, not a parallel system:
    - look → `theme.json` and `styles/`
@@ -308,8 +308,11 @@ Kits need:
 
 Implement as small theme CSS/JS in `src/` attached to the header part wrapper (Phase 6).
 Keep it presentational.
-Per-page flags can be post meta the plugin writes on import, or a class on `body`/`main`.
+Per-page flags can be post meta the plugin writes on import, or a class on `body` or the header wrapper.
 Prefer classes the kit contract names (`stk-shell-header-sticky`, `stk-shell-header-transparent`) so import is one write.
+The theme copies either public flag from `body`, the header wrapper, or a nested header pattern onto the actual header wrapper.
+While the page is scrolled, the theme adds `stk-shell-header-scrolled` to that wrapper as internal visual state.
+Plugins and kits should not write the internal state class.
 
 Dual logo: two Site Logo blocks or an image pair toggled with the scrolled class.
 Document the class names in the Site Kit import contract if they are part of the public kit API.
@@ -356,8 +359,8 @@ The zip must stand alone: `screenshot.png` that matches Default, designed templa
 ## Implementation
 
 Numbered what/how steps per phase: [`start-stackable.plan.md`](./start-stackable.plan.md).
-Skip Phases 0-4 (done).
-Continue Phase 5 and do the numbered items in order.
+Skip Phases 0-5 (done).
+Continue Phase 6 and do the numbered items in order.
 Do not skip a phase's **This phase is done when**.
 
 E2E specs to create once a surface exists: table in [`start-stackable.agents.md`](./start-stackable.agents.md#e2e-create-these).

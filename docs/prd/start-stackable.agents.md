@@ -13,10 +13,10 @@ ADR: [`../adr/0002-theme-is-the-default.md`](../adr/0002-theme-is-the-default.md
 
 Law below is the **finished** theme.
 The tree is a **scaffold**.
-Phases 0-4 are done (bootstrap, the `theme.json` design system, style variations, the header/footer shell, and the first-activation blog).
-Phase 5 is in progress (the ordinary, full-width, and blank page canvases).
-Phases 6-11 are not started.
-**Current: Phase 5** in the plan.
+Phases 0-5 are done (bootstrap, the `theme.json` design system, style variations, the header/footer shell, the first-activation blog, and page canvases).
+Phase 6 is in progress (sticky and transparent header behavior).
+Phases 7-11 are not started.
+**Current: Phase 6** in the plan.
 Do not skip phases.
 Do not treat the file map or template-as-pattern-include as the current tree.
 Fix [gaps](#current-repo-gaps) on the matching phase only.
@@ -77,6 +77,8 @@ If a kit needs a new header or footer behavior, add it here and extend this list
 Sticky is a **flag**, not a fourth header layout.
 Transparent is a **flag** (and a dedicated part when the markup differs).
 Do not implement sticky by requiring a Stackable container in the header.
+The runtime normalizes the two public flag classes onto the actual header wrapper and adds `stk-shell-header-scrolled` there as internal scroll state.
+Plugins and kits should write only the two public contract flag classes.
 
 ## Templates
 
@@ -116,13 +118,12 @@ Not allowed: a section catalog of heroes, pricing, testimonials, team, FAQ, logo
 Do not take a later gap first.
 Each item is gone or explicitly deferred in an ADR.
 
-- Phase 5: canvas patterns and thin templates are implemented; acceptance verification is in progress.
-- Phase 6: sticky / transparent / scroll state in `src/` (height token host already exists).
+- Phase 6: sticky, transparent, scroll-to-solid, measured height, and mobile overlay behavior are implemented; consolidated acceptance verification is in progress.
 - Phase 7-11: pattern catalog incomplete; no Woo templates; no recommend-plugin notice; no `screenshot.png`; snap-in contract on paper only.
 
 ## Implementation sequence
 
-Phases 0-4 are done; skip them.
+Phases 0-5 are done; skip them.
 Follow [`start-stackable.plan.md`](./start-stackable.plan.md) (numbered What/How).
 Do not skip a phase's **This phase is done when**.
 Then run that phase in [`start-stackable.check.md`](./start-stackable.check.md).
@@ -131,8 +132,8 @@ Then run that phase in [`start-stackable.check.md`](./start-stackable.check.md).
 2. Style variations.
 3. Header and footer parts + patterns (no `ref`, user copyright).
 4. Blog templates (index/home/archive/search/404/single).
-5. Canvases (`page`, `full-width`, `blank`). **Current.**
-6. Header flags.
+5. Canvases (`page`, `full-width`, `blank`).
+6. Header flags. **Current.**
 7. Shell pattern catalog + one `page-home`.
 8. Woo templates.
 9. `functions.php` (notice, breakpoints; supports/enqueue/body class already exist).

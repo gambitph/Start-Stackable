@@ -11,3 +11,89 @@
 :root {
 	--stk-header-height: 0px;
 }
+
+.wp-site-blocks > header:is(
+	.stk-shell-header-sticky,
+	.stk-shell-header-transparent
+) {
+	inset-inline: 0;
+	top: var(--wp-admin--admin-bar--height, 0px);
+	width: 100%;
+	z-index: 100;
+}
+
+.wp-site-blocks > header.stk-shell-header-sticky {
+	position: sticky;
+}
+
+.wp-site-blocks > header.stk-shell-header-transparent {
+	position: absolute;
+}
+
+.wp-site-blocks > header:is(
+	.stk-shell-header-sticky.stk-shell-header-transparent
+) {
+	margin-bottom: calc(-1 * var(--stk-header-height));
+	position: sticky;
+}
+
+.wp-site-blocks > header.stk-shell-header-transparent,
+.wp-site-blocks > header.stk-shell-header-transparent > .wp-block-group {
+	background-color: transparent !important;
+}
+
+.wp-site-blocks > header.stk-shell-header-transparent + main {
+	margin-block-start: 0;
+}
+
+.wp-site-blocks > header:is(
+	.stk-shell-header-sticky,
+	.stk-shell-header-transparent
+),
+.wp-site-blocks > header:is(
+	.stk-shell-header-sticky,
+	.stk-shell-header-transparent
+) > .wp-block-group {
+	transition: background-color 180ms ease, box-shadow 180ms ease, color 180ms ease;
+}
+
+.wp-site-blocks > header.stk-shell-header-transparent.stk-shell-header-scrolled,
+.wp-site-blocks > header.stk-shell-header-transparent.stk-shell-header-scrolled > .wp-block-group {
+	background-color: var(--wp--preset--color--tint) !important;
+	color: var(--wp--preset--color--contrast);
+}
+
+.wp-site-blocks > header.stk-shell-header-scrolled {
+	box-shadow: var(--wp--preset--shadow--small);
+}
+
+.wp-site-blocks > header.stk-shell-header-transparent.stk-shell-header-scrolled :where(
+	.wp-block-navigation-item__content,
+	.wp-block-navigation__responsive-container-close,
+	.wp-block-navigation__responsive-container-open,
+	.wp-block-site-title a
+) {
+	color: var(--wp--preset--color--outline-contrast);
+}
+
+.wp-site-blocks > header:is(
+	.stk-shell-header-sticky,
+	.stk-shell-header-transparent
+) .wp-block-navigation__responsive-container.is-menu-open {
+	background-color: var(--wp--preset--color--tint);
+	color: var(--wp--preset--color--contrast);
+	z-index: 101;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.wp-site-blocks > header:is(
+		.stk-shell-header-sticky,
+		.stk-shell-header-transparent
+	),
+	.wp-site-blocks > header:is(
+		.stk-shell-header-sticky,
+		.stk-shell-header-transparent
+	) > .wp-block-group {
+		transition: none;
+	}
+}

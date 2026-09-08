@@ -11,7 +11,7 @@ Do not start the next phase until the current one is checked off.
 
 ## How to use this file
 
-1. Confirm you are on the phase marked **in progress** (right now: Phase 5).
+1. Confirm you are on the phase marked **in progress** (right now: Phase 6).
 2. Read that phase's "is for" sentence so you know the job.
 3. Do the numbered items in order.
    Each item has **What** (the outcome) and **How** (the files and edits).
@@ -562,7 +562,7 @@ Then work the **Phase 4** list in the acceptance check.
 
 ## Phase 5 is for page canvases (ordinary vs marketing vs blank)
 
-**Status:** **in progress.**
+**Status:** done.
 
 **What you are making:** three ways a page can sit in the shell.
 Ordinary pages keep a title.
@@ -616,7 +616,7 @@ Then work the **Phase 5** list in the acceptance check.
 
 ## Phase 6 is for sticky and transparent header behavior
 
-**Status:** later (after Phase 5).
+**Status:** **in progress.**
 
 **What you are making:** theme-owned header **flags** (behaviors), with Stackable off.
 `theme.json` cannot do this, so it lives in `src/`.
