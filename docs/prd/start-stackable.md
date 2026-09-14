@@ -15,12 +15,12 @@ There is almost no classic PHP templating.
 
 The theme is **not finished**.
 What you have now is a working theme shell: it activates, the Site Editor opens, the header and footer are designed, and the compile/zip tooling works.
-The first-activation blog and page canvases are complete, and header behavior is being completed now.
+The first-activation blog, page canvases, and header behavior are complete.
 
 Work is organized as **phases 0 through 11** in the [implementation plan](./start-stackable.plan.md).
-Phases 0-5 are done.
-**The current work is Phase 6** (sticky and transparent header behavior).
-Do not skip ahead to the remaining pattern catalog or Site Kit snap-in until that phase's **Done when** is true.
+Phases 0-6 are done.
+**The next work is Phase 7** (the shell pattern catalog and one Homepage starter).
+Do not skip ahead to WooCommerce or Site Kit snap-in until that phase's **Done when** is true.
 
 If a word feels loaded (Default, shell, token, canvas, header flag), see [`CONTEXT.md`](../../CONTEXT.md).
 
@@ -36,7 +36,7 @@ If a word feels loaded (Default, shell, token, canvas, header flag), see [`CONTE
 | See the two big decisions (theme is shell, theme is Default) | [`../adr/`](../adr/) |
 | Work on Site Kits (plugin, not this theme) | Sibling `../Stackable/docs/prd/site-kits.md` |
 
-For Phase 6, keep the public flag class names aligned with the Site Kit import contract.
+The Phase 6 public flag class names stay aligned with the Site Kit import contract.
 
 ## Block theme in 60 seconds
 
@@ -63,19 +63,18 @@ CSS in `src/` is only for things `theme.json` cannot do, such as measuring heade
 
 ## Current state (you are here)
 
-Snapshot of the tree as of 8 September 2026.
+Snapshot of the tree as of 14 September 2026.
 If the files and this section disagree, trust the files and the [phase checklists](./start-stackable.check.md).
 
-**Phases 0-5 are complete.**
+**Phases 0-6 are complete.**
 The theme is a valid block theme that activates without a PHP fatal.
 `functions.php` enqueues `assets/build/frontend.*` and adds the body class `stk--is-stackable-theme`.
 `npm run start` compiles `src/` into `assets/build/`.
 Template and part **files** exist.
 Color palette **slugs** and content/wide widths already match the token contract below.
 
-**Phase 6 is in progress.**
 Phases 7-11 are not started.
-Sticky, transparent, scroll-to-solid, measured height, and mobile overlay behavior are implemented and awaiting consolidated E2E verification.
+Sticky, transparent, scroll-to-solid, measured height, and mobile overlay behavior are implemented and covered by the consolidated E2E suite.
 
 | Phase | Status | What is true now | What "done" looks like |
 | --- | --- | --- | --- |
@@ -85,7 +84,7 @@ Sticky, transparent, scroll-to-solid, measured height, and mobile overlay behavi
 | 3 Header and footer | Done | Five core-only patterns own the shell markup; parts are thin pattern includes | (already met) |
 | 4 First-activation blog | Done | Shared blog atoms and hidden template patterns own thin blog templates | (already met) |
 | 5 Canvases | Done | Hidden canvas patterns own thin `page`, `full-width`, and `blank` templates | (already met) |
-| 6 Header flags | In progress | Theme CSS/JS honors sticky and transparent flags, applies scroll-to-solid, measures header height, and layers mobile navigation above a hero | Consolidated Phase 1-6 E2E verification |
+| 6 Header flags | Done | Theme CSS/JS honors sticky and transparent flags, applies scroll-to-solid, measures header height, and layers mobile navigation above a hero | (already met) |
 | 7 Patterns | Not started | Header/footer, blog atoms, and hidden blog template patterns exist; `page-home` does not | Header/footer/post-card/comments + exactly one Homepage starter; no hero/pricing catalog |
 | 8 Woo templates | Not started | No Woo HTML templates | Shop/product/cart/checkout look designed if Woo is active; theme still works if it is not |
 | 9 PHP host | Partial | Setup, enqueue, body class | Dismissible "install Stackable" notice + optional breakpoint handshake |
@@ -94,7 +93,7 @@ Sticky, transparent, scroll-to-solid, measured height, and mobile overlay behavi
 
 Honest one-liner: this is a **designed standalone shell with page canvases and theme-owned header behavior**.
 Plugin integration still comes later.
-Continue Phase 6 acceptance verification.
+Continue with Phase 7, the shell pattern catalog and one Homepage starter.
 
 ## How we develop
 
@@ -102,7 +101,7 @@ This is sequential craft, not "pick a random file."
 
 1. **Read this guide** so you know what the theme is allowed to own.
 2. **Open the next unfinished phase** in the [plan](./start-stackable.plan.md).
-   Right now that is Phase 6.
+   Right now that is Phase 7.
    Do not skip a phase.
 3. **Implement in the existing seam**, not a parallel system:
    - look → `theme.json` and `styles/`
@@ -359,8 +358,8 @@ The zip must stand alone: `screenshot.png` that matches Default, designed templa
 ## Implementation
 
 Numbered what/how steps per phase: [`start-stackable.plan.md`](./start-stackable.plan.md).
-Skip Phases 0-5 (done).
-Continue Phase 6 and do the numbered items in order.
+Skip Phases 0-6 (done).
+Continue Phase 7 and do the numbered items in order.
 Do not skip a phase's **This phase is done when**.
 
 E2E specs to create once a surface exists: table in [`start-stackable.agents.md`](./start-stackable.agents.md#e2e-create-these).

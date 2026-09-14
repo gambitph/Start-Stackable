@@ -13,10 +13,9 @@ ADR: [`../adr/0002-theme-is-the-default.md`](../adr/0002-theme-is-the-default.md
 
 Law below is the **finished** theme.
 The tree is a **scaffold**.
-Phases 0-5 are done (bootstrap, the `theme.json` design system, style variations, the header/footer shell, the first-activation blog, and page canvases).
-Phase 6 is in progress (sticky and transparent header behavior).
+Phases 0-6 are done (bootstrap, the `theme.json` design system, style variations, the header/footer shell, the first-activation blog, page canvases, and sticky and transparent header behavior).
 Phases 7-11 are not started.
-**Current: Phase 6** in the plan.
+**Next: Phase 7** in the plan.
 Do not skip phases.
 Do not treat the file map or template-as-pattern-include as the current tree.
 Fix [gaps](#current-repo-gaps) on the matching phase only.
@@ -118,12 +117,11 @@ Not allowed: a section catalog of heroes, pricing, testimonials, team, FAQ, logo
 Do not take a later gap first.
 Each item is gone or explicitly deferred in an ADR.
 
-- Phase 6: sticky, transparent, scroll-to-solid, measured height, and mobile overlay behavior are implemented; consolidated acceptance verification is in progress.
 - Phase 7-11: pattern catalog incomplete; no Woo templates; no recommend-plugin notice; no `screenshot.png`; snap-in contract on paper only.
 
 ## Implementation sequence
 
-Phases 0-5 are done; skip them.
+Phases 0-6 are done; skip them.
 Follow [`start-stackable.plan.md`](./start-stackable.plan.md) (numbered What/How).
 Do not skip a phase's **This phase is done when**.
 Then run that phase in [`start-stackable.check.md`](./start-stackable.check.md).
@@ -133,8 +131,8 @@ Then run that phase in [`start-stackable.check.md`](./start-stackable.check.md).
 3. Header and footer parts + patterns (no `ref`, user copyright).
 4. Blog templates (index/home/archive/search/404/single).
 5. Canvases (`page`, `full-width`, `blank`).
-6. Header flags. **Current.**
-7. Shell pattern catalog + one `page-home`.
+6. Header flags.
+7. Shell pattern catalog + one `page-home`. **Next.**
 8. Woo templates.
 9. `functions.php` (notice, breakpoints; supports/enqueue/body class already exist).
 10. Directory packaging (`screenshot.png`, `readme.txt`, tags, licenses).

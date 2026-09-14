@@ -42,8 +42,8 @@ module.exports = defineConfig( {
 	webServer: {
 		command: [
 			'npx @wp-playground/cli server',
-			'--mount=.:/wordpress/wp-content/themes/start-stackable',
-			`--blueprint=${ PLAYGROUND_BLUEPRINT }`,
+			`--mount=${ JSON.stringify( `.:/wordpress/wp-content/themes/${ process.env.THEME_SLUG }` ) }`,
+			`--blueprint=${ JSON.stringify( PLAYGROUND_BLUEPRINT ) }`,
 			`--php=${ PHP_VERSION }`,
 			`--wp=${ WP_VERSION }`,
 			`--port=${ PORT }`,

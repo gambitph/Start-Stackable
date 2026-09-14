@@ -11,7 +11,7 @@ Do not start the next phase until the current one is checked off.
 
 ## How to use this file
 
-1. Confirm you are on the phase marked **in progress** (right now: Phase 6).
+1. Confirm you are on the phase marked **next** (right now: Phase 7).
 2. Read that phase's "is for" sentence so you know the job.
 3. Do the numbered items in order.
    Each item has **What** (the outcome) and **How** (the files and edits).
@@ -43,8 +43,11 @@ Constants for every file you add:
 | 1 Design system | **Done.** Skip it. |
 | 2 Style variations | **Done.** Skip it. |
 | 3 Header and footer | **Done.** Skip it. |
-| 4 First-activation blog | **In progress.** |
-| 5-11 | Later. Do not start these yet. |
+| 4 First-activation blog | **Done.** Skip it. |
+| 5 Page canvases | **Done.** Skip it. |
+| 6 Header flags | **Done.** Skip it. |
+| 7 Patterns | **Next.** |
+| 8-11 | Later. Do not start these yet. |
 
 The file tree in the [appendix](#appendix-a-finished-zip) is the **destination**.
 It is not what the repo looks like today.
@@ -616,7 +619,7 @@ Then work the **Phase 5** list in the acceptance check.
 
 ## Phase 6 is for sticky and transparent header behavior
 
-**Status:** **in progress.**
+**Status:** **done.**
 
 **What you are making:** theme-owned header **flags** (behaviors), with Stackable off.
 `theme.json` cannot do this, so it lives in `src/`.
@@ -692,7 +695,7 @@ Then work the **Phase 6** list in the acceptance check.
 
 ## Phase 7 is for the pattern catalog and one Homepage starter
 
-**Status:** later (after Phase 6).
+**Status:** **next.**
 
 **What you are making:** users can reconstruct Default from the inserter, and optionally start **one** marketing page without the plugin.
 This is not a Design Library.

@@ -1,6 +1,7 @@
 /**
  * Playwright global setup: cookie-authenticates as the Playground blueprint
- * admin (admin / password) and persists storage state for specs + requestUtils.
+ * admin (admin / password), persists storage state for specs + requestUtils,
+ * and activates the mounted theme.
  */
 const fs = require( 'fs/promises' )
 const path = require( 'path' )
@@ -18,6 +19,7 @@ module.exports = async function globalSetup() {
 	} )
 
 	await requestUtils.setupRest()
+	await requestUtils.activateTheme( process.env.THEME_SLUG || 'start-stackable' )
 
 	const authDir = path.dirname( storageStatePath || path.join( __dirname, '../.auth/admin.json' ) )
 	await fs.mkdir( authDir, { recursive: true } )
