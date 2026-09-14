@@ -11,7 +11,7 @@ Do not start the next phase until the current one is checked off.
 
 ## How to use this file
 
-1. Confirm you are on the phase marked **next** (right now: Phase 7).
+1. Confirm you are on the phase marked **next** (right now: Phase 8).
 2. Read that phase's "is for" sentence so you know the job.
 3. Do the numbered items in order.
    Each item has **What** (the outcome) and **How** (the files and edits).
@@ -46,8 +46,9 @@ Constants for every file you add:
 | 4 First-activation blog | **Done.** Skip it. |
 | 5 Page canvases | **Done.** Skip it. |
 | 6 Header flags | **Done.** Skip it. |
-| 7 Patterns | **Next.** |
-| 8-11 | Later. Do not start these yet. |
+| 7 Patterns | **Done.** Skip it. |
+| 8 WooCommerce templates | **Next.** |
+| 9-11 | Later. Do not start these yet. |
 
 The file tree in the [appendix](#appendix-a-finished-zip) is the **destination**.
 It is not what the repo looks like today.
@@ -695,7 +696,7 @@ Then work the **Phase 6** list in the acceptance check.
 
 ## Phase 7 is for the pattern catalog and one Homepage starter
 
-**Status:** **next.**
+**Status:** **done.**
 
 **What you are making:** users can reconstruct Default from the inserter, and optionally start **one** marketing page without the plugin.
 This is not a Design Library.
@@ -743,7 +744,7 @@ Then work the **Phase 7** list in the acceptance check.
 
 ## Phase 8 is for WooCommerce templates
 
-**Status:** later (after Phase 7).
+**Status:** **next.**
 
 **What you are making:** if Woo is installed, shop/product/cart/checkout/account are not unstyled core.
 If Woo is not installed, the theme still activates.

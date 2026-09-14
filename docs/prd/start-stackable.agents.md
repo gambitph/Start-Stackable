@@ -13,9 +13,9 @@ ADR: [`../adr/0002-theme-is-the-default.md`](../adr/0002-theme-is-the-default.md
 
 Law below is the **finished** theme.
 The tree is a **scaffold**.
-Phases 0-6 are done (bootstrap, the `theme.json` design system, style variations, the header/footer shell, the first-activation blog, page canvases, and sticky and transparent header behavior).
-Phases 7-11 are not started.
-**Next: Phase 7** in the plan.
+Phases 0-7 are done (bootstrap, the `theme.json` design system, style variations, the header/footer shell, the first-activation blog, page canvases, sticky and transparent header behavior, and the shell pattern catalog).
+Phases 8-11 are unfinished.
+**Next: Phase 8** in the plan.
 Do not skip phases.
 Do not treat the file map or template-as-pattern-include as the current tree.
 Fix [gaps](#current-repo-gaps) on the matching phase only.
@@ -117,11 +117,11 @@ Not allowed: a section catalog of heroes, pricing, testimonials, team, FAQ, logo
 Do not take a later gap first.
 Each item is gone or explicitly deferred in an ADR.
 
-- Phase 7-11: pattern catalog incomplete; no Woo templates; no recommend-plugin notice; no `screenshot.png`; snap-in contract on paper only.
+- Phase 8-11: no Woo templates; no recommend-plugin notice; no `screenshot.png`; snap-in contract on paper only.
 
 ## Implementation sequence
 
-Phases 0-6 are done; skip them.
+Phases 0-7 are done; skip them.
 Follow [`start-stackable.plan.md`](./start-stackable.plan.md) (numbered What/How).
 Do not skip a phase's **This phase is done when**.
 Then run that phase in [`start-stackable.check.md`](./start-stackable.check.md).
@@ -132,8 +132,8 @@ Then run that phase in [`start-stackable.check.md`](./start-stackable.check.md).
 4. Blog templates (index/home/archive/search/404/single).
 5. Canvases (`page`, `full-width`, `blank`).
 6. Header flags.
-7. Shell pattern catalog + one `page-home`. **Next.**
-8. Woo templates.
+7. Shell pattern catalog + one `page-home`.
+8. Woo templates. **Next.**
 9. `functions.php` (notice, breakpoints; supports/enqueue/body class already exist).
 10. Directory packaging (`screenshot.png`, `readme.txt`, tags, licenses).
 11. Snap-in (classes, overlay reception). Do not import.
@@ -175,6 +175,7 @@ Do not add failing specs for an unfinished header or footer.
 | `e2e/tests/blog.spec.ts` | Create a post with featured image; `single` shows title, image, date, comments form; `home`/`archive` shows a grid card; `search` finds it; `404` shows search. |
 | `e2e/tests/canvases.spec.ts` | Page on `page` shows title; same page on `full-width` has no theme `h1` from Post Title and content can be `alignfull`; `blank` has no header/footer in the DOM. |
 | `e2e/tests/header-flags.spec.ts` | Transparent header overlays a full-bleed first section; after scroll, header background is opaque; `--stk-header-height` is a non-zero px value; mobile menu opens above the hero. |
+| `e2e/tests/patterns.spec.ts` | The complete catalog registers with intended visibility; a new page offers exactly one Homepage starter; the starter renders cleanly on Full Width in Default and Dark. |
 | `e2e/tests/onboarding.spec.ts` | Plugin-missing notice visible and dismissible; after dismiss it stays gone; with plugin on, notice is absent. |
 | `e2e/tests/with-plugin-snap-in.spec.ts` | With Stackable active: `body` has `stk--is-stackable-theme`; a fixture kit import (plugin e2e) assigns `full-width` and transparent header without missing blocks. |
 

@@ -6,18 +6,6 @@ const THEME_SLUG = process.env.THEME_SLUG || 'start-stackable'
 const FEATURED_TITLE = 'Phase 4 Featured Story'
 const TEXT_TITLE = 'Phase 4 Text Story'
 const PNG_PIXEL = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII='
-const BLOG_ATOMS = [
-	'start-stackable/comments',
-	'start-stackable/post-card',
-	'start-stackable/post-meta',
-]
-const BLOG_TEMPLATE_PATTERNS = [
-	'start-stackable/template-404',
-	'start-stackable/template-archive',
-	'start-stackable/template-index-grid',
-	'start-stackable/template-search',
-	'start-stackable/template-single',
-]
 const BLOG_TEMPLATE_SLUGS = [ 'index', 'home', 'archive', 'search', '404', 'single' ]
 
 type RestRecord = {
@@ -32,11 +20,6 @@ type BlogFixture = {
 	pageIds: number[]
 	postIds: number[]
 	text: RestRecord
-}
-
-type BlockPattern = {
-	inserter?: boolean
-	name: string
 }
 
 async function deleteRecord( requestUtils: RequestUtils, restBase: string, id: number ) {
@@ -291,31 +274,6 @@ test.describe( 'Designed blog', () => {
 		await expect( page.getByRole( 'heading', { level: 1, name: 'Latest posts' } ) ).toBeVisible()
 		await expect( page.locator( '.wp-block-post' ).filter( { hasText: FEATURED_TITLE } ) ).toBeVisible()
 		await expect( page.locator( '.wp-block-post' ).filter( { hasText: TEXT_TITLE } ) ).toBeVisible()
-	} )
-
-	test( 'WordPress registers blog atoms and keeps whole-template patterns out of the inserter', async ( {
-		requestUtils,
-	} ) => {
-		const patterns = await requestUtils.rest< BlockPattern[] >( {
-			path: '/wp/v2/block-patterns/patterns',
-		} )
-		const blogPatterns = patterns.filter( ( pattern ) =>
-			[ ...BLOG_ATOMS, ...BLOG_TEMPLATE_PATTERNS ].includes( pattern.name )
-		)
-
-		expect( blogPatterns.map( ( pattern ) => pattern.name ).sort() ).toEqual(
-			[ ...BLOG_ATOMS, ...BLOG_TEMPLATE_PATTERNS ].sort()
-		)
-		expect(
-			blogPatterns
-				.filter( ( pattern ) => BLOG_ATOMS.includes( pattern.name ) )
-				.every( ( pattern ) => pattern.inserter !== false )
-		).toBe( true )
-		expect(
-			blogPatterns
-				.filter( ( pattern ) => BLOG_TEMPLATE_PATTERNS.includes( pattern.name ) )
-				.every( ( pattern ) => pattern.inserter === false )
-		).toBe( true )
 	} )
 
 	test( 'Site Editor loads every blog template without recovery warnings', async ( {

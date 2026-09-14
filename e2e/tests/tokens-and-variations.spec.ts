@@ -1,5 +1,9 @@
-import type { RequestUtils } from '@wordpress/e2e-test-utils-playwright'
 import { test, expect } from '../test-utils/test'
+import {
+	applyStyleVariation,
+	getStyleVariations,
+	type StyleVariation,
+} from '../test-utils/global-styles'
 
 const THEME_SLUG = process.env.THEME_SLUG || 'start-stackable'
 
@@ -26,18 +30,6 @@ type FontFamilyPreset = {
 	}[]
 	fontFamily: string
 	slug: string
-}
-
-type StyleVariation = {
-	title: string
-	settings?: {
-		color?: {
-			palette?: {
-				theme?: PaletteColor[]
-			}
-		}
-	}
-	styles?: Record< string, unknown >
 }
 
 type ThemeGlobalStyles = {
@@ -127,31 +119,6 @@ const REQUIRED_BLOCK_STYLES = [
 
 const REQUIRED_ELEMENT_STYLES = [ 'button', 'heading', 'link' ]
 
-async function getStyleVariations( requestUtils: RequestUtils ) {
-	return requestUtils.rest< StyleVariation[] >( {
-		path: `/wp/v2/global-styles/themes/${ THEME_SLUG }/variations`,
-	} )
-}
-
-async function applyStyleVariation(
-	requestUtils: RequestUtils,
-	variation: StyleVariation
-) {
-	const globalStylesId = await requestUtils.getCurrentThemeGlobalStylesPostId()
-
-	expect( globalStylesId ).not.toBe( '' )
-
-	await requestUtils.rest( {
-		method: 'POST',
-		path: `/wp/v2/global-styles/${ globalStylesId }`,
-		data: {
-			id: globalStylesId,
-			settings: variation.settings || {},
-			styles: variation.styles || {},
-		},
-	} )
-}
-
 test.describe( 'Tokens and style variations', () => {
 	let buttonCheckPage: RestRecord
 	let seededPost: RestRecord
@@ -194,7 +161,7 @@ test.describe( 'Tokens and style variations', () => {
 		const themeStyles = await requestUtils.rest< ThemeGlobalStyles >( {
 			path: `/wp/v2/global-styles/themes/${ THEME_SLUG }`,
 		} )
-		const variations = await getStyleVariations( requestUtils )
+		const variations = await getStyleVariations( requestUtils, THEME_SLUG )
 		const colorVariations = variations.filter( ( variation ) => variation.settings?.color?.palette?.theme )
 
 		expect(
@@ -272,7 +239,7 @@ test.describe( 'Tokens and style variations', () => {
 		page,
 		requestUtils,
 	} ) => {
-		const variations = await getStyleVariations( requestUtils )
+		const variations = await getStyleVariations( requestUtils, THEME_SLUG )
 		const dark = variations.find( ( variation ) => variation.title === 'Dark' )
 
 		expect( dark ).toBeDefined()
@@ -330,7 +297,7 @@ test.describe( 'Tokens and style variations', () => {
 			( element ) => getComputedStyle( element ).fontSize
 		)
 
-		const variations = await getStyleVariations( requestUtils )
+		const variations = await getStyleVariations( requestUtils, THEME_SLUG )
 		const compact = variations.find( ( variation ) => variation.title === 'Compact' )
 		const editorial = variations.find( ( variation ) => variation.title === 'Editorial' )
 

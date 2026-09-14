@@ -44,7 +44,7 @@ New to the repo? Start with the developer guide (what it is, current state, how 
 | When | Doc |
 | --- | --- |
 | New here / how we develop | [`docs/prd/start-stackable.md`](./docs/prd/start-stackable.md) |
-| Continue the current phase | [`docs/prd/start-stackable.plan.md`](./docs/prd/start-stackable.plan.md) (Phase 2 is in progress) |
+| Continue the current phase | [`docs/prd/start-stackable.plan.md`](./docs/prd/start-stackable.plan.md) (Phase 8 is next) |
 | Check a phase | [`docs/prd/start-stackable.check.md`](./docs/prd/start-stackable.check.md) |
 | Word meanings | [`CONTEXT.md`](./CONTEXT.md) |
 | Agents (same law, shorter) | [`docs/prd/start-stackable.agents.md`](./docs/prd/start-stackable.agents.md) |

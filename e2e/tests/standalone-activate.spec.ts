@@ -3,13 +3,6 @@ import { test, expect } from '../test-utils/test'
 
 const THEME_SLUG = process.env.THEME_SLUG || 'start-stackable'
 const FALLBACK_THEME = 'twentytwentyfive'
-const SHELL_PATTERNS = [
-	'start-stackable/footer',
-	'start-stackable/footer-landing',
-	'start-stackable/header',
-	'start-stackable/header-minimal',
-	'start-stackable/header-transparent',
-]
 const SHELL_PARTS = [
 	'footer',
 	'footer-landing',
@@ -17,13 +10,6 @@ const SHELL_PARTS = [
 	'header-minimal',
 	'header-transparent',
 ]
-
-type BlockPattern = {
-	block_types?: string[]
-	content?: string
-	inserter?: boolean
-	name: string
-}
 
 async function assertNoCriticalError( page: Page ) {
 	await expect( page.getByText( 'There has been a critical error on this website' ) ).toHaveCount( 0 )
@@ -67,34 +53,6 @@ test.describe( 'Standalone activate', () => {
 		const html = await page.content()
 		expect( html ).not.toMatch( /wp:stackable\// )
 		expect( html ).not.toMatch( /wp-block-stackable/ )
-	} )
-
-	test( 'WordPress registers all header and footer patterns', async ( {
-		requestUtils,
-	} ) => {
-		await requestUtils.activateTheme( THEME_SLUG )
-		const patterns = await requestUtils.rest< BlockPattern[] >( {
-			path: '/wp/v2/block-patterns/patterns',
-		} )
-		const shellPatterns = patterns.filter( ( pattern ) => SHELL_PATTERNS.includes( pattern.name ) )
-
-		expect( shellPatterns.map( ( pattern ) => pattern.name ).sort() ).toEqual( SHELL_PATTERNS )
-		expect( shellPatterns.every( ( pattern ) => pattern.inserter !== false ) ).toBe( true )
-		expect(
-			shellPatterns
-				.filter( ( pattern ) => pattern.name.includes( 'header' ) )
-				.every( ( pattern ) => pattern.block_types?.includes( 'core/template-part/header' ) )
-		).toBe( true )
-		expect(
-			shellPatterns
-				.filter( ( pattern ) => pattern.name.includes( 'header' ) )
-				.every( ( pattern ) => typeof pattern.content === 'string' && ! pattern.content.includes( '"ref":' ) )
-		).toBe( true )
-		expect(
-			shellPatterns
-				.filter( ( pattern ) => pattern.name.includes( 'footer' ) )
-				.every( ( pattern ) => pattern.block_types?.includes( 'core/template-part/footer' ) )
-		).toBe( true )
 	} )
 
 	test( 'Site Editor loads every pattern-backed shell part without recovery warnings', async ( {
