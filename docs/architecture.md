@@ -13,7 +13,7 @@ Current phase status and how to implement live in [`prd/start-stackable.md`](./p
 
 ```text
  theme.json + styles/              design system (Default)
- templates/ + parts/ + patterns/   header, footer, canvases, blog
+ templates/ + parts/ + patterns/   header, footer, canvases, blog, WooCommerce
  src/ → assets/build/              header-flag CSS/JS (theme.json cannot express)
  functions.php                     enqueue, body class, recommend plugin, flags host
         ▲

@@ -15,12 +15,12 @@ There is almost no classic PHP templating.
 
 The theme is **not finished**.
 What you have now is a working theme shell: it activates, the Site Editor opens, the header and footer are designed, and the compile/zip tooling works.
-The first-activation blog, page canvases, header behavior, and optional Homepage pattern are complete.
+The first-activation blog, page canvases, header behavior, optional Homepage pattern, and WooCommerce templates are complete.
 
 Work is organized as **phases 0 through 11** in the [implementation plan](./start-stackable.plan.md).
-Phases 0-7 are done.
-**The next work is Phase 8** (WooCommerce templates).
-Do not skip ahead to the PHP host or Site Kit snap-in until that phase's **Done when** is true.
+Phases 0-8 are done.
+**The next work is Phase 9** (the remaining PHP host work).
+Do not skip ahead to directory packaging or Site Kit snap-in until that phase's **Done when** is true.
 
 If a word feels loaded (Default, shell, token, canvas, header flag), see [`CONTEXT.md`](../../CONTEXT.md).
 
@@ -48,7 +48,7 @@ These are the files you will touch, and what each one is for:
 | `styles/colors/` and `styles/typography/` | Optional skins (style variations) that restyle the **same** named colors or fonts. Switching a variation in Site Editor → Styles should restyle the whole site. |
 | `templates/` | One HTML file per kind of page (blog home, single post, page, search, 404, and so on). WordPress picks the file automatically. |
 | `parts/` | Reusable header and footer pieces that templates include. |
-| `patterns/` | Reusable block layouts. Phases 3-4 added header/footer patterns, blog atoms, and hidden blog template patterns; Phase 7 added one optional Homepage starter. |
+| `patterns/` | Reusable block layouts. Phases 3-4 added header/footer patterns, blog atoms, and hidden blog template patterns; Phase 7 added one optional Homepage starter; Phase 8 added hidden Woo template patterns. |
 | `functions.php` | The only PHP bootstrap WordPress loads from the theme. Must be this filename (not `function.php`). |
 | `src/` | Extra CSS and JS for behavior `theme.json` cannot express (sticky/transparent header). Compiles into `assets/build/`. |
 | `style.css` | Theme identity for WordPress (name, version, tags). It is not where the design system lives. |
@@ -66,16 +66,17 @@ CSS in `src/` is only for things `theme.json` cannot do, such as measuring heade
 Snapshot of the tree as of 14 September 2026.
 If the files and this section disagree, trust the files and the [phase checklists](./start-stackable.check.md).
 
-**Phases 0-7 are complete.**
+**Phases 0-8 are complete.**
 The theme is a valid block theme that activates without a PHP fatal.
 `functions.php` enqueues `assets/build/frontend.*` and adds the body class `stk--is-stackable-theme`.
 `npm run start` compiles `src/` into `assets/build/`.
 Template and part **files** exist.
 Color palette **slugs** and content/wide widths already match the token contract below.
 
-Phases 8-11 are unfinished.
+Phases 9-11 are unfinished.
 Sticky, transparent, scroll-to-solid, measured height, and mobile overlay behavior are implemented and covered by the consolidated E2E suite.
 The complete shell pattern catalog and one optional core-block Homepage starter are available in the inserter.
+WooCommerce activates into designed catalog, product, cart, checkout, My Account, and order confirmation views while remaining optional.
 
 | Phase | Status | What is true now | What "done" looks like |
 | --- | --- | --- | --- |
@@ -87,14 +88,14 @@ The complete shell pattern catalog and one optional core-block Homepage starter 
 | 5 Canvases | Done | Hidden canvas patterns own thin `page`, `full-width`, and `blank` templates | (already met) |
 | 6 Header flags | Done | Theme CSS/JS honors sticky and transparent flags, applies scroll-to-solid, measures header height, and layers mobile navigation above a hero | (already met) |
 | 7 Patterns | Done | Header/footer, blog atoms, hidden template patterns, and exactly one Homepage starter form the complete shell catalog | (already met) |
-| 8 Woo templates | Not started | No Woo HTML templates | Shop/product/cart/checkout look designed if Woo is active; theme still works if it is not |
+| 8 Woo templates | Done | Thin Woo template files use hidden Woo/core-block patterns and theme tokens; mobile Cart/Checkout and inactive-plugin behavior are covered | (already met) |
 | 9 PHP host | Partial | Setup, enqueue, body class | Dismissible "install Stackable" notice + optional breakpoint handshake |
 | 10 Directory packaging | Not started | No `screenshot.png`; tags incomplete | WP.org zip: screenshot of Default, licenses, honest tags |
 | 11 Snap-in | Not started | Contract is documented only | Plugin can assign `full-width` + header flags without a theme PHP change |
 
-Honest one-liner: this is a **designed standalone shell with page canvases and theme-owned header behavior**.
+Honest one-liner: this is a **designed standalone shell with page canvases, theme-owned header behavior, and optional WooCommerce storefront templates**.
 Plugin integration still comes later.
-Continue with Phase 8, the WooCommerce templates.
+Continue with Phase 9, the remaining PHP host work.
 
 ## How we develop
 
@@ -102,7 +103,7 @@ This is sequential craft, not "pick a random file."
 
 1. **Read this guide** so you know what the theme is allowed to own.
 2. **Open the next unfinished phase** in the [plan](./start-stackable.plan.md).
-   Right now that is Phase 8.
+   Right now that is Phase 9.
    Do not skip a phase.
 3. **Implement in the existing seam**, not a parallel system:
    - look → `theme.json` and `styles/`
@@ -281,7 +282,7 @@ A **canvas** is how a page’s main content is framed: ordinary page (title OK),
 | `archive.html` | Category/tag/date |
 | `search.html` | Search results |
 | `404.html` | Not found |
-| Woo templates | Shop, product, cart, checkout, account |
+| Woo templates | Shop archive, product search, single product, cart, checkout, and order confirmation. My Account uses `page.html`. |
 
 Do not ship `front-page.html`.
 
@@ -322,7 +323,7 @@ Document the class names in the Site Kit import contract if they are part of the
 Theme patterns reconstruct Default.
 They are not a second Design Library.
 
-**In the theme:** header/footer variants, post card, post meta, comments, template patterns (inserter hidden), one Homepage starter page.
+**In the theme:** header/footer variants, post card, post meta, comments, template patterns (including hidden Woo patterns), one Homepage starter page.
 
 **In the plugin:** heroes, pricing, testimonials, team, FAQ, logos, kit pages.
 
@@ -359,8 +360,8 @@ The zip must stand alone: `screenshot.png` that matches Default, designed templa
 ## Implementation
 
 Numbered what/how steps per phase: [`start-stackable.plan.md`](./start-stackable.plan.md).
-Skip Phases 0-7 (done).
-Continue Phase 8 and do the numbered items in order.
+Skip Phases 0-8 (done).
+Continue Phase 9 and do the numbered items in order.
 Do not skip a phase's **This phase is done when**.
 
 E2E specs to create once a surface exists: table in [`start-stackable.agents.md`](./start-stackable.agents.md#e2e-create-these).

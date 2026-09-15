@@ -2,6 +2,7 @@
 
 Start Stackable's end-to-end tests verify that the block theme activates and
 renders as a complete WordPress.org theme **without** the Stackable plugin.
+The separate WooCommerce profile installs the official WooCommerce plugin and verifies the optional storefront templates.
 
 WordPress is provided by [`@wp-playground/cli`](https://www.npmjs.com/package/@wp-playground/cli)
 (WASM PHP + SQLite, **no Docker**). Playwright's `webServer` boots it
@@ -33,8 +34,15 @@ or with the Playwright UI:
 npm run test:debug
 ```
 
-Playground starts on port `9430` if nothing is already listening.
-Locally, Playwright reuses an already-running Playground on that port when present.
+Run the WooCommerce profile separately:
+
+```bash
+npm run test:e2e:woo
+npm run test:debug:woo
+```
+
+The standalone Playground starts on port `9430`, and the WooCommerce profile starts on `9431`.
+Locally, Playwright reuses an already-running Playground on the active profile's port when present.
 In CI it always boots fresh.
 If a stale instance is misbehaving after editing PHP/HTML that Playground mounted at boot, kill whatever is listening on that port and re-run.
 
@@ -59,8 +67,8 @@ THEME_SLUG=Start-Stackable WP_PORT=9434 npm run test:e2e
 
 ## CI
 
-`.github/workflows/e2e-tests.yml` runs the suite on `main` pushes and PRs.
-Two corners: latest WP + PHP 8.3 with folder `Start-Stackable`, and WP 6.9 (theme `Requires at least`) + PHP 7.4 with folder `start-stackable`.
+`.github/workflows/e2e-tests.yml` runs the standalone and WooCommerce profiles on `main` pushes and PRs.
+Both profiles run two corners: latest WP + PHP 8.3 with folder `Start-Stackable`, and WP 6.9 (theme `Requires at least`) + PHP 7.4 with folder `start-stackable`.
 The different folder names catch hard-coded template-part theme references.
 A new push to the same PR or branch cancels the previous E2E run.
 
@@ -77,7 +85,8 @@ opens the editor. Do not listen for console `Block validation` messages.
 | `e2e/tests/blog.spec.ts` | The latest-posts and configured posts-page grids share complete responsive cards, including equal desktop columns and a single mobile column; untitled cards retain working permalinks with and without images across blog, archive, and search; single posts honor wide/full content alignment and mobile text gutters without overflow; single, archive, search, empty search, and 404 views are designed; blog templates render both header/footer parts in Site Editor without missing-part or recovery UI. |
 | `e2e/tests/canvases.spec.ts` | Standard pages show a theme title and constrained text; Full Width removes the theme title and lets its first `alignfull` block reach both viewport edges on desktop and mobile; Blank renders content without header, footer, or theme title; all three hidden canvas patterns register and load in Site Editor without recovery UI. |
 | `e2e/tests/header-flags.spec.ts` | Sticky and transparent body flags normalize onto the header wrapper; the header overlays a full-width hero, becomes solid after scroll with contrast-safe text, exposes a non-zero height token, and keeps a full-viewport, closable mobile navigation overlay above the hero. |
-| `e2e/tests/patterns.spec.ts` | WordPress registers the complete 17-pattern catalog with the intended visibility and block types; new pages offer exactly one Homepage starter; the starter renders full-bleed and without overflow on Full Width, remains contrast-safe in Default and Dark, and opens in the editor without recovery UI. |
+| `e2e/tests/patterns.spec.ts` | WordPress registers the complete 24-pattern catalog with the intended visibility and block types; new pages offer exactly one Homepage starter; the starter renders full-bleed and without overflow on Full Width, remains contrast-safe in Default and Dark, and opens in the editor without recovery UI. |
+| `e2e/tests/woocommerce.spec.ts` | The WooCommerce profile verifies plugin activation; six theme commerce templates register and open in the Site Editor without recovery UI; seeded catalog, category, product search, single product, Cart, Checkout, My Account, and order confirmation views render; Cart and Checkout fit 375px; Dark restyles order confirmation. |
 
 Deferred until those surfaces ship (see [`docs/prd/start-stackable.agents.md`](../docs/prd/start-stackable.agents.md#e2e-create-these)):
 
@@ -88,8 +97,9 @@ Deferred until those surfaces ship (see [`docs/prd/start-stackable.agents.md`](.
 
 | Path | Role |
 | --- | --- |
-| `../playwright.config.js` | Suite; Playground on 9430; mounts this repo as the theme |
+| `../playwright.config.js` | Suite; standalone Playground on 9430, WooCommerce on 9431; mounts this repo as the theme |
 | `playground-blueprint.json` | Playground admin login |
+| `playground-woocommerce-blueprint.json` | Playground admin login + official WooCommerce install/activation |
 | `config/global-setup.js` | Cookie auth + activate `THEME_SLUG` + write `e2e/.auth/test-env.json` |
 | `test-utils/test.ts` | Re-export Playwright + WordPress e2e fixtures |
 | `tests/*.spec.ts` | Browser specs |
@@ -100,5 +110,5 @@ Deferred until those surfaces ship (see [`docs/prd/start-stackable.agents.md`](.
 - **`browserType.launch: Executable doesn't exist`** - run
   `npx playwright install chromium` once per machine.
 - **Stale theme behaviour after editing PHP/HTML** - Playground snapshots the
-  mount at boot. Stop the process on port `9430` and re-run.
+  mount at boot. Stop the process on port `9430` or `9431` for the active profile and re-run.
 - **Port already in use** - another Playground is still running. Kill it or set `WP_PORT`.

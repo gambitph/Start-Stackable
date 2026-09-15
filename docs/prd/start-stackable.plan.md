@@ -11,7 +11,7 @@ Do not start the next phase until the current one is checked off.
 
 ## How to use this file
 
-1. Confirm you are on the phase marked **next** (right now: Phase 8).
+1. Confirm you are on the phase marked **next** (right now: Phase 9).
 2. Read that phase's "is for" sentence so you know the job.
 3. Do the numbered items in order.
    Each item has **What** (the outcome) and **How** (the files and edits).
@@ -47,8 +47,9 @@ Constants for every file you add:
 | 5 Page canvases | **Done.** Skip it. |
 | 6 Header flags | **Done.** Skip it. |
 | 7 Patterns | **Done.** Skip it. |
-| 8 WooCommerce templates | **Next.** |
-| 9-11 | Later. Do not start these yet. |
+| 8 WooCommerce templates | **Done.** Skip it. |
+| 9 PHP host | **Next.** |
+| 10-11 | Later. Do not start these yet. |
 
 The file tree in the [appendix](#appendix-a-finished-zip) is the **destination**.
 It is not what the repo looks like today.
@@ -744,7 +745,7 @@ Then work the **Phase 7** list in the acceptance check.
 
 ## Phase 8 is for WooCommerce templates
 
-**Status:** **next.**
+**Status:** done.
 
 **What you are making:** if Woo is installed, shop/product/cart/checkout/account are not unstyled core.
 If Woo is not installed, the theme still activates.
@@ -785,13 +786,13 @@ Woo on → shop/product look like Default.
 Woo off → theme still activates.
 Theme Check does not fail on missing Woo.
 
-Then work the **Phase 8** list in the acceptance check.
+Phase 8 is covered by the WooCommerce E2E profile and the matching acceptance checks.
 
 ---
 
 ## Phase 9 is for the remaining PHP host work
 
-**Status:** later (after Phase 8).
+**Status:** **next.**
 
 **What you are making:** recommend Stackable without auto-installing it, and optionally share breakpoints with the plugin.
 Identity (supports, enqueue, body class) is **already** in `functions.php`.
@@ -1027,6 +1028,14 @@ Templates and parts should become **one-line pattern includes** so strings stay 
 
 Do not add standalone hero, pricing, testimonial, team, FAQ, or logo-grid patterns.
 
-### Woo patterns (`Inserter: false` unless a card is reusable)
+### Woo patterns (`Inserter: false`)
 
-Shop archive, single product, cart, checkout, account: core/Woo blocks, same tokens.
+| Slug | Template Types | Contents |
+| --- | --- | --- |
+| `product-collection` | (shared atom) | Catalog toolbar, three-column product cards, pagination, and no-results state |
+| `template-archive-product` | `archive-product` | Header, breadcrumbs, archive title/description, notices, product collection, footer |
+| `template-product-search-results` | `product-search-results` | Header, breadcrumbs, search title, notices, product collection, footer |
+| `template-single-product` | `single-product` | Header, breadcrumbs, gallery, product details, related products, footer |
+| `template-page-cart` | `page-cart` | Header, Woo page wrapper, notices, page title/content, footer |
+| `template-page-checkout` | `page-checkout` | Minimal header, Woo page wrapper, notices, page content, landing footer |
+| `template-order-confirmation` | `order-confirmation` | Minimal header, order status/summary/details/addresses, landing footer |

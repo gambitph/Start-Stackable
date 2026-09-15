@@ -22,10 +22,24 @@ jobs:
           - php_version: '8.3'
             wp_version: 'latest'
             theme_slug: 'Start-Stackable'
+            profile: standalone
+            test_script: test:e2e
           - php_version: '7.4'
             wp_version: '6.9'
             theme_slug: 'start-stackable'
-    name: e2e PHP ${{ matrix.php_version }} WP ${{ matrix.wp_version }} (${{ matrix.theme_slug }})
+            profile: standalone
+            test_script: test:e2e
+          - php_version: '8.3'
+            wp_version: 'latest'
+            theme_slug: 'Start-Stackable'
+            profile: woocommerce
+            test_script: test:e2e:woo
+          - php_version: '7.4'
+            wp_version: '6.9'
+            theme_slug: 'start-stackable'
+            profile: woocommerce
+            test_script: test:e2e:woo
+    name: ${{ matrix.profile }} PHP ${{ matrix.php_version }} WP ${{ matrix.wp_version }} (${{ matrix.theme_slug }})
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -59,11 +73,11 @@ jobs:
           WP_PHP_VERSION: ${{ matrix.php_version }}
           WP_VERSION: ${{ matrix.wp_version }}
           THEME_SLUG: ${{ matrix.theme_slug }}
-        run: npm run test:e2e
+        run: npm run ${{ matrix.test_script }}
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() && steps.run-playwright-tests.outcome == 'failure' }}
         with:
-          name: playwright-report-php_${{ matrix.php_version }}-wp_${{ matrix.wp_version }}
+          name: playwright-report-${{ matrix.profile }}-php_${{ matrix.php_version }}-wp_${{ matrix.wp_version }}
           path: playwright-report/
           overwrite: true
           retention-days: 30

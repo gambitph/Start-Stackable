@@ -31,11 +31,21 @@ const ATOM_PATTERNS = [
 	'start-stackable/post-card',
 	'start-stackable/post-meta',
 ]
+const WOOCOMMERCE_PATTERNS = [
+	'start-stackable/product-collection',
+	'start-stackable/template-archive-product',
+	'start-stackable/template-order-confirmation',
+	'start-stackable/template-page-cart',
+	'start-stackable/template-page-checkout',
+	'start-stackable/template-product-search-results',
+	'start-stackable/template-single-product',
+]
 const STARTER_PATTERN = 'start-stackable/page-home'
 const ALL_PATTERNS = [
 	...TEMPLATE_PATTERNS,
 	...PART_PATTERNS,
 	...ATOM_PATTERNS,
+	...WOOCOMMERCE_PATTERNS,
 	STARTER_PATTERN,
 ]
 const INSERTER_PATTERNS = [
@@ -102,11 +112,18 @@ test.describe( 'Pattern catalog', () => {
 			.sort()
 		const homepage = themePatterns.find( ( pattern ) => pattern.name === STARTER_PATTERN )
 
-		expect( themePatterns.map( ( pattern ) => pattern.name ).sort() ).toEqual( ALL_PATTERNS.sort() )
-		expect( visiblePatterns ).toEqual( INSERTER_PATTERNS.sort() )
+		expect( themePatterns.map( ( pattern ) => pattern.name ).sort() ).toEqual(
+			[ ...ALL_PATTERNS ].sort()
+		)
+		expect( visiblePatterns ).toEqual( [ ...INSERTER_PATTERNS ].sort() )
 		expect(
 			themePatterns
 				.filter( ( pattern ) => TEMPLATE_PATTERNS.includes( pattern.name ) )
+				.every( ( pattern ) => pattern.inserter === false )
+		).toBe( true )
+		expect(
+			themePatterns
+				.filter( ( pattern ) => WOOCOMMERCE_PATTERNS.includes( pattern.name ) )
 				.every( ( pattern ) => pattern.inserter === false )
 		).toBe( true )
 		expect(
