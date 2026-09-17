@@ -39,6 +39,16 @@ jobs:
             theme_slug: 'start-stackable'
             profile: woocommerce
             test_script: test:e2e:woo
+          - php_version: '8.3'
+            wp_version: 'latest'
+            theme_slug: 'Start-Stackable'
+            profile: onboarding
+            test_script: test:e2e:onboarding
+          - php_version: '7.4'
+            wp_version: '6.9'
+            theme_slug: 'start-stackable'
+            profile: onboarding
+            test_script: test:e2e:onboarding
     name: ${{ matrix.profile }} PHP ${{ matrix.php_version }} WP ${{ matrix.wp_version }} (${{ matrix.theme_slug }})
     steps:
       - uses: actions/checkout@v4

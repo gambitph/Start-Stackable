@@ -25,6 +25,30 @@ async function waitForWooCommerce( requestUtils ) {
 	throw new Error( 'WooCommerce did not become ready within 300 seconds.' )
 }
 
+async function waitForStackable( requestUtils ) {
+	const deadline = Date.now() + 300_000
+
+	while ( Date.now() < deadline ) {
+		try {
+			const plugins = await requestUtils.rest( {
+				path: '/wp/v2/plugins',
+			} )
+			if (
+				plugins.some( ( plugin ) =>
+					plugin.plugin.startsWith( 'stackable-ultimate-gutenberg-blocks/' )
+				)
+			) {
+				return
+			}
+		} catch {
+			// The plugin endpoint can be unavailable while the blueprint is running.
+		}
+		await new Promise( ( resolve ) => setTimeout( resolve, 1_000 ) )
+	}
+
+	throw new Error( 'Stackable did not become available within 300 seconds.' )
+}
+
 async function activateThemeWhenMounted( requestUtils, themeSlug ) {
 	const deadline = Date.now() + 60_000
 
@@ -54,6 +78,9 @@ module.exports = async function globalSetup() {
 	await requestUtils.setupRest()
 	if ( process.env.E2E_PROFILE === 'woocommerce' ) {
 		await waitForWooCommerce( requestUtils )
+	}
+	if ( process.env.E2E_PROFILE === 'onboarding' ) {
+		await waitForStackable( requestUtils )
 	}
 	await activateThemeWhenMounted(
 		requestUtils,

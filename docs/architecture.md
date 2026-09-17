@@ -15,7 +15,7 @@ Current phase status and how to implement live in [`prd/start-stackable.md`](./p
  theme.json + styles/              design system (Default)
  templates/ + parts/ + patterns/   header, footer, canvases, blog, WooCommerce
  src/ → assets/build/              header-flag CSS/JS (theme.json cannot express)
- functions.php                     enqueue, body class, recommend plugin, flags host
+ functions.php                     enqueue, body class, plugin notice, breakpoints
         ▲
         │  CONTRACT snap-in (plugin writes flags / variation / styles overlay)
         │

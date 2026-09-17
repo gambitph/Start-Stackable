@@ -28,6 +28,15 @@ test.describe( 'Standalone activate', () => {
 		expect( await admin.getPageError() ).toBeNull()
 
 		await expect( page.locator( `.theme.active[data-slug="${ THEME_SLUG }"]` ) ).toBeVisible()
+
+		const notice = page.locator( '.start-stackable-plugin-notice' )
+		await expect( notice ).toBeVisible()
+		await expect(
+			notice.getByRole( 'link', { name: 'Install Stackable' } )
+		).toHaveAttribute(
+			'href',
+			new RegExp( 'plugin=stackable-ultimate-gutenberg-blocks' )
+		)
 	} )
 
 	test( 'Front page loads header and footer without Stackable markup', async ( {

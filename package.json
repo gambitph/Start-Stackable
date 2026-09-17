@@ -15,8 +15,10 @@
 		"build": "npm run compile && node scripts/package.js ${npm_config_suffix}",
 		"test": "npm run test:e2e",
 		"test:e2e": "npx playwright test",
+		"test:e2e:onboarding": "E2E_PROFILE=onboarding npx playwright test",
 		"test:e2e:woo": "E2E_PROFILE=woocommerce npx playwright test",
 		"test:debug": "npx playwright test --ui",
+		"test:debug:onboarding": "E2E_PROFILE=onboarding npx playwright test --ui",
 		"test:debug:woo": "E2E_PROFILE=woocommerce npx playwright test --ui"
 	},
 	"devDependencies": {

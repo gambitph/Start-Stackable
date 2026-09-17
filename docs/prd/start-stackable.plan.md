@@ -11,7 +11,7 @@ Do not start the next phase until the current one is checked off.
 
 ## How to use this file
 
-1. Confirm you are on the phase marked **next** (right now: Phase 9).
+1. Confirm you are on the phase marked **next** (right now: Phase 10).
 2. Read that phase's "is for" sentence so you know the job.
 3. Do the numbered items in order.
    Each item has **What** (the outcome) and **How** (the files and edits).
@@ -48,8 +48,9 @@ Constants for every file you add:
 | 6 Header flags | **Done.** Skip it. |
 | 7 Patterns | **Done.** Skip it. |
 | 8 WooCommerce templates | **Done.** Skip it. |
-| 9 PHP host | **Next.** |
-| 10-11 | Later. Do not start these yet. |
+| 9 PHP host | **Done.** Skip it. |
+| 10 WordPress.org packaging | **Next.** |
+| 11 | Later. Do not start this yet. |
 
 The file tree in the [appendix](#appendix-a-finished-zip) is the **destination**.
 It is not what the repo looks like today.
@@ -792,7 +793,7 @@ Phase 8 is covered by the WooCommerce E2E profile and the matching acceptance ch
 
 ## Phase 9 is for the remaining PHP host work
 
-**Status:** **next.**
+**Status:** done.
 
 **What you are making:** recommend Stackable without auto-installing it, and optionally share breakpoints with the plugin.
 Identity (supports, enqueue, body class) is **already** in `functions.php`.
@@ -846,13 +847,13 @@ Plugin off → notice dismissible, site works.
 Plugin on → body class present, notice gone.
 Activate never creates kit pages.
 
-Then work the **Phase 9** list in the acceptance check.
+Phase 9 is covered by the onboarding E2E profile and the matching acceptance checks.
 
 ---
 
 ## Phase 10 is for WordPress.org packaging
 
-**Status:** later (after Phase 9).
+**Status:** **next.**
 
 **What you are making:** a zip a Theme Directory reviewer can walk **without** Stackable.
 

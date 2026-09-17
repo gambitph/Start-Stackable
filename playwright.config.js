@@ -13,34 +13,55 @@ const path = require( 'path' )
 const { defineConfig, devices } = require( '@playwright/test' )
 
 const E2E_PROFILE = process.env.E2E_PROFILE || 'standalone'
-const IS_WOOCOMMERCE = E2E_PROFILE === 'woocommerce'
-// Distinct from Stackable (9420), Cimo (9410), and the other local profile.
-const PORT = process.env.WP_PORT || ( IS_WOOCOMMERCE ? '9431' : '9430' )
+const E2E_PROFILES = {
+	standalone: {
+		blueprint: 'e2e/playground-blueprint.json',
+		defaultPort: '9430',
+		serverTimeout: 180,
+		storageState: 'e2e/.auth/admin.json',
+		testIgnore: [ '**/onboarding.spec.ts', '**/woocommerce.spec.ts' ],
+		testMatch: '**/*.spec.ts',
+	},
+	woocommerce: {
+		blueprint: 'e2e/playground-woocommerce-blueprint.json',
+		defaultPort: '9431',
+		serverTimeout: 360,
+		storageState: 'e2e/.auth/admin-woocommerce.json',
+		testMatch: '**/woocommerce.spec.ts',
+	},
+	onboarding: {
+		blueprint: 'e2e/playground-onboarding-blueprint.json',
+		defaultPort: '9432',
+		serverTimeout: 180,
+		storageState: 'e2e/.auth/admin-onboarding.json',
+		testMatch: '**/onboarding.spec.ts',
+	},
+}
+const PROFILE = E2E_PROFILES[ E2E_PROFILE ]
+
+if ( ! PROFILE ) {
+	throw new Error( `Unknown E2E_PROFILE "${ E2E_PROFILE }".` )
+}
+
+// Distinct from Stackable (9420), Cimo (9410), and the other local profiles.
+const PORT = process.env.WP_PORT || PROFILE.defaultPort
 const baseURL = process.env.WP_BASE_URL || `http://127.0.0.1:${ PORT }`
 process.env.WP_BASE_URL = baseURL
 process.env.WP_USERNAME = process.env.WP_USERNAME || 'admin'
 process.env.WP_PASSWORD = process.env.WP_PASSWORD || 'password'
 process.env.THEME_SLUG = process.env.THEME_SLUG || 'start-stackable'
 
-const STORAGE_STATE_PATH = path.join(
-	__dirname,
-	IS_WOOCOMMERCE ? 'e2e/.auth/admin-woocommerce.json' : 'e2e/.auth/admin.json'
-)
+const STORAGE_STATE_PATH = path.join( __dirname, PROFILE.storageState )
 process.env.STORAGE_STATE_PATH = STORAGE_STATE_PATH
 
-const PLAYGROUND_BLUEPRINT = path.join(
-	__dirname,
-	IS_WOOCOMMERCE
-		? 'e2e/playground-woocommerce-blueprint.json'
-		: 'e2e/playground-blueprint.json'
-)
+const PLAYGROUND_BLUEPRINT = path.join( __dirname, PROFILE.blueprint )
 const PHP_VERSION = process.env.WP_PHP_VERSION || '8.2'
 const WP_VERSION = process.env.WP_VERSION || 'latest'
 
 module.exports = defineConfig( {
 	testDir: './e2e/tests',
-	testMatch: IS_WOOCOMMERCE ? '**/woocommerce.spec.ts' : '**/*.spec.ts',
-	testIgnore: IS_WOOCOMMERCE ? undefined : '**/woocommerce.spec.ts',
+	testMatch: PROFILE.testMatch,
+	testIgnore: PROFILE.testIgnore,
 	globalSetup: require.resolve( './e2e/config/global-setup.js' ),
 	fullyParallel: false,
 	forbidOnly: !! process.env.CI,
@@ -65,7 +86,7 @@ module.exports = defineConfig( {
 		// The authenticated global setup waits for WooCommerce when that profile is active.
 		port: Number( PORT ),
 		reuseExistingServer: ! process.env.CI,
-		timeout: ( IS_WOOCOMMERCE ? 360 : 180 ) * 1000,
+		timeout: PROFILE.serverTimeout * 1000,
 		stdout: 'pipe',
 		stderr: 'pipe',
 	},

@@ -15,12 +15,12 @@ There is almost no classic PHP templating.
 
 The theme is **not finished**.
 What you have now is a working theme shell: it activates, the Site Editor opens, the header and footer are designed, and the compile/zip tooling works.
-The first-activation blog, page canvases, header behavior, optional Homepage pattern, and WooCommerce templates are complete.
+The first-activation blog, page canvases, header behavior, optional Homepage pattern, WooCommerce templates, and PHP host are complete.
 
 Work is organized as **phases 0 through 11** in the [implementation plan](./start-stackable.plan.md).
-Phases 0-8 are done.
-**The next work is Phase 9** (the remaining PHP host work).
-Do not skip ahead to directory packaging or Site Kit snap-in until that phase's **Done when** is true.
+Phases 0-9 are done.
+**The next work is Phase 10** (WordPress.org packaging).
+Do not skip ahead to Site Kit snap-in until that phase's **Done when** is true.
 
 If a word feels loaded (Default, shell, token, canvas, header flag), see [`CONTEXT.md`](../../CONTEXT.md).
 
@@ -63,20 +63,21 @@ CSS in `src/` is only for things `theme.json` cannot do, such as measuring heade
 
 ## Current state (you are here)
 
-Snapshot of the tree as of 14 September 2026.
+Snapshot of the tree as of 15 September 2026.
 If the files and this section disagree, trust the files and the [phase checklists](./start-stackable.check.md).
 
-**Phases 0-8 are complete.**
+**Phases 0-9 are complete.**
 The theme is a valid block theme that activates without a PHP fatal.
 `functions.php` enqueues `assets/build/frontend.*` and adds the body class `stk--is-stackable-theme`.
 `npm run start` compiles `src/` into `assets/build/`.
 Template and part **files** exist.
 Color palette **slugs** and content/wide widths already match the token contract below.
 
-Phases 9-11 are unfinished.
+Phases 10-11 are unfinished.
 Sticky, transparent, scroll-to-solid, measured height, and mobile overlay behavior are implemented and covered by the consolidated E2E suite.
 The complete shell pattern catalog and one optional core-block Homepage starter are available in the inserter.
 WooCommerce activates into designed catalog, product, cart, checkout, My Account, and order confirmation views while remaining optional.
+The PHP host recommends Stackable without installing it, persists dismissal, and shares responsive breakpoints only while the plugin is active.
 
 | Phase | Status | What is true now | What "done" looks like |
 | --- | --- | --- | --- |
@@ -89,13 +90,13 @@ WooCommerce activates into designed catalog, product, cart, checkout, My Account
 | 6 Header flags | Done | Theme CSS/JS honors sticky and transparent flags, applies scroll-to-solid, measures header height, and layers mobile navigation above a hero | (already met) |
 | 7 Patterns | Done | Header/footer, blog atoms, hidden template patterns, and exactly one Homepage starter form the complete shell catalog | (already met) |
 | 8 Woo templates | Done | Thin Woo template files use hidden Woo/core-block patterns and theme tokens; mobile Cart/Checkout and inactive-plugin behavior are covered | (already met) |
-| 9 PHP host | Partial | Setup, enqueue, body class | Dismissible "install Stackable" notice + optional breakpoint handshake |
+| 9 PHP host | Done | Setup, enqueue, body class, dismissible Stackable recommendation, and active-plugin breakpoint handshake | (already met) |
 | 10 Directory packaging | Not started | No `screenshot.png`; tags incomplete | WP.org zip: screenshot of Default, licenses, honest tags |
 | 11 Snap-in | Not started | Contract is documented only | Plugin can assign `full-width` + header flags without a theme PHP change |
 
 Honest one-liner: this is a **designed standalone shell with page canvases, theme-owned header behavior, and optional WooCommerce storefront templates**.
-Plugin integration still comes later.
-Continue with Phase 9, the remaining PHP host work.
+Site Kit snap-in integration still comes later.
+Continue with Phase 10, WordPress.org packaging.
 
 ## How we develop
 
@@ -103,7 +104,7 @@ This is sequential craft, not "pick a random file."
 
 1. **Read this guide** so you know what the theme is allowed to own.
 2. **Open the next unfinished phase** in the [plan](./start-stackable.plan.md).
-   Right now that is Phase 9.
+   Right now that is Phase 10.
    Do not skip a phase.
 3. **Implement in the existing seam**, not a parallel system:
    - look → `theme.json` and `styles/`
@@ -338,7 +339,7 @@ Do not ship `function.php`.
 
 Compiled extras enqueue from here (`assets/build/frontend.*`, source in `src/`).
 
-Minimum (Phase 9 completes the last two; Phase 0 already has the first two):
+The PHP host includes:
 
 - `add_theme_support` for editor styles / responsive embeds / block styles as needed.
 - `body_class` filter → `stk--is-stackable-theme`.
@@ -360,8 +361,8 @@ The zip must stand alone: `screenshot.png` that matches Default, designed templa
 ## Implementation
 
 Numbered what/how steps per phase: [`start-stackable.plan.md`](./start-stackable.plan.md).
-Skip Phases 0-8 (done).
-Continue Phase 9 and do the numbered items in order.
+Skip Phases 0-9 (done).
+Continue Phase 10 and do the numbered items in order.
 Do not skip a phase's **This phase is done when**.
 
 E2E specs to create once a surface exists: table in [`start-stackable.agents.md`](./start-stackable.agents.md#e2e-create-these).
