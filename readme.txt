@@ -41,8 +41,15 @@ Yes. WooCommerce is optional, and its storefront views use the same theme styles
 
 == Copyright ==
 
-Start Stackable Theme, (C) 2025 Gambit Tehcnologies Inc.
+Start Stackable Theme, (C) 2025 Gambit Technologies Inc.
 Start Stackable is distributed under the terms of the GNU GPL.
+
+Theme screenshot
+Copyright 2026 Gambit Technologies Inc.
+License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+The screenshot uses the theme's own rendered interface and original sample text.
+No third-party images are bundled with this theme.
 
 Plus Jakarta Sans
 Copyright 2020 The Plus Jakarta Sans Project Authors (https://github.com/tokotype/PlusJakartaSans)

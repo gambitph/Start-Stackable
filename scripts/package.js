@@ -23,7 +23,6 @@ const INCLUDED_FILES = [
 	'readme.txt',
 	'functions.php',
 	'screenshot.png',
-	'screenshot.jpg',
 ]
 
 const INCLUDED_DIRS = [
