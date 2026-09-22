@@ -84,7 +84,7 @@ The PHP host recommends Stackable without installing it, persists dismissal, and
 | 0 Bootstrap | Done | Theme activates; compile/zip works | (already met) |
 | 1 Design system | Done | Token contract, Jakarta headings, system body, fluid type and spacing, shadows, radius, and core-block styles are implemented | (already met) |
 | 2 Style variations | Done | Nine color skins, including Dark, plus Compact and Editorial typography presets use the shared token contract | (already met) |
-| 3 Header and footer | Done | Five core-only patterns own the shell markup; parts are thin pattern includes | (already met) |
+| 3 Header and footer | Done | Six core-only patterns own the shell markup and presets; parts are thin pattern includes | (already met) |
 | 4 First-activation blog | Done | Shared blog atoms and hidden template patterns own thin blog templates | (already met) |
 | 5 Canvases | Done | Hidden canvas patterns own thin `page`, `full-width`, and `blank` templates | (already met) |
 | 6 Header flags | Done | Theme CSS/JS honors sticky and transparent flags, applies scroll-to-solid, measures header height, and layers mobile navigation above a hero | (already met) |
@@ -227,8 +227,11 @@ Never import on theme or plugin activation.
 | One Homepage starter page (core blocks) | Multi-page kits + menus + Global Design System |
 | Dismissible "install Stackable" notice | Plugin admin, Freemius, REST |
 
-Header **layouts** are template parts (`header`, `header-transparent`, `header-minimal`).
-Header **flags** are behaviors (sticky, transparent, on-scroll solid).
+Header **presets** are template parts (`header`, `header-sticky`, `header-transparent`, `header-minimal`).
+Header **flags** are independent behaviors (sticky, transparent, on-scroll solid).
+The `header-sticky` part applies the sticky flag to the solid header layout.
+The `header-transparent` part is the backward-compatible Sticky Transparent preset and applies both public flags.
+A non-sticky transparent header uses the standard `header` part with only the transparent flag.
 A kit says: use part X with flags Y.
 Do not create a new part for every combination.
 
@@ -290,7 +293,8 @@ Do not ship `front-page.html`.
 | Part | Role |
 | --- | --- |
 | `header` | Default solid bar |
-| `header-transparent` | Overlay for hero homes |
+| `header-sticky` | Solid bar that stays at the top while scrolling |
+| `header-transparent` | Sticky transparent overlay for hero homes; becomes solid after scroll |
 | `header-minimal` | Quiet inner/landing |
 | `footer` | Default columns |
 | `footer-landing` | Compact |

@@ -1,15 +1,32 @@
+import type { RequestUtils } from '@wordpress/e2e-test-utils-playwright'
 import { test, expect } from '../test-utils/test'
 import { getContrastRatio } from '../test-utils/color'
 
 const THEME_SLUG = process.env.THEME_SLUG || 'start-stackable'
-const HEADER_FLAGS = [
-	'stk-shell-header-sticky',
-	'stk-shell-header-transparent',
-]
+
+type BlockPattern = {
+	content?: string
+	name: string
+}
 
 type RestRecord = {
 	id: number
 	link: string
+}
+
+async function installHeaderPreset( requestUtils: RequestUtils, patternSlug: string ) {
+	const patterns = await requestUtils.rest< BlockPattern[] >( {
+		path: '/wp/v2/block-patterns/patterns',
+	} )
+	const pattern = patterns.find( ( candidate ) => candidate.name === patternSlug )
+	expect( pattern?.content ).toBeTruthy()
+
+	await requestUtils.deleteAllTemplates( 'wp_template_part' )
+	await requestUtils.createTemplate( 'wp_template_part', {
+		slug: 'header',
+		title: 'Header preset fixture',
+		content: pattern!.content,
+	} )
 }
 
 test.describe( 'Header flags', () => {
@@ -25,29 +42,10 @@ test.describe( 'Header flags', () => {
 			status: 'publish',
 			template: 'full-width',
 		} )
-
-		await page.addInitScript( ( flags ) => {
-			const applyFlags = () => {
-				if ( ! document.body ) {
-					return false
-				}
-
-				document.body.classList.add( ...flags )
-				return true
-			}
-
-			if ( ! applyFlags() ) {
-				const observer = new MutationObserver( () => {
-					if ( applyFlags() ) {
-						observer.disconnect()
-					}
-				} )
-				observer.observe( document, { childList: true, subtree: true } )
-			}
-		}, HEADER_FLAGS )
 	} )
 
 	test.afterEach( async ( { requestUtils } ) => {
+		await requestUtils.deleteAllTemplates( 'wp_template_part' )
 		if ( fixture?.id ) {
 			await requestUtils.rest( {
 				method: 'DELETE',
@@ -59,7 +57,9 @@ test.describe( 'Header flags', () => {
 
 	test( 'transparent sticky header becomes solid and keeps mobile navigation above the hero', async ( {
 		page,
+		requestUtils,
 	} ) => {
+		await installHeaderPreset( requestUtils, 'start-stackable/header-transparent' )
 		await page.setViewportSize( { width: 1440, height: 900 } )
 		await page.goto( fixture.link )
 
@@ -114,5 +114,29 @@ test.describe( 'Header flags', () => {
 		expect( stacking.menu ).toBeGreaterThan( stacking.hero )
 		await mobileMenu.locator( '.wp-block-navigation__responsive-container-close' ).click()
 		await expect( mobileMenu ).not.toBeVisible()
+	} )
+
+	test( 'solid sticky header remains opaque while it sticks', async ( {
+		page,
+		requestUtils,
+	} ) => {
+		await installHeaderPreset( requestUtils, 'start-stackable/header-sticky' )
+		await page.setViewportSize( { width: 1440, height: 900 } )
+		await page.goto( fixture.link )
+
+		const header = page.locator( '.wp-site-blocks > header' )
+		const headerSurface = header.locator( ':scope > .wp-block-group' )
+		await expect( header ).toHaveClass( /stk-shell-header-sticky/ )
+		await expect( header ).not.toHaveClass( /stk-shell-header-transparent/ )
+		await expect( header ).toHaveCSS( 'position', 'sticky' )
+		await expect( headerSurface ).not.toHaveCSS( 'background-color', 'rgba(0, 0, 0, 0)' )
+
+		await page.evaluate( () => window.scrollTo( 0, 500 ) )
+		await expect( header ).toHaveClass( /stk-shell-header-scrolled/ )
+		const headerBox = await header.boundingBox()
+		const stickyTop = await header.evaluate( ( element ) => Number.parseFloat( getComputedStyle( element ).top ) )
+		expect( headerBox ).not.toBeNull()
+		expect( headerBox!.y ).toBeCloseTo( stickyTop, 0 )
+		await expect( headerSurface ).not.toHaveCSS( 'background-color', 'rgba(0, 0, 0, 0)' )
 	} )
 } )

@@ -414,7 +414,7 @@ The intended structure is: markup lives in a **pattern** file, and `parts/*.html
 
 **Files you will add or edit:**
 
-- `patterns/header.php`, `header-transparent.php`, `header-minimal.php`, `footer.php`, `footer-landing.php`
+- `patterns/header.php`, `header-sticky.php`, `header-transparent.php`, `header-minimal.php`, `footer.php`, `footer-landing.php`
 - `parts/*.html` (replace current markup with a pattern include)
 - `theme.json` `templateParts` (already registered; do not duplicate)
 
@@ -459,12 +459,13 @@ See [Appendix B](#appendix-b-pattern-inventory) for the slug list.
    Check: the front still shows a header.
    Editing the pattern edits every template that uses the header part.
 
-3. **Repeat for transparent, minimal, both footers**
+3. **Repeat for sticky, sticky transparent, minimal, and both footers**
 
-   What: five designed parts, five patterns.
+   What: six designed parts and six patterns.
 
    How: same as steps 1-2 for:
-   - `start-stackable/header-transparent` (same structure, no opaque background)
+   - `start-stackable/header-sticky` (same structure as `header`, with the sticky flag)
+   - `start-stackable/header-transparent` (backward-compatible slug for the Sticky Transparent preset, with both public flags)
    - `start-stackable/header-minimal` (compact)
    - `start-stackable/footer` (columns: identity, socials, two navs, copyright)
    - `start-stackable/footer-landing` (compact)
@@ -969,7 +970,7 @@ start-stackable/
   assets/build/          # compiled frontend.css / .js / .asset.php
   templates/             # index, home, page, full-width, blank, single,
                          # archive, search, 404, plus Woo files if Phase 8 shipped
-  parts/                 # header, header-transparent, header-minimal,
+  parts/                 # header, header-sticky, header-transparent, header-minimal,
                          # footer, footer-landing
   patterns/              # see Appendix B
   styles/colors/*.json
@@ -1008,7 +1009,8 @@ Templates and parts should become **one-line pattern includes** so strings stay 
 | Slug | Part |
 | --- | --- |
 | `header` | Solid bar: Site Title or Logo, Navigation **without `ref`**, optional search or button |
-| `header-transparent` | Same structure, no opaque background |
+| `header-sticky` | Solid header structure with the sticky flag |
+| `header-transparent` | Backward-compatible slug for the Sticky Transparent preset; applies sticky and transparent flags |
 | `header-minimal` | Compact |
 | `footer` | Columns: site identity, socials, two nav columns, copyright = site name not "Start Stackable Theme" |
 | `footer-landing` | Compact |

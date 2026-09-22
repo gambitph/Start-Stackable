@@ -57,7 +57,8 @@ If a kit needs a new header or footer behavior, add it here and extend this list
 | Primitive | Guarantee |
 | --- | --- |
 | `header` | Solid header part: logo/title, Navigation, optional search/CTA. Valid on a fresh install (no hardcoded `ref` IDs). |
-| `header-transparent` | Same structure, no opaque background, sits over the first full-bleed section. |
+| `header-sticky` | Solid Sticky preset: same structure as `header`, applies the sticky flag, and stays at the top while scrolling. |
+| `header-transparent` | Backward-compatible Sticky Transparent preset: same structure, applies both public header flags, overlays the first full-bleed section, and becomes solid after scroll. |
 | `header-minimal` | Compact header for inner/landing use. |
 | Sticky flag | Header stays at the top of the viewport while scrolling. Theme-owned, works with Stackable off. |
 | Transparent flag | Header overlays the page canvas. Combinable with sticky. |
@@ -73,8 +74,10 @@ If a kit needs a new header or footer behavior, add it here and extend this list
 | `stk--is-stackable-theme` | Body class when this theme is active. |
 | Recommend Stackable | Dismissible admin notice. Does not auto-install. User action only. WordPress.org plugin slug only. Gone when the plugin is active. |
 
-Sticky is a **flag**, not a fourth header layout.
-Transparent is a **flag** (and a dedicated part when the markup differs).
+Sticky is a **flag**, and `header-sticky` is the convenience preset that applies it to the solid header layout.
+Transparent is also a flag.
+The `header-transparent` part is the user-facing Sticky Transparent preset and keeps its established slug for compatibility.
+Use the standard `header` part with only the transparent flag when a non-sticky overlay is required.
 Do not implement sticky by requiring a Stackable container in the header.
 The runtime normalizes the two public flag classes onto the actual header wrapper and adds `stk-shell-header-scrolled` there as internal scroll state.
 Plugins and kits should write only the two public contract flag classes.

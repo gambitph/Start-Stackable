@@ -624,8 +624,13 @@
             "area": "header"
         },
         {
+            "name": "header-sticky",
+            "title": "Header Sticky",
+            "area": "header"
+        },
+        {
             "name": "header-transparent",
-            "title": "Header Transparent",
+            "title": "Header Sticky Transparent",
             "area": "header"
         },
         {

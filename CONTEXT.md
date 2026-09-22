@@ -36,7 +36,7 @@ A kit-owned `theme.json` styles object the plugin writes as user Global Styles s
 _Avoid_: editing theme files from the plugin, a second palette vocabulary
 
 **Header part**:
-A template part that is the site header (`header`, `header-transparent`, `header-minimal`).
+A template part that is the site header (`header`, `header-sticky`, `header-transparent`, `header-minimal`).
 _Avoid_: header block (unless you mean a core block inside the part), chrome
 
 **Header flag**:

@@ -62,7 +62,7 @@ Stop if law and the tree disagree; law wins.
 - [ ] `styles.elements` covers heading, link, button (including outline).
 - [ ] `styles.blocks` covers button, navigation, site-title, quote, search, query-pagination, post-title at minimum.
 - [ ] `customTemplates` includes `full-width` and `blank`.
-- [ ] `templateParts` includes `header`, `header-transparent`, `header-minimal`, `footer`, `footer-landing`.
+- [ ] `templateParts` includes `header`, `header-sticky`, `header-transparent`, `header-minimal`, `footer`, `footer-landing`.
 
 ---
 
@@ -109,6 +109,8 @@ Stop if law and the tree disagree; law wins.
 ## Phase 6 - Header flags
 
 - [ ] Sticky works without a Stackable container.
+- [ ] `header-sticky` is available as a registered header template part and applies the sticky flag.
+- [ ] `header-transparent` is presented as Sticky Transparent and applies both public header flags.
 - [ ] Transparent header overlays a full-bleed first section on `full-width`.
 - [ ] After scroll, header background is opaque and text stays readable.
 - [ ] `--stk-header-height` is set to a non-zero px value on the front.

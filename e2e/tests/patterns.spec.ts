@@ -24,6 +24,7 @@ const PART_PATTERNS = [
 	'start-stackable/footer-landing',
 	'start-stackable/header',
 	'start-stackable/header-minimal',
+	'start-stackable/header-sticky',
 	'start-stackable/header-transparent',
 ]
 const ATOM_PATTERNS = [
@@ -111,7 +112,6 @@ test.describe( 'Pattern catalog', () => {
 			.map( ( pattern ) => pattern.name )
 			.sort()
 		const homepage = themePatterns.find( ( pattern ) => pattern.name === STARTER_PATTERN )
-
 		expect( themePatterns.map( ( pattern ) => pattern.name ).sort() ).toEqual(
 			[ ...ALL_PATTERNS ].sort()
 		)

@@ -8,6 +8,7 @@ const SHELL_PARTS = [
 	'footer-landing',
 	'header',
 	'header-minimal',
+	'header-sticky',
 	'header-transparent',
 ]
 
