@@ -43,6 +43,10 @@ _Avoid_: header block (unless you mean a core block inside the part), chrome
 A behavior applied to a header part: sticky, transparent, hide.
 _Avoid_: treating sticky as a fourth header layout
 
+**Navigation overflow**:
+Theme-owned header behavior that moves trailing desktop Navigation items into a More disclosure when their rendered widths do not fit, then restores them for wider layouts and core's mobile overlay.
+_Avoid_: fixed item limits, plugin-only menu CSS, a Site Kit overflow flag
+
 **Page canvas**:
 How a page’s main content is framed: default, full-bleed no-title, blank (no header/footer).
 _Avoid_: Site Kit page (plugin content)

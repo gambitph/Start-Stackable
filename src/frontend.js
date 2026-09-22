@@ -4,3 +4,4 @@
  */
 import './css/frontend.css'
 import './js/header-flags'
+import './js/navigation-overflow'

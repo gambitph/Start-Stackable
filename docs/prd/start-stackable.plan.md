@@ -45,7 +45,7 @@ Constants for every file you add:
 | 3 Header and footer | **Done.** Skip it. |
 | 4 First-activation blog | **Done.** Skip it. |
 | 5 Page canvases | **Done.** Skip it. |
-| 6 Header flags | **Done.** Skip it. |
+| 6 Header behavior | **Done.** Skip it. |
 | 7 Patterns | **Done.** Skip it. |
 | 8 WooCommerce templates | **Done.** Skip it. |
 | 9 PHP host | **Done.** Skip it. |
@@ -621,16 +621,16 @@ Then work the **Phase 5** list in the acceptance check.
 
 ---
 
-## Phase 6 is for sticky and transparent header behavior
+## Phase 6 is for sticky, transparent, and Navigation overflow behavior
 
 **Status:** **done.**
 
-**What you are making:** theme-owned header **flags** (behaviors), with Stackable off.
+**What you are making:** theme-owned header **flags** and width-aware desktop Navigation overflow, with Stackable off.
 `theme.json` cannot do this, so it lives in `src/`.
 `functions.php` already enqueues the compiled bundle.
 Do not add a second enqueue.
 
-**Files:** `src/css/header-flags.css`, `src/js/header-flags.js` (stubs already exist).
+**Files:** `src/css/header-flags.css`, `src/js/header-flags.js`, `src/css/navigation-overflow.css`, `src/js/navigation-overflow.js`.
 Run `npm run start` while you edit them.
 
 Contract class names (honor these on `body` or the header wrapper):
@@ -685,12 +685,24 @@ Contract class names (honor these on `body` or the header wrapper):
 
    Check: on a phone width, open the menu over a hero; it is clickable and visible.
 
+6. **Width-aware desktop Navigation overflow**
+
+   What: a long desktop menu stays on one line and exposes the trailing items through a More disclosure.
+
+   How: measure the rendered Navigation width after fonts and layout settle.
+   Move the original trailing list items, without cloning them, until the row fits.
+   Restore all items when more room becomes available or when core Navigation switches to its mobile overlay.
+   Do not use a fixed item count or add a Site Kit flag.
+
+   Check: resize across constrained desktop, wide desktop, and phone widths; item order remains unchanged, More appears only when needed, and the core mobile overlay contains every link.
+
 ### This phase is done when
 
 A `full-width` page with a tall `alignfull` first Group shows nav over the hero.
 After scroll the bar is opaque.
 `--stk-header-height` is non-zero px.
 Mobile menu works over the hero.
+Desktop Navigation stays on one line, More contains only the trailing items that do not fit, and all links return to core Navigation on mobile.
 All with Stackable off.
 
 Then work the **Phase 6** list in the acceptance check.

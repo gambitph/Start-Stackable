@@ -50,7 +50,7 @@ These are the files you will touch, and what each one is for:
 | `parts/` | Reusable header and footer pieces that templates include. |
 | `patterns/` | Reusable block layouts. Phases 3-4 added header/footer patterns, blog atoms, and hidden blog template patterns; Phase 7 added one optional Homepage starter; Phase 8 added hidden Woo template patterns. |
 | `functions.php` | The only PHP bootstrap WordPress loads from the theme. Must be this filename (not `function.php`). |
-| `src/` | Extra CSS and JS for behavior `theme.json` cannot express (sticky/transparent header). Compiles into `assets/build/`. |
+| `src/` | Extra CSS and JS for behavior `theme.json` cannot express (sticky/transparent header and width-aware Navigation overflow). Compiles into `assets/build/`. |
 | `style.css` | Theme identity for WordPress (name, version, tags). It is not where the design system lives. |
 
 **Tokens** are the named values in `theme.json` (for example color `primary`, spacing `large`).
@@ -59,7 +59,7 @@ A raw hex or a made-up slug such as `spacing|50` is a bug.
 
 **Do not** put the color palette, type scale, or spacing scale into CSS.
 That belongs in `theme.json`.
-CSS in `src/` is only for things `theme.json` cannot do, such as measuring header height or sticky overlay behavior.
+CSS in `src/` is only for things `theme.json` cannot do, such as measuring header height, sticky overlay behavior, or width-aware Navigation overflow.
 
 ## Current state (you are here)
 
@@ -87,7 +87,7 @@ The PHP host recommends Stackable without installing it, persists dismissal, and
 | 3 Header and footer | Done | Six core-only patterns own the shell markup and presets; parts are thin pattern includes | (already met) |
 | 4 First-activation blog | Done | Shared blog atoms and hidden template patterns own thin blog templates | (already met) |
 | 5 Canvases | Done | Hidden canvas patterns own thin `page`, `full-width`, and `blank` templates | (already met) |
-| 6 Header flags | Done | Theme CSS/JS honors sticky and transparent flags, applies scroll-to-solid, measures header height, and layers mobile navigation above a hero | (already met) |
+| 6 Header behavior | Done | Theme CSS/JS honors sticky and transparent flags, applies scroll-to-solid, measures header height, keeps desktop Navigation on one line with a More disclosure, and layers mobile navigation above a hero | (already met) |
 | 7 Patterns | Done | Header/footer, blog atoms, hidden template patterns, and exactly one Homepage starter form the complete shell catalog | (already met) |
 | 8 Woo templates | Done | Thin Woo template files use hidden Woo/core-block patterns and theme tokens; mobile Cart/Checkout and inactive-plugin behavior are covered | (already met) |
 | 9 PHP host | Done | Setup, enqueue, body class, dismissible Stackable recommendation, and active-plugin breakpoint handshake | (already met) |
@@ -311,6 +311,7 @@ Kits need:
 2. After scroll: opaque background, readable nav, optional logo swap.
 3. `--stk-header-height` so heroes can pad content below the bar.
 4. Mobile overlay above the hero.
+5. Width-aware desktop overflow that moves only trailing Navigation items that do not fit into an accessible More disclosure.
 
 Implement as small theme CSS/JS in `src/` attached to the header part wrapper (Phase 6).
 Keep it presentational.
@@ -319,6 +320,8 @@ Prefer classes the kit contract names (`stk-shell-header-sticky`, `stk-shell-hea
 The theme copies either public flag from `body`, the header wrapper, or a nested header pattern onto the actual header wrapper.
 While the page is scrolled, the theme adds `stk-shell-header-scrolled` to that wrapper as internal visual state.
 Plugins and kits should not write the internal state class.
+Desktop Navigation overflow is automatic for every header part and does not add a Site Kit flag or class.
+It is based on rendered width, not a fixed item limit, and it restores every item before core Navigation takes over at mobile widths.
 
 Dual logo: two Site Logo blocks or an image pair toggled with the scrolled class.
 Document the class names in the Site Kit import contract if they are part of the public kit API.

@@ -33,7 +33,7 @@ add_action( 'after_setup_theme', 'start_stackable_setup' );
 
 if ( ! function_exists( 'start_stackable_enqueue_assets' ) ) {
 	/**
-	 * Enqueue the compiled frontend bundle (header-flag CSS/JS).
+	 * Enqueue the compiled frontend bundle for theme-owned header behavior.
 	 *
 	 * Source lives in src/. Compile with `npm run start` or `npm run compile`.
 	 */
@@ -73,6 +73,11 @@ if ( ! function_exists( 'start_stackable_enqueue_assets' ) ) {
 					'in_footer' => true,
 					'strategy'  => 'defer',
 				)
+			);
+			wp_set_script_translations(
+				'start-stackable-frontend',
+				'start-stackable',
+				get_theme_file_path( 'languages' )
 			);
 		}
 	}

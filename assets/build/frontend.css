@@ -1,1 +1,196 @@
-:root{--stk-header-height:0px}.wp-site-blocks>header:is(.stk-shell-header-sticky,.stk-shell-header-transparent){inset-inline:0;top:var(--wp-admin--admin-bar--height,0);width:100%;z-index:100}.wp-site-blocks>header.stk-shell-header-sticky{position:sticky}.wp-site-blocks>header.stk-shell-header-transparent{position:absolute}.wp-site-blocks>header:is(.stk-shell-header-sticky.stk-shell-header-transparent){margin-bottom:calc(var(--stk-header-height)*-1);position:sticky}.wp-site-blocks>header.stk-shell-header-transparent,.wp-site-blocks>header.stk-shell-header-transparent>.wp-block-group{background-color:transparent!important}.wp-site-blocks>header.stk-shell-header-transparent+main{margin-block-start:0}.wp-site-blocks>header:is(.stk-shell-header-sticky,.stk-shell-header-transparent),.wp-site-blocks>header:is(.stk-shell-header-sticky,.stk-shell-header-transparent)>.wp-block-group{transition:background-color .18s ease,box-shadow .18s ease,color .18s ease}.wp-site-blocks>header.stk-shell-header-transparent.stk-shell-header-scrolled,.wp-site-blocks>header.stk-shell-header-transparent.stk-shell-header-scrolled>.wp-block-group{background-color:var(--wp--preset--color--tint)!important;color:var(--wp--preset--color--contrast)}.wp-site-blocks>header.stk-shell-header-scrolled{box-shadow:var(--wp--preset--shadow--shadow-3)}.wp-site-blocks>header.stk-shell-header-transparent.stk-shell-header-scrolled :where(.wp-block-navigation-item__content,.wp-block-navigation__responsive-container-close,.wp-block-navigation__responsive-container-open,.wp-block-site-title a){color:var(--wp--preset--color--outline-contrast)}.wp-site-blocks>header:is(.stk-shell-header-sticky,.stk-shell-header-transparent) .wp-block-navigation__responsive-container.is-menu-open{background-color:var(--wp--preset--color--tint);color:var(--wp--preset--color--contrast);z-index:101}@media (prefers-reduced-motion:reduce){.wp-site-blocks>header:is(.stk-shell-header-sticky,.stk-shell-header-transparent),.wp-site-blocks>header:is(.stk-shell-header-sticky,.stk-shell-header-transparent)>.wp-block-group{transition:none}}
+/*!**************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[2].use[2]!./src/css/frontend.css ***!
+  \**************************************************************************************************************************************************************************/
+/**
+ * Extra CSS theme.json cannot express.
+ * Import partials here so `npm run start` emits one frontend.css.
+ *//**
+ * Header flags (Phase 6).
+ *
+ * Honor these classes on `body` or the header wrapper (shell contract):
+ * - .stk-shell-header-sticky
+ * - .stk-shell-header-transparent
+ *
+ * --stk-header-height is set at runtime in src/js/header-flags.js.
+ * Do not put palette, type, or spacing tokens here.
+ */
+:root {
+	--stk-header-height: 0px;
+}
+
+.wp-site-blocks > header:is(
+	.stk-shell-header-sticky,
+	.stk-shell-header-transparent
+) {
+	inset-inline: 0;
+	top: var(--wp-admin--admin-bar--height, 0px);
+	width: 100%;
+	z-index: 100;
+}
+
+.wp-site-blocks > header.stk-shell-header-sticky {
+	position: sticky;
+}
+
+.wp-site-blocks > header.stk-shell-header-transparent {
+	position: absolute;
+}
+
+.wp-site-blocks > header:is(
+	.stk-shell-header-sticky.stk-shell-header-transparent
+) {
+	margin-bottom: calc(-1 * var(--stk-header-height));
+	position: sticky;
+}
+
+.wp-site-blocks > header.stk-shell-header-transparent,
+.wp-site-blocks > header.stk-shell-header-transparent > .wp-block-group {
+	background-color: transparent !important;
+}
+
+.wp-site-blocks > header.stk-shell-header-transparent + main {
+	margin-block-start: 0;
+}
+
+.wp-site-blocks > header:is(
+	.stk-shell-header-sticky,
+	.stk-shell-header-transparent
+),
+.wp-site-blocks > header:is(
+	.stk-shell-header-sticky,
+	.stk-shell-header-transparent
+) > .wp-block-group {
+	transition: background-color 180ms ease, box-shadow 180ms ease, color 180ms ease;
+}
+
+.wp-site-blocks > header.stk-shell-header-transparent.stk-shell-header-scrolled,
+.wp-site-blocks > header.stk-shell-header-transparent.stk-shell-header-scrolled > .wp-block-group {
+	background-color: var(--wp--preset--color--tint) !important;
+	color: var(--wp--preset--color--contrast);
+}
+
+.wp-site-blocks > header.stk-shell-header-scrolled {
+	box-shadow: var(--wp--preset--shadow--small);
+}
+
+.wp-site-blocks > header.stk-shell-header-transparent.stk-shell-header-scrolled :where(
+	.wp-block-navigation-item__content,
+	.wp-block-navigation__responsive-container-close,
+	.wp-block-navigation__responsive-container-open,
+	.wp-block-site-title a
+) {
+	color: var(--wp--preset--color--outline-contrast);
+}
+
+.wp-site-blocks > header:is(
+	.stk-shell-header-sticky,
+	.stk-shell-header-transparent
+) .wp-block-navigation__responsive-container.is-menu-open {
+	background-color: var(--wp--preset--color--tint);
+	color: var(--wp--preset--color--contrast);
+	z-index: 101;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.wp-site-blocks > header:is(
+		.stk-shell-header-sticky,
+		.stk-shell-header-transparent
+	),
+	.wp-site-blocks > header:is(
+		.stk-shell-header-sticky,
+		.stk-shell-header-transparent
+	) > .wp-block-group {
+		transition: none;
+	}
+}
+
+/**
+ * Width-aware overflow for header Navigation blocks.
+ * Mobile layout remains owned by the core Navigation overlay.
+ */
+.wp-site-blocks > header .wp-block-navigation {
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+.wp-site-blocks > header .wp-block-navigation__responsive-container-content,
+.wp-site-blocks > header .wp-block-navigation__container {
+	min-width: 0;
+}
+
+.wp-site-blocks > header .wp-block-navigation__container,
+.wp-site-blocks > header .wp-block-page-list {
+	flex-wrap: nowrap;
+}
+
+.wp-site-blocks > header .wp-block-navigation__container > .wp-block-navigation-item > .wp-block-navigation-item__content,
+.wp-site-blocks > header .wp-block-page-list > .wp-block-navigation-item > .wp-block-navigation-item__content {
+	white-space: nowrap;
+}
+
+.stk-navigation-overflow {
+	position: relative;
+}
+
+.stk-navigation-overflow__toggle {
+	align-items: center;
+	background: transparent;
+	border: 0;
+	color: inherit;
+	cursor: pointer;
+	display: flex !important;
+	font: inherit;
+	gap: 0.5em;
+	padding: 0;
+}
+
+.stk-navigation-overflow__toggle:focus-visible {
+	outline: 2px solid currentColor;
+	outline-offset: 4px;
+}
+
+.stk-navigation-overflow__icon {
+	border-bottom: 1px solid currentColor;
+	border-right: 1px solid currentColor;
+	display: inline-block;
+	height: 0.45em;
+	transform: translateY(-0.15em) rotate(45deg);
+	transition: transform 120ms ease;
+	width: 0.45em;
+}
+
+.stk-navigation-overflow__toggle[aria-expanded="true"] .stk-navigation-overflow__icon {
+	transform: translateY(0.1em) rotate(225deg);
+}
+
+.wp-site-blocks > header .stk-navigation-overflow__menu {
+	background-color: var(--wp--preset--color--tint);
+	box-shadow: var(--wp--preset--shadow--medium, var(--wp--preset--shadow--shadow-4));
+	color: var(--wp--preset--color--outline-contrast);
+	display: flex;
+	flex-direction: column;
+	inset-inline-end: 0;
+	min-width: max-content;
+	padding: var(--wp--preset--spacing--small);
+	position: absolute;
+	top: calc(100% + var(--wp--preset--spacing--small));
+	z-index: 102;
+}
+
+.wp-site-blocks > header .stk-navigation-overflow__menu[hidden] {
+	display: none;
+}
+
+.wp-site-blocks > header .stk-navigation-overflow__menu .wp-block-navigation-item__content {
+	color: inherit;
+	white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.stk-navigation-overflow__icon {
+		transition: none;
+	}
+}
+
+
+/*# sourceMappingURL=frontend.css.map*/

@@ -106,7 +106,7 @@ Stop if law and the tree disagree; law wins.
 
 ---
 
-## Phase 6 - Header flags
+## Phase 6 - Header behavior
 
 - [ ] Sticky works without a Stackable container.
 - [ ] `header-sticky` is available as a registered header template part and applies the sticky flag.
@@ -116,6 +116,9 @@ Stop if law and the tree disagree; law wins.
 - [ ] `--stk-header-height` is set to a non-zero px value on the front.
 - [ ] Contract classes `stk-shell-header-sticky` and `stk-shell-header-transparent` are the names the theme honors.
 - [ ] Mobile nav overlay sits above a full-bleed first section.
+- [ ] Desktop header Navigation remains on one line and exposes a More disclosure only when its rendered items do not fit.
+- [ ] More preserves source order, keyboard Escape closes it and restores focus, and widening the viewport restores every item to the top level.
+- [ ] At mobile widths, More is removed and core Navigation's overlay contains every original item.
 
 ---
 

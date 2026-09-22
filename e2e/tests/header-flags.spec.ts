@@ -3,6 +3,16 @@ import { test, expect } from '../test-utils/test'
 import { getContrastRatio } from '../test-utils/color'
 
 const THEME_SLUG = process.env.THEME_SLUG || 'start-stackable'
+const OVERFLOW_LINK_LABELS = [
+	'Overview',
+	'Services',
+	'Solutions',
+	'Resources',
+	'Customers',
+	'Company',
+	'Journal',
+	'Contact',
+]
 
 type BlockPattern = {
 	content?: string
@@ -14,6 +24,15 @@ type RestRecord = {
 	link: string
 }
 
+async function installHeaderContent( requestUtils: RequestUtils, content: string ) {
+	await requestUtils.deleteAllTemplates( 'wp_template_part' )
+	await requestUtils.createTemplate( 'wp_template_part', {
+		slug: 'header',
+		title: 'Header preset fixture',
+		content,
+	} )
+}
+
 async function installHeaderPreset( requestUtils: RequestUtils, patternSlug: string ) {
 	const patterns = await requestUtils.rest< BlockPattern[] >( {
 		path: '/wp/v2/block-patterns/patterns',
@@ -21,19 +40,45 @@ async function installHeaderPreset( requestUtils: RequestUtils, patternSlug: str
 	const pattern = patterns.find( ( candidate ) => candidate.name === patternSlug )
 	expect( pattern?.content ).toBeTruthy()
 
-	await requestUtils.deleteAllTemplates( 'wp_template_part' )
-	await requestUtils.createTemplate( 'wp_template_part', {
-		slug: 'header',
-		title: 'Header preset fixture',
-		content: pattern!.content,
-	} )
+	await installHeaderContent( requestUtils, pattern!.content! )
+}
+
+function createOverflowHeaderContent() {
+	const links = OVERFLOW_LINK_LABELS.map( ( label ) => {
+		const slug = label.toLowerCase()
+		return `<!-- wp:navigation-link {"label":"${ label }","url":"#${ slug }","kind":"custom"} /-->`
+	} ).join( '\n' )
+
+	return `<!-- wp:group {"align":"full","backgroundColor":"tint","style":{"spacing":{"padding":{"top":"var:preset|spacing|medium","right":"var:preset|spacing|xx-large","bottom":"var:preset|spacing|medium","left":"var:preset|spacing|xx-large"}}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group alignfull has-tint-background-color has-background" style="padding-top:var(--wp--preset--spacing--medium);padding-right:var(--wp--preset--spacing--xx-large);padding-bottom:var(--wp--preset--spacing--medium);padding-left:var(--wp--preset--spacing--xx-large)"><!-- wp:group {"align":"wide","layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between"}} -->
+<div class="wp-block-group alignwide"><!-- wp:site-title {"level":0} /-->
+
+<!-- wp:navigation {"overlayMenu":"mobile","layout":{"type":"flex","justifyContent":"right"}} -->
+${ links }
+<!-- /wp:navigation --></div>
+<!-- /wp:group --></div>
+<!-- /wp:group -->`
+}
+
+function createPageListHeaderContent() {
+	return `<!-- wp:group {"align":"full","backgroundColor":"tint","style":{"spacing":{"padding":{"top":"var:preset|spacing|medium","right":"var:preset|spacing|xx-large","bottom":"var:preset|spacing|medium","left":"var:preset|spacing|xx-large"}}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group alignfull has-tint-background-color has-background" style="padding-top:var(--wp--preset--spacing--medium);padding-right:var(--wp--preset--spacing--xx-large);padding-bottom:var(--wp--preset--spacing--medium);padding-left:var(--wp--preset--spacing--xx-large)"><!-- wp:group {"align":"wide","layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between"}} -->
+<div class="wp-block-group alignwide"><!-- wp:site-title {"level":0} /-->
+
+<!-- wp:navigation {"overlayMenu":"mobile","layout":{"type":"flex","justifyContent":"right"}} -->
+<!-- wp:page-list /-->
+<!-- /wp:navigation --></div>
+<!-- /wp:group --></div>
+<!-- /wp:group -->`
 }
 
 test.describe( 'Header flags', () => {
 	let fixture: RestRecord
+	let overflowPageIds: number[]
 
 	test.beforeEach( async ( { page, requestUtils } ) => {
 		await requestUtils.activateTheme( THEME_SLUG )
+		overflowPageIds = []
 		fixture = await requestUtils.createRecord< RestRecord >( 'pages', {
 			title: 'Phase 6 Header Fixture',
 			slug: `phase-6-header-${ Date.now() }`,
@@ -50,6 +95,13 @@ test.describe( 'Header flags', () => {
 			await requestUtils.rest( {
 				method: 'DELETE',
 				path: `/wp/v2/pages/${ fixture.id }`,
+				params: { force: true },
+			} )
+		}
+		for ( const pageId of overflowPageIds ) {
+			await requestUtils.rest( {
+				method: 'DELETE',
+				path: `/wp/v2/pages/${ pageId }`,
 				params: { force: true },
 			} )
 		}
@@ -138,5 +190,88 @@ test.describe( 'Header flags', () => {
 		expect( headerBox ).not.toBeNull()
 		expect( headerBox!.y ).toBeCloseTo( stickyTop, 0 )
 		await expect( headerSurface ).not.toHaveCSS( 'background-color', 'rgba(0, 0, 0, 0)' )
+	} )
+
+	test( 'desktop navigation moves only overflowing links into More and restores them for wide and mobile layouts', async ( {
+		page,
+		requestUtils,
+	} ) => {
+		await installHeaderContent( requestUtils, createOverflowHeaderContent() )
+		await page.setViewportSize( { width: 900, height: 900 } )
+		await page.goto( fixture.link )
+
+		const header = page.locator( '.wp-site-blocks > header' )
+		const navigation = header.getByRole( 'navigation' )
+		const moreButton = navigation.getByRole( 'button', { name: 'More', exact: true } )
+		const overflowMenu = navigation.locator( '.stk-navigation-overflow__menu' )
+		await expect( moreButton ).toBeVisible()
+		await expect( moreButton ).toHaveAttribute( 'aria-expanded', 'false' )
+		await expect( overflowMenu ).toBeHidden()
+
+		const visibleLabels = await navigation.locator(
+			'.wp-block-navigation__container > .wp-block-navigation-item:not(.stk-navigation-overflow) > .wp-block-navigation-item__content'
+		).allTextContents()
+		const overflowLabels = await overflowMenu.locator(
+			':scope > .wp-block-navigation-item > .wp-block-navigation-item__content'
+		).allTextContents()
+		expect( visibleLabels.length ).toBeGreaterThan( 0 )
+		expect( overflowLabels.length ).toBeGreaterThan( 0 )
+		expect( [ ...visibleLabels, ...overflowLabels ] ).toEqual( OVERFLOW_LINK_LABELS )
+		expect( await page.evaluate( () => document.documentElement.scrollWidth ) ).toBe( 900 )
+
+		await moreButton.click()
+		await expect( moreButton ).toHaveAttribute( 'aria-expanded', 'true' )
+		await expect( overflowMenu ).toBeVisible()
+		await page.keyboard.press( 'Escape' )
+		await expect( moreButton ).toHaveAttribute( 'aria-expanded', 'false' )
+		await expect( moreButton ).toBeFocused()
+
+		await page.setViewportSize( { width: 1600, height: 900 } )
+		await expect( moreButton ).toHaveCount( 0 )
+		await expect( navigation.locator(
+			'.wp-block-navigation__container > .wp-block-navigation-item > .wp-block-navigation-item__content'
+		) ).toHaveText( OVERFLOW_LINK_LABELS )
+
+		await page.setViewportSize( { width: 375, height: 900 } )
+		await expect( moreButton ).toHaveCount( 0 )
+		await navigation.locator( '.wp-block-navigation__responsive-container-open' ).click()
+		for ( const label of OVERFLOW_LINK_LABELS ) {
+			await expect( navigation.getByRole( 'link', { name: label, exact: true } ) ).toBeVisible()
+		}
+	} )
+
+	test( 'automatic Page List navigation also moves overflowing pages into More', async ( {
+		page,
+		requestUtils,
+	} ) => {
+		for ( const label of OVERFLOW_LINK_LABELS ) {
+			const overflowPage = await requestUtils.createRecord< RestRecord >( 'pages', {
+				title: `Overflow ${ label }`,
+				slug: `overflow-${ label.toLowerCase() }-${ Date.now() }`,
+				status: 'publish',
+			} )
+			overflowPageIds.push( overflowPage.id )
+		}
+		await installHeaderContent( requestUtils, createPageListHeaderContent() )
+		await page.setViewportSize( { width: 900, height: 900 } )
+		await page.goto( fixture.link )
+
+		const navigation = page.locator( '.wp-site-blocks > header' ).getByRole( 'navigation' )
+		const moreButton = navigation.getByRole( 'button', { name: 'More', exact: true } )
+		await expect( moreButton ).toBeVisible()
+		await expect( navigation.locator( '.wp-block-page-list > .stk-navigation-overflow' ) ).toHaveCount( 1 )
+		const visibleItemBoxes = await navigation.locator(
+			'.wp-block-page-list > .wp-block-navigation-item:not(.stk-navigation-overflow)'
+		).evaluateAll( ( items ) => items.map( ( item ) => item.getBoundingClientRect() ) )
+		expect( new Set( visibleItemBoxes.map( ( box ) => Math.round( box.y ) ) ).size ).toBe( 1 )
+		expect( Math.max( ...visibleItemBoxes.map( ( box ) => box.height ) ) ).toBeLessThan( 40 )
+
+		await moreButton.click()
+		await expect( navigation.getByRole( 'link', { name: 'Overflow Contact', exact: true } ) ).toBeVisible()
+
+		await page.setViewportSize( { width: 375, height: 900 } )
+		await expect( moreButton ).toHaveCount( 0 )
+		await navigation.locator( '.wp-block-navigation__responsive-container-open' ).click()
+		await expect( navigation.getByRole( 'link', { name: 'Overflow Contact', exact: true } ) ).toBeVisible()
 	} )
 } )
