@@ -49,6 +49,7 @@ type ThemeGlobalStyles = {
 			wideSize: string
 		}
 		shadow: {
+			defaultPresets: boolean
 			presets: {
 				theme: { shadow: string; slug: string }[]
 			}
@@ -176,7 +177,18 @@ test.describe( 'Tokens and style variations', () => {
 		).toEqual( [ 'small', 'medium', 'large', 'full' ] )
 		expect(
 			themeStyles.settings.shadow.presets.theme.map( ( preset ) => preset.slug )
-		).toEqual( [ 'small', 'medium', 'large' ] )
+		).toEqual( [
+			'shadow-1',
+			'shadow-2',
+			'shadow-3',
+			'shadow-4',
+			'shadow-5',
+			'shadow-6',
+			'shadow-7',
+			'shadow-8',
+			'shadow-9',
+		] )
+		expect( themeStyles.settings.shadow.defaultPresets ).toBe( true )
 		expect(
 			themeStyles.settings.spacing.spacingSizes.theme.every( ( preset ) => preset.size.startsWith( 'clamp(' ) )
 		).toBe( true )
