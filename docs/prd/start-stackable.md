@@ -248,12 +248,15 @@ Keep these aligned with the plugin's inheritance layer:
 | --- | --- |
 | `layout.contentSize` | `645px` |
 | `layout.wideSize` | `1340px` |
-| Palette slugs | `primary`, `primary-light`, `primary-soft`, `primary-deep`, `base`, `base-accent`, `tint`, `contrast`, `contrast-accent`, `outline`, `outline-contrast` |
+| Palette slugs, in role order | `primary`, `primary-deep`, `contrast-accent`, `outline-contrast`, `outline`, `base-accent`, `tint`, `base` |
 | Font size slugs | `x-small` … `xxx-large` as in current `theme.json` (add fluid `min`/`max`) |
 | Spacing slugs | `small` … `xxxx-large` as in current `theme.json` (prefer `clamp`) |
 | Heading font | Plus Jakarta Sans (bundled OFL, slug `plus-jakarta-sans`) on `styles.elements.heading`, site title, and post title |
 | Body font | System UI stack (existing slug `sans-serif`) on `styles.typography.fontFamily` |
 | `--stk-header-height` | Theme CSS/JS, not `theme.json` (measured at runtime) |
+
+Within every light palette, `contrast-accent` is the restrained body-text color and `outline-contrast` is the darker heading color.
+The dark palette reverses their luminance while preserving those roles.
 
 Every HTML template and pattern must use these presets.
 Undefined slugs (`spacing|50`, color `secondary`) are bugs.

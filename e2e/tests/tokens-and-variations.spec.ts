@@ -94,19 +94,38 @@ const COLOR_VARIATIONS = [
 	'Yellow',
 ]
 
-const PALETTE_SLUGS = [
-	'base',
-	'base-accent',
-	'contrast',
-	'contrast-accent',
-	'outline',
-	'outline-contrast',
+const PALETTE_SLUGS_IN_ROLE_ORDER = [
 	'primary',
 	'primary-deep',
-	'primary-light',
-	'primary-soft',
+	'contrast-accent',
+	'outline-contrast',
+	'outline',
+	'base-accent',
 	'tint',
+	'base',
 ]
+
+const getPaletteColor = ( palette: PaletteColor[], slug: string ) => {
+	const color = palette.find( ( entry ) => entry.slug === slug )?.color
+	expect( color ).toBeDefined()
+	return color as string
+}
+
+const relativeLuminance = ( hex: string ) => {
+	const channels = hex.slice( 1 ).match( /../g )?.map( ( channel ) => parseInt( channel, 16 ) / 255 )
+	expect( channels ).toHaveLength( 3 )
+	const linear = ( channels as number[] ).map( ( channel ) =>
+		channel <= 0.04045 ? channel / 12.92 : ( ( channel + 0.055 ) / 1.055 ) ** 2.4
+	)
+	return ( 0.2126 * linear[ 0 ] ) + ( 0.7152 * linear[ 1 ] ) + ( 0.0722 * linear[ 2 ] )
+}
+
+const contrastRatio = ( foreground: string, background: string ) => {
+	const foregroundLuminance = relativeLuminance( foreground )
+	const backgroundLuminance = relativeLuminance( background )
+	return ( Math.max( foregroundLuminance, backgroundLuminance ) + 0.05 ) /
+		( Math.min( foregroundLuminance, backgroundLuminance ) + 0.05 )
+}
 
 const REQUIRED_BLOCK_STYLES = [
 	'core/button',
@@ -130,7 +149,7 @@ test.describe( 'Tokens and style variations', () => {
 		buttonCheckPage = await requestUtils.createRecord< RestRecord >( 'pages', {
 			title: 'Phase 2 Button Check',
 			slug: `phase-2-button-check-${ Date.now() }`,
-			content: '<!-- wp:search {"label":"Search","showLabel":false,"buttonText":"Search"} /-->',
+			content: '<!-- wp:heading --><h2 class="wp-block-heading">Palette heading</h2><!-- /wp:heading --><!-- wp:search {"label":"Search","showLabel":false,"buttonText":"Search"} /-->',
 			status: 'publish',
 		} )
 		seededPost = await requestUtils.createRecord< RestRecord >( 'posts', {
@@ -164,10 +183,22 @@ test.describe( 'Tokens and style variations', () => {
 		} )
 		const variations = await getStyleVariations( requestUtils, THEME_SLUG )
 		const colorVariations = variations.filter( ( variation ) => variation.settings?.color?.palette?.theme )
+		const defaultPalette = themeStyles.settings.color.palette.theme
 
 		expect(
-			themeStyles.settings.color.palette.theme.map( ( color ) => color.slug ).sort()
-		).toEqual( PALETTE_SLUGS )
+			defaultPalette.map( ( color ) => color.slug )
+		).toEqual( PALETTE_SLUGS_IN_ROLE_ORDER )
+		expect(
+			contrastRatio(
+				getPaletteColor( defaultPalette, 'contrast-accent' ),
+				getPaletteColor( defaultPalette, 'base' )
+			)
+		).toBeGreaterThanOrEqual( 4.5 )
+		expect(
+			relativeLuminance( getPaletteColor( defaultPalette, 'outline-contrast' ) )
+		).toBeLessThan(
+			relativeLuminance( getPaletteColor( defaultPalette, 'contrast-accent' ) )
+		)
 		expect( themeStyles.settings.layout ).toEqual( {
 			contentSize: '645px',
 			wideSize: '1340px',
@@ -217,6 +248,13 @@ test.describe( 'Tokens and style variations', () => {
 		expect( Object.keys( themeStyles.styles.elements ) ).toEqual(
 			expect.arrayContaining( REQUIRED_ELEMENT_STYLES )
 		)
+		expect( themeStyles.styles.elements.heading ).toEqual(
+			expect.objectContaining( {
+				color: {
+					text: 'var(--wp--preset--color--outline-contrast)',
+				},
+			} )
+		)
 		expect( Object.keys( themeStyles.styles.blocks ) ).toEqual(
 			expect.arrayContaining( REQUIRED_BLOCK_STYLES )
 		)
@@ -225,9 +263,19 @@ test.describe( 'Tokens and style variations', () => {
 		)
 
 		for ( const variation of colorVariations ) {
-			expect(
-				variation.settings?.color?.palette?.theme?.map( ( color ) => color.slug ).sort()
-			).toEqual( PALETTE_SLUGS )
+			const palette = variation.settings?.color?.palette?.theme as PaletteColor[]
+			const bodyText = getPaletteColor( palette, 'contrast-accent' )
+			const headingText = getPaletteColor( palette, 'outline-contrast' )
+			const base = getPaletteColor( palette, 'base' )
+
+			expect( palette.map( ( color ) => color.slug ) ).toEqual( PALETTE_SLUGS_IN_ROLE_ORDER )
+			expect( contrastRatio( bodyText, base ) ).toBeGreaterThanOrEqual( 4.5 )
+			expect( contrastRatio( headingText, base ) ).toBeGreaterThanOrEqual( 4.5 )
+			if ( variation.title === 'Dark' ) {
+				expect( relativeLuminance( headingText ) ).toBeGreaterThan( relativeLuminance( bodyText ) )
+			} else {
+				expect( relativeLuminance( headingText ) ).toBeLessThan( relativeLuminance( bodyText ) )
+			}
 		}
 
 		expect( variations.map( ( variation ) => variation.title ) ).toEqual(
@@ -262,7 +310,7 @@ test.describe( 'Tokens and style variations', () => {
 			background: getComputedStyle( document.body ).backgroundColor,
 			text: getComputedStyle( document.body ).color,
 			base: getComputedStyle( document.documentElement ).getPropertyValue( '--wp--preset--color--base' ).trim(),
-			contrast: getComputedStyle( document.documentElement ).getPropertyValue( '--wp--preset--color--contrast' ).trim(),
+			contrastAccent: getComputedStyle( document.documentElement ).getPropertyValue( '--wp--preset--color--contrast-accent' ).trim(),
 		} ) )
 		const shellColors = {
 			header: await page.locator( '.wp-block-site-title a' ).first().evaluate(
@@ -278,17 +326,21 @@ test.describe( 'Tokens and style variations', () => {
 
 		expect( colors ).toEqual( {
 			background: 'rgb(11, 17, 32)',
-			text: 'rgb(248, 250, 252)',
+			text: 'rgb(203, 213, 225)',
 			base: '#0B1120',
-			contrast: '#F8FAFC',
+			contrastAccent: '#CBD5E1',
 		} )
 		expect( shellColors ).toEqual( {
-			header: 'rgb(248, 250, 252)',
-			footer: 'rgb(248, 250, 252)',
+			header: 'rgb(203, 213, 225)',
+			footer: 'rgb(203, 213, 225)',
 			postCard: 'rgb(199, 210, 254)',
 		} )
 
 		await page.goto( new URL( buttonCheckPage.link ).pathname )
+		await expect( page.locator( 'h2.wp-block-heading' ) ).toHaveCSS(
+			'color',
+			'rgb(241, 245, 249)'
+		)
 		const searchButton = page.locator( '.wp-block-search__button' )
 		await expect( searchButton ).toBeVisible()
 		expect( await searchButton.evaluate( ( element ) => ( {

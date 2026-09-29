@@ -41,24 +41,24 @@
                     "color": "#3B82F6"
                 },
                 {
-                    "name": "Primary Light",
-                    "slug": "primary-light",
-                    "color": "#60A5FA"
-                },
-                {
-                    "name": "Primary Soft",
-                    "slug": "primary-soft",
-                    "color": "#93C5FD"
-                },
-                {
                     "name": "Primary Deep",
                     "slug": "primary-deep",
                     "color": "#1E3A8A"
                 },
                 {
-                    "name": "Base",
-                    "slug": "base",
-                    "color": "#FFFFFF"
+                    "name": "Contrast Accent",
+                    "slug": "contrast-accent",
+                    "color": "#3A4F66"
+                },
+                {
+                    "name": "Outline Contrast",
+                    "slug": "outline-contrast",
+                    "color": "#192A3D"
+                },
+                {
+                    "name": "Outline",
+                    "slug": "outline",
+                    "color": "#BFDBFE"
                 },
                 {
                     "name": "Base Accent",
@@ -71,24 +71,9 @@
                     "color": "#F8FAFC"
                 },
                 {
-                    "name": "Contrast",
-                    "slug": "contrast",
-                    "color": "#000000"
-                },
-                {
-                    "name": "Contrast Accent",
-                    "slug": "contrast-accent",
-                    "color": "#64748B"
-                },
-                {
-                    "name": "Outline",
-                    "slug": "outline",
-                    "color": "#BFDBFE"
-                },
-                {
-                    "name": "Outline Contrast",
-                    "slug": "outline-contrast",
-                    "color": "#0A2540"
+                    "name": "Base",
+                    "slug": "base",
+                    "color": "#FFFFFF"
                 }
             ]
         },
@@ -293,7 +278,7 @@
         },
         "color": {
             "background": "var:preset|color|base",
-            "text": "var:preset|color|contrast"
+            "text": "var:preset|color|contrast-accent"
         },
         "spacing": {
             "blockGap": "24px"
@@ -546,6 +531,9 @@
         },
         "elements": {
             "heading": {
+                "color": {
+                    "text": "var:preset|color|outline-contrast"
+                },
                 "typography": {
                     "fontFamily": "var:preset|font-family|plus-jakarta-sans"
                 }

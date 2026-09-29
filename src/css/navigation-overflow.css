@@ -59,7 +59,7 @@
 
 .wp-site-blocks > header .stk-navigation-overflow__menu {
 	background-color: var(--wp--preset--color--tint);
-	box-shadow: var(--wp--preset--shadow--medium, var(--wp--preset--shadow--shadow-4));
+	box-shadow: var(--wp--preset--shadow--shadow-4);
 	color: var(--wp--preset--color--outline-contrast);
 	display: flex;
 	flex-direction: column;

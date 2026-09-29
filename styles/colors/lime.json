@@ -11,24 +11,24 @@
                     "color": "#84CC16"
                 },
                 {
-                    "name": "Primary Light",
-                    "slug": "primary-light",
-                    "color": "#A3E635"
-                },
-                {
-                    "name": "Primary Soft",
-                    "slug": "primary-soft",
-                    "color": "#D9F99D"
-                },
-                {
                     "name": "Primary Deep",
                     "slug": "primary-deep",
                     "color": "#3F6212"
                 },
                 {
-                    "name": "Base",
-                    "slug": "base",
-                    "color": "#FFFFFF"
+                    "name": "Contrast Accent",
+                    "slug": "contrast-accent",
+                    "color": "#365951"
+                },
+                {
+                    "name": "Outline Contrast",
+                    "slug": "outline-contrast",
+                    "color": "#192C27"
+                },
+                {
+                    "name": "Outline",
+                    "slug": "outline",
+                    "color": "#ECFCCB"
                 },
                 {
                     "name": "Base Accent",
@@ -41,24 +41,9 @@
                     "color": "#F8FAFC"
                 },
                 {
-                    "name": "Contrast",
-                    "slug": "contrast",
-                    "color": "#000000"
-                },
-                {
-                    "name": "Contrast Accent",
-                    "slug": "contrast-accent",
-                    "color": "#64748B"
-                },
-                {
-                    "name": "Outline",
-                    "slug": "outline",
-                    "color": "#ECFCCB"
-                },
-                {
-                    "name": "Outline Contrast",
-                    "slug": "outline-contrast",
-                    "color": "#365314"
+                    "name": "Base",
+                    "slug": "base",
+                    "color": "#FFFFFF"
                 }
             ]
         }

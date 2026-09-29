@@ -36,7 +36,7 @@ test.describe( 'Page canvases', () => {
 			title: 'Phase 5 Canvas Fixture',
 			slug: `phase-5-canvas-${ Date.now() }`,
 			content: [
-				'<!-- wp:group {"align":"full","backgroundColor":"primary-soft","layout":{"type":"constrained"}} --><div class="wp-block-group alignfull has-primary-soft-background-color has-background"><!-- wp:paragraph --><p>Full-bleed canvas content.</p><!-- /wp:paragraph --></div><!-- /wp:group -->',
+				'<!-- wp:group {"align":"full","backgroundColor":"base-accent","layout":{"type":"constrained"}} --><div class="wp-block-group alignfull has-base-accent-background-color has-background"><!-- wp:paragraph --><p>Full-bleed canvas content.</p><!-- /wp:paragraph --></div><!-- /wp:group -->',
 				'<!-- wp:paragraph --><p>Constrained canvas text.</p><!-- /wp:paragraph -->',
 			].join( '\n' ),
 			status: 'publish',

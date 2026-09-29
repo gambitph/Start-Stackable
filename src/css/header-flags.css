@@ -60,11 +60,11 @@
 .wp-site-blocks > header.stk-shell-header-transparent.stk-shell-header-scrolled,
 .wp-site-blocks > header.stk-shell-header-transparent.stk-shell-header-scrolled > .wp-block-group {
 	background-color: var(--wp--preset--color--tint) !important;
-	color: var(--wp--preset--color--contrast);
+	color: var(--wp--preset--color--outline-contrast);
 }
 
 .wp-site-blocks > header.stk-shell-header-scrolled {
-	box-shadow: var(--wp--preset--shadow--small);
+	box-shadow: var(--wp--preset--shadow--shadow-3);
 }
 
 .wp-site-blocks > header.stk-shell-header-transparent.stk-shell-header-scrolled :where(
@@ -81,7 +81,7 @@
 	.stk-shell-header-transparent
 ) .wp-block-navigation__responsive-container.is-menu-open {
 	background-color: var(--wp--preset--color--tint);
-	color: var(--wp--preset--color--contrast);
+	color: var(--wp--preset--color--outline-contrast);
 	z-index: 101;
 }
 

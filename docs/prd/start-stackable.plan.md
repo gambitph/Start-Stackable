@@ -181,17 +181,19 @@ Those come in later phases and will inherit this work.
    Check: Site Editor → a Heading uses Plus Jakarta Sans.
    A Paragraph still uses the system stack.
 
-3. **Keep palette slugs; you may refine hex values**
+3. **Keep the eight palette slugs; you may refine hex values**
 
    What: Stackable already inherits these slug names.
    Renaming a slug breaks the contract.
 
-   How: in `settings.color.palette`, **do not** rename or delete:
-   `primary`, `primary-light`, `primary-soft`, `primary-deep`, `base`, `base-accent`, `tint`, `contrast`, `contrast-accent`, `outline`, `outline-contrast`.
+   How: in `settings.color.palette`, **do not** rename or delete the eight role-based presets:
+   `primary`, `primary-deep`, `contrast-accent`, `outline-contrast`, `outline`, `base-accent`, `tint`, `base`.
+   Use `contrast-accent` for restrained body text and `outline-contrast` for darker headings in light palettes.
+   Reverse their luminance in Dark while preserving those semantic roles.
    You may change the `"color"` hex so Default looks better.
    Keep `layout.contentSize` at `645px` and `layout.wideSize` at `1340px`.
 
-   Check: grep `theme.json` for those eleven slugs; they still exist.
+   Check: grep `theme.json` for those eight slugs; they still exist in this order.
 
 4. **Make font sizes fluid**
 
@@ -244,7 +246,7 @@ Those come in later phases and will inherit this work.
 
 6. **Add shadow presets**
 
-   What: the editor can pick Small / Medium / Large shadows instead of raw CSS.
+   What: the editor can pick the shared Shadow 1 through Shadow 9 scale instead of raw CSS.
 
    How: add `settings.shadow.presets` (create the `shadow` object if missing).
 
@@ -252,13 +254,13 @@ Those come in later phases and will inherit this work.
 
    ```json
    {
-     "name": "Small",
-     "slug": "small",
-     "shadow": "0 1px 2px rgb(0 0 0 / 0.06)"
+     "name": "Shadow 1",
+     "slug": "shadow-1",
+     "shadow": "0 0 0 1px #7878781a"
    }
    ```
 
-   Add at least small, medium, and large.
+   Keep the shared `shadow-1` through `shadow-9` slugs aligned with Stackable's built-in shadow presets.
    Use a darker shadow only if you also ship a dark variation later.
 
    Check: Site Editor → a Group block → Border & Shadow shows your presets.
@@ -358,11 +360,12 @@ Same slugs, different values.
 
 1. **Audit existing color files**
 
-   What: each color skin is accessible and uses the **same eleven slugs** as `theme.json`.
+   What: each color skin is accessible and uses the **same eight slugs** as `theme.json`.
 
    How: open every file in `styles/colors/`.
    Keep the slug list identical to Default.
-   Adjust hex so `contrast` text on `base` (and buttons on `primary`) is readable.
+   Keep slots 3 and 4 suitable for body text and headings rather than saturated brand accents.
+   Adjust hex so `contrast-accent` text on `base` (and buttons on `primary-deep`) is readable.
    Do not add `secondary` or other extra slugs.
 
    Check: switch Purple, Teal, etc. in Styles; header, footer, and buttons change; no leftover blue from Default.

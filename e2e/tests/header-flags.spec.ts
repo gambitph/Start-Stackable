@@ -83,7 +83,7 @@ test.describe( 'Header flags', () => {
 			title: 'Phase 6 Header Fixture',
 			slug: `phase-6-header-${ Date.now() }`,
 			content:
-				'<!-- wp:group {"align":"full","backgroundColor":"primary-soft","style":{"dimensions":{"minHeight":"1200px"}},"layout":{"type":"constrained","verticalAlignment":"center"}} --><div class="wp-block-group alignfull has-primary-soft-background-color has-background" style="min-height:1200px"><!-- wp:heading {"level":1} --><h1 class="wp-block-heading">Header overlay hero</h1><!-- /wp:heading --></div><!-- /wp:group -->',
+				'<!-- wp:group {"align":"full","backgroundColor":"base-accent","style":{"dimensions":{"minHeight":"1200px"}},"layout":{"type":"constrained","verticalAlignment":"center"}} --><div class="wp-block-group alignfull has-base-accent-background-color has-background" style="min-height:1200px"><!-- wp:heading {"level":1} --><h1 class="wp-block-heading">Header overlay hero</h1><!-- /wp:heading --></div><!-- /wp:group -->',
 			status: 'publish',
 			template: 'full-width',
 		} )
@@ -139,6 +139,7 @@ test.describe( 'Header flags', () => {
 
 		await page.evaluate( () => window.scrollTo( 0, 500 ) )
 		await expect( header ).toHaveClass( /stk-shell-header-scrolled/ )
+		await expect( header ).not.toHaveCSS( 'box-shadow', 'none' )
 		await expect( headerSurface ).not.toHaveCSS( 'background-color', 'rgba(0, 0, 0, 0)' )
 		const scrolledColors = await header.evaluate( ( element ) => ( {
 			background: getComputedStyle( element.querySelector( ':scope > .wp-block-group' )! ).backgroundColor,

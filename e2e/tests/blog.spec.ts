@@ -109,6 +109,7 @@ test.describe( 'Designed blog', () => {
 		await expect( featuredCard.locator( '.wp-block-post-author' ) ).toBeVisible()
 		await expect( featuredCard.locator( '.wp-block-post-date' ) ).toBeVisible()
 		await expect( featuredCard.locator( '.wp-block-post-terms' ) ).toBeVisible()
+		await expect( featuredCard.locator( ':scope > .wp-block-group' ) ).not.toHaveCSS( 'box-shadow', 'none' )
 
 		const imageBox = await featuredCard.locator( '.wp-block-post-featured-image' ).boundingBox()
 		const desktopFeaturedBox = await featuredCard.boundingBox()
@@ -159,7 +160,7 @@ test.describe( 'Designed blog', () => {
 				content: [
 					'<!-- wp:paragraph --><p>Normal-width article text.</p><!-- /wp:paragraph -->',
 					'<!-- wp:group {"align":"wide","backgroundColor":"tint","layout":{"type":"constrained"}} --><div class="wp-block-group alignwide has-tint-background-color has-background"><!-- wp:paragraph --><p>Wide article content.</p><!-- /wp:paragraph --></div><!-- /wp:group -->',
-					'<!-- wp:group {"align":"full","backgroundColor":"primary-soft","layout":{"type":"constrained"}} --><div class="wp-block-group alignfull has-primary-soft-background-color has-background"><!-- wp:paragraph --><p>Full-width article content.</p><!-- /wp:paragraph --></div><!-- /wp:group -->',
+					'<!-- wp:group {"align":"full","backgroundColor":"base-accent","layout":{"type":"constrained"}} --><div class="wp-block-group alignfull has-base-accent-background-color has-background"><!-- wp:paragraph --><p>Full-width article content.</p><!-- /wp:paragraph --></div><!-- /wp:group -->',
 				].join( '\n' ),
 			},
 		} )

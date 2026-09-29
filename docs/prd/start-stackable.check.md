@@ -50,7 +50,8 @@ Stop if law and the tree disagree; law wins.
 
 ## Phase 1 - Design system
 
-- [ ] Palette slugs match the token contract (`primary` … `outline-contrast`).
+- [ ] The palette contains exactly the eight contract slugs in role order (`primary`, `primary-deep`, `contrast-accent`, `outline-contrast`, `outline`, `base-accent`, `tint`, `base`).
+- [ ] `contrast-accent` provides readable body text and `outline-contrast` provides stronger heading text in every color variation.
 - [ ] `layout.contentSize` is `645px`; `wideSize` is `1340px`.
 - [ ] Font sizes have fluid min/max (or equivalent fluid config).
 - [ ] Spacing uses `clamp` or otherwise does not look like desktop scale on a 375px width.
