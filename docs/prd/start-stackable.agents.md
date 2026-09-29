@@ -69,7 +69,7 @@ If a kit needs a new header or footer behavior, add it here and extend this list
 | `full-width` | Marketing canvas: header + footer, **no** theme page title, **no** extra main padding that blocks `alignfull` heroes. |
 | `blank` | Post content only. No header, no footer. |
 | `--stk-header-height` | CSS custom property on `:root` reflecting current header height (and a scrolled variant if the bar shrinks). |
-| Tokens | Palette slugs, font sizes, spacing sizes, `contentSize` `645px`, `wideSize` `1340px` stay aligned with Stackable inheritance. Headings: Plus Jakarta Sans (bundled). Body: system UI stack. |
+| Tokens | Palette slugs, font sizes, spacing sizes, `contentSize` `645px`, `wideSize` `1340px` stay aligned with Stackable inheritance. Default uses ink and pale blue surfaces, broad fluid display type, generous spacing, 20px large surfaces, and pill actions. Headings: Plus Jakarta Sans (bundled). Body: system UI stack. |
 | Style variations | Color files under `styles/colors/`, typography under `styles/typography/`, at least one dark. Same palette slugs, different values. |
 | Theme styles overlay | Plugin may write user Global Styles using the same slugs. Theme files are not edited. |
 | `stk--is-stackable-theme` | Body class when this theme is active. |

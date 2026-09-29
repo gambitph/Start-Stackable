@@ -85,6 +85,16 @@ async function getButtonColors( page: Page ) {
 	)
 }
 
+async function getEditorialHeadingColors( page: Page ) {
+	return page.evaluate( () => [
+		document.querySelector( '#selected-work .wp-block-column:nth-child(2) h3' ),
+		document.querySelector( 'main .has-primary-deep-background-color h2' ),
+	].map( ( heading ) => ( {
+		background: getComputedStyle( heading!.closest( '.has-primary-deep-background-color' )! ).backgroundColor,
+		text: getComputedStyle( heading! ).color,
+	} ) ) )
+}
+
 async function getThemePatterns( requestUtils: RequestUtils ) {
 	const patterns = await requestUtils.rest< BlockPattern[] >( {
 		path: '/wp/v2/block-patterns/patterns',
@@ -180,15 +190,15 @@ test.describe( 'Pattern catalog', () => {
 		try {
 			await page.setViewportSize( { width: 1440, height: 900 } )
 			await page.goto( testPage.link )
-			await expect( page.getByRole( 'heading', { level: 1, name: 'Build a site that feels like yours.' } ) ).toBeVisible()
-			await expect( page.getByRole( 'link', { name: 'Start here' } ) ).toBeVisible()
-			await expect( page.getByRole( 'heading', { name: 'Everything you need to begin with confidence.' } ) ).toBeVisible()
-			await expect( page.locator( '#start-here > .wp-block-group > .wp-block-columns > .wp-block-column' ) ).toHaveCount( 3 )
-			await expect( page.getByRole( 'heading', { name: 'Latest stories' } ) ).toBeVisible()
+			await expect( page.getByRole( 'heading', { level: 1, name: 'Make something people remember.' } ) ).toBeVisible()
+			await expect( page.getByRole( 'link', { name: 'See the work' } ) ).toBeVisible()
+			await expect( page.getByRole( 'heading', { name: 'Selected work' } ) ).toBeVisible()
+			await expect( page.locator( '#selected-work > .wp-block-group > .wp-block-columns > .wp-block-column' ) ).toHaveCount( 2 )
+			await expect( page.getByRole( 'heading', { name: 'From the first question to the final detail.' } ) ).toBeVisible()
+			await expect( page.getByRole( 'heading', { name: 'Notes and stories' } ) ).toBeVisible()
 			await expect( page.locator( '#latest-stories .wp-block-query' ) ).toBeVisible()
 			await expect( page.getByRole( 'banner' ).getByRole( 'navigation' ) ).toBeVisible()
 			await expect( page.getByRole( 'contentinfo' ) ).toBeVisible()
-
 			const hero = page.locator( 'main .wp-block-cover' ).first()
 			const heroBox = await hero.boundingBox()
 			expect( heroBox ).not.toBeNull()
@@ -203,6 +213,10 @@ test.describe( 'Pattern catalog', () => {
 			const buttonColors = await getButtonColors( page )
 			expect( buttonColors ).toHaveLength( 2 )
 			for ( const colors of buttonColors ) {
+				expect( getContrastRatio( colors.text, colors.background ) ).toBeGreaterThanOrEqual( 4.5 )
+			}
+			const editorialHeadingColors = await getEditorialHeadingColors( page )
+			for ( const colors of editorialHeadingColors ) {
 				expect( getContrastRatio( colors.text, colors.background ) ).toBeGreaterThanOrEqual( 4.5 )
 			}
 
@@ -223,6 +237,10 @@ test.describe( 'Pattern catalog', () => {
 			for ( const colors of darkButtonColors ) {
 				expect( getContrastRatio( colors.text, colors.background ) ).toBeGreaterThanOrEqual( 4.5 )
 			}
+			const darkEditorialHeadingColors = await getEditorialHeadingColors( page )
+			for ( const colors of darkEditorialHeadingColors ) {
+				expect( getContrastRatio( colors.text, colors.background ) ).toBeGreaterThanOrEqual( 4.5 )
+			}
 
 			await page.setViewportSize( { width: 375, height: 900 } )
 			const mobileHeroBox = await hero.boundingBox()
@@ -239,7 +257,7 @@ test.describe( 'Pattern catalog', () => {
 			}
 			const canvas = page.frameLocator( 'iframe[name="editor-canvas"]' )
 			await expect(
-				canvas.locator( 'h1.wp-block-heading' ).filter( { hasText: 'Build a site that feels like yours.' } )
+				canvas.locator( 'h1.wp-block-heading' ).filter( { hasText: 'Make something people remember.' } )
 			).toBeVisible()
 			await expect( canvas.getByText( 'Attempt Recovery' ) ).toHaveCount( 0 )
 		} finally {

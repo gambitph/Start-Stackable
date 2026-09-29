@@ -181,7 +181,7 @@ Those come in later phases and will inherit this work.
    Check: Site Editor → a Heading uses Plus Jakarta Sans.
    A Paragraph still uses the system stack.
 
-3. **Keep the eight palette slugs; you may refine hex values**
+3. **Keep the eight palette slugs and the approved Default values**
 
    What: Stackable already inherits these slug names.
    Renaming a slug breaks the contract.
@@ -190,7 +190,7 @@ Those come in later phases and will inherit this work.
    `primary`, `primary-deep`, `contrast-accent`, `outline-contrast`, `outline`, `base-accent`, `tint`, `base`.
    Use `contrast-accent` for restrained body text and `outline-contrast` for darker headings in light palettes.
    Reverse their luminance in Dark while preserving those semantic roles.
-   You may change the `"color"` hex so Default looks better.
+   Default uses `#DBE8FB`, `#140018`, `#645D73`, `#140018`, `#E8E3EA`, `#E7F0FD`, `#F4F8FE`, and `#FFFFFF` in that role order.
    Keep `layout.contentSize` at `645px` and `layout.wideSize` at `1340px`.
 
    Check: grep `theme.json` for those eight slugs; they still exist in this order.
@@ -281,9 +281,8 @@ Those come in later phases and will inherit this work.
    }
    ```
 
-   Add a range from small through large, plus a full/pill size if you want round buttons.
-   Square buttons (`0`) are allowed only if that is a deliberate Default look.
-   Otherwise point `styles.blocks.core/button` border radius at a preset, not `"0"` unless you mean it.
+   Keep the approved Default values: `small` `4px`, `medium` `12px`, `large` `20px`, and `full` `9999px`.
+   Default buttons use `full`; cards and large surfaces use `large`.
 
    Check: a Button in the editor offers your radius presets.
 
@@ -296,6 +295,7 @@ Those come in later phases and will inherit this work.
    Heading `fontFamily` should already be Plus Jakarta Sans from step 2.
    Add `fontWeight` and `lineHeight` on `h1`-`h6`.
    Add `button` (fill) and make sure outline buttons stay readable (the outline variation already lives under `styles.blocks.core/button.variations.outline`).
+   Default buttons are pill shaped, headings are tightly tracked, and content links remain visibly underlined.
    Style `link` (and hover if you set it) and `caption`.
 
    Check: a page with Heading, Paragraph, Button (fill + outline), and a caption looks consistent in the editor with no extra CSS file.
@@ -305,7 +305,7 @@ Those come in later phases and will inherit this work.
    What: navigation, quotes, search, pagination, and post title match Default, not leftover core greys.
 
    How: add entries under `styles.blocks` for at least:
-   `core/button` (already started), `core/navigation`, `core/site-title`, `core/quote`, `core/pullquote`, `core/separator`, `core/search`, `core/query-pagination`, `core/post-title`, `core/post-terms`, `core/post-comments-form` (and comment blocks if you touch them).
+   `core/button` (already started), `core/navigation`, `core/site-title`, `core/quote`, `core/pullquote`, `core/separator`, `core/search`, `core/query-pagination`, `core/post-title`, `core/post-terms`, `core/post-comments-form`, `core/image`, `core/post-excerpt`, `core/read-more`, and `core/table` (and comment blocks if you touch them).
    Use palette slugs (`var:preset|color|primary`, and the other contract slugs), not raw hex.
 
    Check: insert each of those blocks on a test page; none look like unstyled core.

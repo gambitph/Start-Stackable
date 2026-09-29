@@ -51,17 +51,19 @@ Stop if law and the tree disagree; law wins.
 ## Phase 1 - Design system
 
 - [ ] The palette contains exactly the eight contract slugs in role order (`primary`, `primary-deep`, `contrast-accent`, `outline-contrast`, `outline`, `base-accent`, `tint`, `base`).
+- [ ] The Default palette values are `#DBE8FB`, `#140018`, `#645D73`, `#140018`, `#E8E3EA`, `#E7F0FD`, `#F4F8FE`, and `#FFFFFF` in role order.
 - [ ] `contrast-accent` provides readable body text and `outline-contrast` provides stronger heading text in every color variation.
 - [ ] `layout.contentSize` is `645px`; `wideSize` is `1340px`.
 - [ ] Font sizes have fluid min/max (or equivalent fluid config).
 - [ ] Spacing uses `clamp` or otherwise does not look like desktop scale on a 375px width.
 - [ ] Shadow presets exist.
-- [ ] Border radius sizes exist.
+- [ ] Border radius sizes are `small` `4px`, `medium` `12px`, `large` `20px`, and `full` `9999px`.
 - [ ] Plus Jakarta Sans is registered via `fontFace` and files live under `assets/fonts/`.
 - [ ] Headings, site title, and post title use slug `plus-jakarta-sans`.
 - [ ] Body (`styles.typography.fontFamily`) uses the system UI stack (slug `sans-serif`).
-- [ ] `styles.elements` covers heading, link, button (including outline).
-- [ ] `styles.blocks` covers button, navigation, site-title, quote, search, query-pagination, post-title at minimum.
+- [ ] `styles.elements` covers heading, link, button (including outline), text input, and select.
+- [ ] `styles.blocks` covers button, navigation, site-title, quote, pullquote, separator, search, query-pagination, post-title, image, post-excerpt, read-more, and table at minimum.
+- [ ] Default headings are tightly tracked, default actions are pill shaped, and quote surfaces use the large radius without one-off CSS.
 - [ ] `customTemplates` includes `full-width` and `blank`.
 - [ ] `templateParts` includes `header`, `header-sticky`, `header-transparent`, `header-minimal`, `footer`, `footer-landing`.
 

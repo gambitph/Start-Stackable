@@ -249,14 +249,19 @@ Keep these aligned with the plugin's inheritance layer:
 | `layout.contentSize` | `645px` |
 | `layout.wideSize` | `1340px` |
 | Palette slugs, in role order | `primary`, `primary-deep`, `contrast-accent`, `outline-contrast`, `outline`, `base-accent`, `tint`, `base` |
+| Default palette values | `#DBE8FB`, `#140018`, `#645D73`, `#140018`, `#E8E3EA`, `#E7F0FD`, `#F4F8FE`, `#FFFFFF` |
 | Font size slugs | `x-small` … `xxx-large` as in current `theme.json` (add fluid `min`/`max`) |
 | Spacing slugs | `small` … `xxxx-large` as in current `theme.json` (prefer `clamp`) |
+| Default radius values | `small` `4px`, `medium` `12px`, `large` `20px`, `full` `9999px` |
 | Heading font | Plus Jakarta Sans (bundled OFL, slug `plus-jakarta-sans`) on `styles.elements.heading`, site title, and post title |
 | Body font | System UI stack (existing slug `sans-serif`) on `styles.typography.fontFamily` |
 | `--stk-header-height` | Theme CSS/JS, not `theme.json` (measured at runtime) |
 
 Within every light palette, `contrast-accent` is the restrained body-text color and `outline-contrast` is the darker heading color.
 The dark palette reverses their luminance while preserving those roles.
+
+Default uses high-contrast ink, pale blue surfaces, compact rounded actions, and broad fluid display type.
+Core blocks inherit that look without requiring users to choose colors, type sizes, radii, or spacing on every block.
 
 Every HTML template and pattern must use these presets.
 Undefined slugs (`spacing|50`, color `secondary`) are bugs.

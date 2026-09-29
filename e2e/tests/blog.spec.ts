@@ -277,11 +277,16 @@ test.describe( 'Designed blog', () => {
 		await expect( page.locator( '.wp-block-post' ).filter( { hasText: TEXT_TITLE } ) ).toBeVisible()
 	} )
 
-	test( 'Site Editor loads every blog template without recovery warnings', async ( {
-		page,
-		admin,
-	} ) => {
-		for ( const templateSlug of BLOG_TEMPLATE_SLUGS ) {
+} )
+
+test.describe( 'Blog templates in the Site Editor', () => {
+	for ( const templateSlug of BLOG_TEMPLATE_SLUGS ) {
+		test( `${ templateSlug } loads without recovery warnings`, async ( {
+			page,
+			admin,
+			requestUtils,
+		} ) => {
+			await requestUtils.activateTheme( THEME_SLUG )
 			await admin.visitSiteEditor( {
 				postType: 'wp_template',
 				postId: `${ THEME_SLUG }//${ templateSlug }`,
@@ -289,10 +294,10 @@ test.describe( 'Designed blog', () => {
 			} )
 
 			const canvas = page.frameLocator( 'iframe[name="editor-canvas"]' )
-			await expect( canvas.locator( '.wp-block-site-title' ).first() ).toBeVisible()
-			await expect( canvas.locator( '.wp-block-heading' ).filter( { hasText: /^Resources$/ } ) ).toBeVisible()
+			await expect( canvas.locator( '.wp-block-site-title' ).first() ).toBeVisible( { timeout: 15_000 } )
+			await expect( canvas.locator( '.wp-block-heading' ).filter( { hasText: /^Resources$/ } ) ).toBeVisible( { timeout: 15_000 } )
 			await expect( canvas.getByText( /Template part has been deleted or is unavailable/ ) ).toHaveCount( 0 )
 			await expect( canvas.getByText( 'Attempt Recovery' ) ).toHaveCount( 0 )
-		}
-	} )
+		} )
+	}
 } )

@@ -105,6 +105,31 @@ const PALETTE_SLUGS_IN_ROLE_ORDER = [
 	'base',
 ]
 
+const DEFAULT_PALETTE = {
+	primary: '#DBE8FB',
+	'primary-deep': '#140018',
+	'contrast-accent': '#645D73',
+	'outline-contrast': '#140018',
+	outline: '#E8E3EA',
+	'base-accent': '#E7F0FD',
+	tint: '#F4F8FE',
+	base: '#FFFFFF',
+}
+
+const DEFAULT_RADIUS_SIZES = {
+	small: '4px',
+	medium: '12px',
+	large: '20px',
+	full: '9999px',
+}
+
+const DEFAULT_FLUID_TYPE = {
+	large: { min: '1.25rem', max: '1.75rem' },
+	'x-large': { min: '1.5rem', max: '2.5rem' },
+	'xx-large': { min: '2.25rem', max: '4rem' },
+	'xxx-large': { min: '2.75rem', max: '7rem' },
+}
+
 const getPaletteColor = ( palette: PaletteColor[], slug: string ) => {
 	const color = palette.find( ( entry ) => entry.slug === slug )?.color
 	expect( color ).toBeDefined()
@@ -129,27 +154,33 @@ const contrastRatio = ( foreground: string, background: string ) => {
 
 const REQUIRED_BLOCK_STYLES = [
 	'core/button',
+	'core/image',
 	'core/navigation',
+	'core/post-excerpt',
 	'core/post-title',
+	'core/pullquote',
 	'core/query-pagination',
 	'core/quote',
+	'core/read-more',
 	'core/search',
+	'core/separator',
 	'core/site-title',
+	'core/table',
 ]
 
-const REQUIRED_ELEMENT_STYLES = [ 'button', 'heading', 'link' ]
+const REQUIRED_ELEMENT_STYLES = [ 'button', 'heading', 'link', 'select', 'textInput' ]
 
 test.describe( 'Tokens and style variations', () => {
-	let buttonCheckPage: RestRecord
+	let designSystemCheckPage: RestRecord
 	let seededPost: RestRecord
 
 	test.beforeEach( async ( { requestUtils } ) => {
 		await requestUtils.activateTheme( THEME_SLUG )
 		await requestUtils.resetThemeGlobalStyles()
-		buttonCheckPage = await requestUtils.createRecord< RestRecord >( 'pages', {
-			title: 'Phase 2 Button Check',
-			slug: `phase-2-button-check-${ Date.now() }`,
-			content: '<!-- wp:heading --><h2 class="wp-block-heading">Palette heading</h2><!-- /wp:heading --><!-- wp:search {"label":"Search","showLabel":false,"buttonText":"Search"} /-->',
+		designSystemCheckPage = await requestUtils.createRecord< RestRecord >( 'pages', {
+			title: 'Phase 2 Design System Check',
+			slug: `phase-2-design-system-check-${ Date.now() }`,
+			content: '<!-- wp:heading --><h2 class="wp-block-heading">Palette heading</h2><!-- /wp:heading --><!-- wp:paragraph --><p>Default body copy.</p><!-- /wp:paragraph --><!-- wp:buttons --><div class="wp-block-buttons"><!-- wp:button --><div class="wp-block-button"><a class="wp-block-button__link wp-element-button">Primary action</a></div><!-- /wp:button --></div><!-- /wp:buttons --><!-- wp:quote --><blockquote class="wp-block-quote"><!-- wp:paragraph --><p>Default quote.</p><!-- /wp:paragraph --><cite>Source</cite></blockquote><!-- /wp:quote --><!-- wp:search {"label":"Search","showLabel":false,"buttonText":"Search"} /-->',
 			status: 'publish',
 		} )
 		seededPost = await requestUtils.createRecord< RestRecord >( 'posts', {
@@ -164,7 +195,7 @@ test.describe( 'Tokens and style variations', () => {
 		await requestUtils.resetThemeGlobalStyles()
 		await requestUtils.rest( {
 			method: 'DELETE',
-			path: `/wp/v2/pages/${ buttonCheckPage.id }`,
+			path: `/wp/v2/pages/${ designSystemCheckPage.id }`,
 			params: { force: true },
 		} )
 		await requestUtils.rest( {
@@ -188,6 +219,9 @@ test.describe( 'Tokens and style variations', () => {
 		expect(
 			defaultPalette.map( ( color ) => color.slug )
 		).toEqual( PALETTE_SLUGS_IN_ROLE_ORDER )
+		expect( Object.fromEntries(
+			defaultPalette.map( ( color ) => [ color.slug, color.color ] )
+		) ).toEqual( DEFAULT_PALETTE )
 		expect(
 			contrastRatio(
 				getPaletteColor( defaultPalette, 'contrast-accent' ),
@@ -203,9 +237,9 @@ test.describe( 'Tokens and style variations', () => {
 			contentSize: '645px',
 			wideSize: '1340px',
 		} )
-		expect(
-			themeStyles.settings.border.radiusSizes.theme.map( ( preset ) => preset.slug )
-		).toEqual( [ 'small', 'medium', 'large', 'full' ] )
+		expect( Object.fromEntries(
+			themeStyles.settings.border.radiusSizes.theme.map( ( preset ) => [ preset.slug, preset.size ] )
+		) ).toEqual( DEFAULT_RADIUS_SIZES )
 		expect(
 			themeStyles.settings.shadow.presets.theme.map( ( preset ) => preset.slug )
 		).toEqual( [
@@ -228,6 +262,11 @@ test.describe( 'Tokens and style variations', () => {
 				( preset ) => Boolean( preset.fluid?.min && preset.fluid?.max )
 			)
 		).toBe( true )
+		expect( Object.fromEntries(
+			themeStyles.settings.typography.fontSizes.theme
+				.filter( ( preset ) => preset.slug in DEFAULT_FLUID_TYPE )
+				.map( ( preset ) => [ preset.slug, preset.fluid ] )
+		) ).toEqual( DEFAULT_FLUID_TYPE )
 
 		const fontFamilies = themeStyles.settings.typography.fontFamilies.theme
 		const jakarta = fontFamilies.find( ( preset ) => preset.slug === 'plus-jakarta-sans' )
@@ -293,6 +332,36 @@ test.describe( 'Tokens and style variations', () => {
 		)
 		expect( await page.locator( 'body' ).evaluate( ( element ) => getComputedStyle( element ).fontFamily ) )
 			.toContain( '-apple-system' )
+
+		await page.goto( new URL( designSystemCheckPage.link ).pathname )
+		await expect( page.locator( 'h2.wp-block-heading' ) ).toHaveCSS( 'color', 'rgb(20, 0, 24)' )
+		await expect( page.locator( 'h2.wp-block-heading' ) ).toHaveCSS( 'font-weight', '600' )
+		await expect( page.locator( 'main p' ).first() ).toHaveCSS( 'font-weight', '500' )
+
+		const button = page.locator( '.wp-block-button__link', { hasText: 'Primary action' } )
+		await expect( button ).toBeVisible()
+		expect( await button.evaluate( ( element ) => ( {
+			background: getComputedStyle( element ).backgroundColor,
+			borderRadius: getComputedStyle( element ).borderRadius,
+			fontWeight: getComputedStyle( element ).fontWeight,
+			text: getComputedStyle( element ).color,
+		} ) ) ).toEqual( {
+			background: 'rgb(20, 0, 24)',
+			borderRadius: '9999px',
+			fontWeight: '600',
+			text: 'rgb(255, 255, 255)',
+		} )
+
+		const quote = page.locator( '.wp-block-quote' )
+		expect( await quote.evaluate( ( element ) => ( {
+			background: getComputedStyle( element ).backgroundColor,
+			borderRadius: getComputedStyle( element ).borderRadius,
+			text: getComputedStyle( element ).color,
+		} ) ) ).toEqual( {
+			background: 'rgb(231, 240, 253)',
+			borderRadius: '20px',
+			text: 'rgb(20, 0, 24)',
+		} )
 	} )
 
 	test( 'dark variation updates the front-end semantic colors', async ( {
@@ -336,7 +405,7 @@ test.describe( 'Tokens and style variations', () => {
 			postCard: 'rgb(199, 210, 254)',
 		} )
 
-		await page.goto( new URL( buttonCheckPage.link ).pathname )
+		await page.goto( new URL( designSystemCheckPage.link ).pathname )
 		await expect( page.locator( 'h2.wp-block-heading' ) ).toHaveCSS(
 			'color',
 			'rgb(241, 245, 249)'
