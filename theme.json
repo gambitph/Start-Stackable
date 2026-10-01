@@ -725,7 +725,15 @@
         },
         {
             "name": "full-width",
-            "title": "Full Width",
+            "title": "Full Width, No Title",
+            "postTypes": [
+                "page",
+                "post"
+            ]
+        },
+        {
+            "name": "page-with-sidebar",
+            "title": "Page with Sidebar",
             "postTypes": [
                 "page",
                 "post"
@@ -762,6 +770,11 @@
             "name": "footer-landing",
             "title": "Footer Landing",
             "area": "footer"
+        },
+        {
+            "name": "sidebar",
+            "title": "Sidebar",
+            "area": "uncategorized"
         }
     ]
 }

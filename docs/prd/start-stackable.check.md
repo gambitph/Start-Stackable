@@ -64,8 +64,8 @@ Stop if law and the tree disagree; law wins.
 - [ ] `styles.elements` covers heading, link, button (including outline), text input, and select.
 - [ ] `styles.blocks` covers button, navigation, site-title, quote, pullquote, separator, search, query-pagination, post-title, image, post-excerpt, read-more, and table at minimum.
 - [ ] Default headings are tightly tracked, default actions are pill shaped, and quote surfaces use the large radius without one-off CSS.
-- [ ] `customTemplates` includes `full-width` and `blank`.
-- [ ] `templateParts` includes `header`, `header-sticky`, `header-transparent`, `header-minimal`, `footer`, `footer-landing`.
+- [ ] `customTemplates` includes `full-width`, `page-with-sidebar`, and `blank`; the Full Width title makes its no-title behavior explicit.
+- [ ] `templateParts` includes `header`, `header-sticky`, `header-transparent`, `header-minimal`, `footer`, `footer-landing`, and `sidebar`.
 
 ---
 
@@ -105,6 +105,7 @@ Stop if law and the tree disagree; law wins.
 
 - [ ] `page` template shows a theme post title.
 - [ ] `full-width` has no Post Title block and no extra `main` padding that blocks `alignfull`.
+- [ ] `page-with-sidebar` has a page title, two-thirds main content, an editable `sidebar` part, and stacks content before the sidebar without mobile overflow.
 - [ ] `blank` has no header or footer template parts.
 
 ---
@@ -136,7 +137,8 @@ Stop if law and the tree disagree; law wins.
 
 ## Phase 8 - Woo
 
-- [ ] Shop, product, cart, checkout templates exist and use Woo/core blocks + theme tokens.
+- [ ] Shop, product, cart, checkout, order confirmation, and Coming Soon templates exist and use Woo/core blocks + theme tokens.
+- [ ] Anonymous store visitors see the theme Coming Soon template when WooCommerce store-only Coming Soon mode is enabled.
 - [ ] Theme still activates with Woo inactive.
 
 ---

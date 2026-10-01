@@ -76,7 +76,7 @@ Color palette **slugs** and content/wide widths already match the token contract
 Phases 10-11 are unfinished.
 Sticky, transparent, scroll-to-solid, measured height, and mobile overlay behavior are implemented and covered by the consolidated E2E suite.
 The complete shell pattern catalog and one optional core-block Homepage starter are available in the inserter.
-WooCommerce activates into designed catalog, product, cart, checkout, My Account, and order confirmation views while remaining optional.
+WooCommerce activates into designed catalog, product, cart, checkout, My Account, order confirmation, and Coming Soon views while remaining optional.
 The PHP host recommends Stackable without installing it, persists dismissal, and shares responsive breakpoints only while the plugin is active.
 
 | Phase | Status | What is true now | What "done" looks like |
@@ -86,10 +86,10 @@ The PHP host recommends Stackable without installing it, persists dismissal, and
 | 2 Style variations | Done | Nine color skins, including Dark, plus Compact and Editorial typography presets use the shared token contract | (already met) |
 | 3 Header and footer | Done | Six core-only patterns own the shell markup and presets; parts are thin pattern includes | (already met) |
 | 4 First-activation blog | Done | Shared blog atoms and hidden template patterns own thin blog templates | (already met) |
-| 5 Canvases | Done | Hidden canvas patterns own thin `page`, `full-width`, and `blank` templates | (already met) |
+| 5 Canvases | Done | Hidden canvas patterns own thin `page`, `full-width`, `page-with-sidebar`, and `blank` templates | (already met) |
 | 6 Header behavior | Done | Theme CSS/JS honors sticky and transparent flags, applies scroll-to-solid, measures header height, keeps desktop Navigation on one line with a More disclosure, and layers mobile navigation above a hero | (already met) |
 | 7 Patterns | Done | Header/footer, blog atoms, hidden template patterns, and exactly one Homepage starter form the complete shell catalog | (already met) |
-| 8 Woo templates | Done | Thin Woo template files use hidden Woo/core-block patterns and theme tokens; mobile Cart/Checkout and inactive-plugin behavior are covered | (already met) |
+| 8 Woo templates | Done | Thin Woo template files use hidden Woo/core-block patterns and theme tokens; mobile Cart/Checkout, Coming Soon, and inactive-plugin behavior are covered | (already met) |
 | 9 PHP host | Done | Setup, enqueue, body class, dismissible Stackable recommendation, and active-plugin breakpoint handshake | (already met) |
 | 10 Directory packaging | Not started | No `screenshot.png`; tags incomplete | WP.org zip: screenshot of Default, licenses, honest tags |
 | 11 Snap-in | Not started | Contract is documented only | Plugin can assign `full-width` + header flags without a theme PHP change |
@@ -199,10 +199,10 @@ When Default is finished, a user with only this theme can:
 - Edit the header and footer in the Site Editor, including swapping header/footer patterns.
 - Switch **color and typography** style variations, including at least one dark.
 - Run a blog: home/archive grid, single post (image, meta, comments), search, 404.
-- Choose page canvases: default, full-width (no title), blank (no header or footer).
+- Choose page canvases: default, full-width (no title), page with an editable sidebar, or blank (no header or footer).
 - Insert the one Homepage starter pattern onto a new page.
 - Use core blocks that inherit `theme.json`.
-- If WooCommerce is active: shop/product/cart/checkout/account templates that are not unstyled.
+- If WooCommerce is active: shop/product/cart/checkout/account/coming-soon templates that are not unstyled.
 
 They cannot import a multi-page marketing Site Kit until Stackable is installed.
 That gap is the conversion, not a broken empty site.
@@ -280,8 +280,8 @@ Cite the Jakarta license in `readme.txt`.
 ## Templates and parts
 
 A **template** is the HTML WordPress uses for a kind of view.
-A **part** is a header or footer chunk templates include.
-A **canvas** is how a page’s main content is framed: ordinary page (title OK), full-width (no title, full-bleed), or blank (content only).
+A **part** is an editable header, footer, or sidebar chunk templates include.
+A **canvas** is how a page’s main content is framed: ordinary page (title OK), full-width (no title, full-bleed), page with sidebar, or blank (content only).
 
 | Template | When to use |
 | --- | --- |
@@ -289,12 +289,13 @@ A **canvas** is how a page’s main content is framed: ordinary page (title OK),
 | `home.html` | Posts page when a static front page is set |
 | `page.html` | Ordinary pages (title OK) |
 | `full-width.html` | Kit marketing pages: no Post Title, no extra padding on `main`, `alignfull` works |
+| `page-with-sidebar.html` | Editorial pages or posts: title and content in a two-thirds column with an editable right sidebar |
 | `blank.html` | Landing / coming soon: content only |
 | `single.html` | Blog post |
 | `archive.html` | Category/tag/date |
 | `search.html` | Search results |
 | `404.html` | Not found |
-| Woo templates | Shop archive, product search, single product, cart, checkout, and order confirmation. My Account uses `page.html`. |
+| Woo templates | Shop archive, product search, single product, cart, checkout, order confirmation, and Coming Soon. My Account uses `page.html`. |
 
 Do not ship `front-page.html`.
 
@@ -306,6 +307,7 @@ Do not ship `front-page.html`.
 | `header-minimal` | Quiet inner/landing |
 | `footer` | Default columns |
 | `footer-landing` | Compact |
+| `sidebar` | Search, latest posts, and categories; editable from the Site Editor |
 
 `full-width` is the kit default for Home/About/Pricing/Contact.
 If the theme prints a page title or large padding above the first section, the kit looks wrong even with a perfect sticky header.

@@ -16,6 +16,7 @@ const TEMPLATE_PATTERNS = [
 	'start-stackable/template-full-width',
 	'start-stackable/template-index-grid',
 	'start-stackable/template-page',
+	'start-stackable/template-page-with-sidebar',
 	'start-stackable/template-search',
 	'start-stackable/template-single',
 ]
@@ -27,6 +28,7 @@ const PART_PATTERNS = [
 	'start-stackable/header-sticky',
 	'start-stackable/header-transparent',
 ]
+const HIDDEN_PART_PATTERNS = [ 'start-stackable/sidebar' ]
 const ATOM_PATTERNS = [
 	'start-stackable/comments',
 	'start-stackable/post-card',
@@ -35,6 +37,7 @@ const ATOM_PATTERNS = [
 const WOOCOMMERCE_PATTERNS = [
 	'start-stackable/product-collection',
 	'start-stackable/template-archive-product',
+	'start-stackable/template-coming-soon',
 	'start-stackable/template-order-confirmation',
 	'start-stackable/template-page-cart',
 	'start-stackable/template-page-checkout',
@@ -45,6 +48,7 @@ const STARTER_PATTERN = 'start-stackable/page-home'
 const ALL_PATTERNS = [
 	...TEMPLATE_PATTERNS,
 	...PART_PATTERNS,
+	...HIDDEN_PART_PATTERNS,
 	...ATOM_PATTERNS,
 	...WOOCOMMERCE_PATTERNS,
 	STARTER_PATTERN,
@@ -134,6 +138,11 @@ test.describe( 'Pattern catalog', () => {
 		expect(
 			themePatterns
 				.filter( ( pattern ) => WOOCOMMERCE_PATTERNS.includes( pattern.name ) )
+				.every( ( pattern ) => pattern.inserter === false )
+		).toBe( true )
+		expect(
+			themePatterns
+				.filter( ( pattern ) => HIDDEN_PART_PATTERNS.includes( pattern.name ) )
 				.every( ( pattern ) => pattern.inserter === false )
 		).toBe( true )
 		expect(

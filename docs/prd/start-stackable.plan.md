@@ -570,17 +570,18 @@ Then work the **Phase 4** list in the acceptance check.
 
 ---
 
-## Phase 5 is for page canvases (ordinary vs marketing vs blank)
+## Phase 5 is for page canvases (ordinary vs marketing vs sidebar vs blank)
 
 **Status:** done.
 
-**What you are making:** three ways a page can sit in the shell.
+**What you are making:** four ways a page can sit in the shell.
 Ordinary pages keep a title.
 Site Kit marketing pages need **no** theme title and **no** extra padding that blocks a full-bleed first section.
+Editorial pages can keep their title and content primary beside an editable sidebar.
 Blank is content only (no header/footer).
 
-**Files:** `patterns/template-page.php`, `template-full-width.php`, `template-blank.php` (or edit the HTML templates directly if you have not extracted patterns yet), plus `templates/page.html`, `full-width.html`, `blank.html`.
-`theme.json` already registers `full-width` and `blank` under `customTemplates`.
+**Files:** `patterns/template-page.php`, `template-full-width.php`, `template-page-with-sidebar.php`, `sidebar.php`, and `template-blank.php` (or edit the HTML templates directly if you have not extracted patterns yet), plus `templates/page.html`, `full-width.html`, `page-with-sidebar.html`, `blank.html`, and `parts/sidebar.html`.
+`theme.json` registers `full-width`, `page-with-sidebar`, and `blank` under `customTemplates`, plus `sidebar` under `templateParts`.
 
 ### Implement the following
 
@@ -605,7 +606,18 @@ Blank is content only (no header/footer).
    Check: the same page assigned to Full Width has no theme H1.
    A full-width Group/Cover as the first block reaches the left and right edges.
 
-3. **Blank canvas**
+3. **Page with sidebar canvas**
+
+   What: editorial page or post with a title, primary content, and an editable right sidebar.
+
+   How: use a two-thirds / one-third Columns block inside the standard padded shell.
+   Keep Post Title, optional featured image, and Post Content in the first column.
+   Render the `sidebar` template part in an `aside` in the second column.
+   The default part uses only core Search, Latest Posts, and Categories blocks with theme tokens.
+
+   Check: content is wider than the sidebar on desktop, content precedes the sidebar in the DOM, columns stack in that order on mobile, and the page does not overflow.
+
+4. **Blank canvas**
 
    What: landing / coming soon: content only.
 
@@ -618,6 +630,7 @@ Blank is content only (no header/footer).
 
 `page` shows a title.
 `full-width` does not, and `alignfull` works.
+`page-with-sidebar` renders the editable sidebar after primary content and stacks cleanly on mobile.
 `blank` has no header/footer in the DOM.
 
 Then work the **Phase 5** list in the acceptance check.
@@ -767,7 +780,7 @@ Then work the **Phase 7** list in the acceptance check.
 **What you are making:** if Woo is installed, shop/product/cart/checkout/account are not unstyled core.
 If Woo is not installed, the theme still activates.
 
-**Files:** `templates/archive-product.html`, `single-product.html`, `page-cart.html`, `page-checkout.html`, plus account / order confirmation if the current Woo block-theme handbook lists them.
+**Files:** `templates/archive-product.html`, `single-product.html`, `page-cart.html`, `page-checkout.html`, `order-confirmation.html`, and `coming-soon.html`, plus account if the current Woo block-theme handbook lists a dedicated template.
 Optional hidden Woo patterns.
 
 ### Implement the following
@@ -784,14 +797,24 @@ Optional hidden Woo patterns.
    Check: with Woo active, shop and product are designed.
    With Woo inactive, the theme still activates.
 
-2. **Mobile cart and checkout**
+2. **Coming Soon**
+
+   What: WooCommerce store-only Coming Soon uses the theme shell and tokens for anonymous visitors.
+
+   How: add `coming-soon.html` as a thin include of a hidden pattern built around `woocommerce/coming-soon`.
+   Keep Woo blocks out of PHP so the theme still activates without the plugin.
+
+   Check: enable store-only Coming Soon and visit the shop as a signed-out visitor.
+   The theme Coming Soon heading, header, and footer render without horizontal overflow.
+
+3. **Mobile cart and checkout**
 
    What: readable on a phone.
 
    How: check the templates at 375px width.
    Fix spacing with presets, not a one-off CSS file unless `theme.json` cannot express it.
 
-3. **Tags**
+4. **Tags**
 
    What: do not advertise e-commerce until these files exist.
 
@@ -799,8 +822,8 @@ Optional hidden Woo patterns.
 
 ### This phase is done when
 
-Woo on → shop/product look like Default.
-Woo off → theme still activates.
+Woo on -> shop/product and Coming Soon look like Default.
+Woo off -> theme still activates.
 Theme Check does not fail on missing Woo.
 
 Phase 8 is covered by the WooCommerce E2E profile and the matching acceptance checks.
@@ -983,7 +1006,7 @@ start-stackable/
   assets/fonts/          # Plus Jakarta Sans (headings) + license cited in readme
   assets/images/         # CC0 images used by patterns
   assets/build/          # compiled frontend.css / .js / .asset.php
-  templates/             # index, home, page, full-width, blank, single,
+  templates/             # index, home, page, full-width, page-with-sidebar, blank, single,
                          # archive, search, 404, plus Woo files if Phase 8 shipped
   parts/                 # header, header-sticky, header-transparent, header-minimal,
                          # footer, footer-landing
@@ -1017,9 +1040,10 @@ Templates and parts should become **one-line pattern includes** so strings stay 
 | `template-single` | `single` | header + terms, H1, meta, featured image, content, comments, post nav + footer |
 | `template-page` | `page` | header + title + featured image + content + footer |
 | `template-full-width` | (custom template) | header + `post-content` alignfull, no Post Title, no extra `main` padding + footer |
+| `template-page-with-sidebar` | (custom template) | header + title/content in a two-thirds column + editable right sidebar + footer |
 | `template-blank` | (custom) | `post-content` only |
 
-### Part patterns (`Block Types: core/template-part/header` or `footer`, Inserter true)
+### Part patterns
 
 | Slug | Part |
 | --- | --- |
@@ -1029,6 +1053,7 @@ Templates and parts should become **one-line pattern includes** so strings stay 
 | `header-minimal` | Compact |
 | `footer` | Columns: site identity, socials, two nav columns, copyright = site name not "Start Stackable Theme" |
 | `footer-landing` | Compact |
+| `sidebar` | Hidden pattern used by the editable Sidebar part: Search, Latest Posts, and Categories |
 
 ### Atoms (Inserter true)
 
@@ -1052,6 +1077,7 @@ Do not add standalone hero, pricing, testimonial, team, FAQ, or logo-grid patter
 | --- | --- | --- |
 | `product-collection` | (shared atom) | Catalog toolbar, three-column product cards, pagination, and no-results state |
 | `template-archive-product` | `archive-product` | Header, breadcrumbs, archive title/description, notices, product collection, footer |
+| `template-coming-soon` | `coming-soon` | Woo Coming Soon wrapper, theme header, centered status card, and footer |
 | `template-product-search-results` | `product-search-results` | Header, breadcrumbs, search title, notices, product collection, footer |
 | `template-single-product` | `single-product` | Header, breadcrumbs, gallery, product details, related products, footer |
 | `template-page-cart` | `page-cart` | Header, Woo page wrapper, notices, page title/content, footer |

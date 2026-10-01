@@ -10,6 +10,7 @@ import {
 const THEME_SLUG = process.env.THEME_SLUG || 'start-stackable'
 const WOO_TEMPLATES = [
 	'archive-product',
+	'coming-soon',
 	'order-confirmation',
 	'page-cart',
 	'page-checkout',
@@ -44,6 +45,8 @@ type PluginRecord = {
 	plugin: string
 	status: string
 }
+
+type WooOptions = Record< string, string | boolean >
 
 async function deleteWooRecord(
 	requestUtils: RequestUtils,
@@ -137,6 +140,53 @@ test.describe( 'WooCommerce templates', () => {
 				canvas: 'edit',
 			} )
 			await assertNoEditorRecovery( page )
+		}
+	} )
+
+	test( 'renders the theme coming soon template for anonymous store visitors', async ( {
+		browser,
+		requestUtils,
+	} ) => {
+		const previousOptions = await requestUtils.rest< WooOptions >( {
+			path: '/wc-admin/options',
+			params: {
+				options: 'woocommerce_coming_soon,woocommerce_store_pages_only',
+			},
+		} )
+		const anonymousContext = await browser.newContext( {
+			baseURL: process.env.WP_BASE_URL,
+		} )
+
+		try {
+			const anonymousPage = await anonymousContext.newPage()
+			await anonymousPage.goto( '/wp-login.php?action=logout' )
+			await anonymousPage.getByRole( 'link', { name: /log out/i } ).click()
+			await requestUtils.rest( {
+				method: 'POST',
+				path: '/wc-admin/options',
+				data: {
+					woocommerce_coming_soon: 'yes',
+					woocommerce_store_pages_only: 'yes',
+				},
+			} )
+			await anonymousPage.setViewportSize( { width: 375, height: 900 } )
+			await anonymousPage.goto( '/shop/' )
+
+			await expect( anonymousPage.locator( 'body' ) ).not.toHaveClass( /logged-in/ )
+			await expect( anonymousPage.locator( 'meta[name="woo-coming-soon-page"]' ) ).toHaveAttribute( 'content', 'yes' )
+			await expect(
+				anonymousPage.getByRole( 'heading', { level: 1, name: 'Something good is taking shape.' } )
+			).toBeVisible()
+			await expect( anonymousPage.getByRole( 'banner' ) ).toBeVisible()
+			await expect( anonymousPage.getByRole( 'contentinfo' ) ).toBeVisible()
+			expect( await anonymousPage.evaluate( () => document.documentElement.scrollWidth ) ).toBe( 375 )
+		} finally {
+			await anonymousContext.close()
+			await requestUtils.rest( {
+				method: 'POST',
+				path: '/wc-admin/options',
+				data: previousOptions,
+			} )
 		}
 	} )
 

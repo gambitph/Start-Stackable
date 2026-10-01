@@ -6,6 +6,7 @@ const CANVAS_PATTERNS = [
 	'start-stackable/template-blank',
 	'start-stackable/template-full-width',
 	'start-stackable/template-page',
+	'start-stackable/template-page-with-sidebar',
 ]
 
 type RestRecord = {
@@ -17,6 +18,16 @@ type BlockPattern = {
 	content?: string
 	inserter?: boolean
 	name: string
+}
+
+type BlockTemplate = {
+	id: string
+	slug: string
+	source: string
+	title?: {
+		raw?: string
+		rendered?: string
+	}
 }
 
 async function assignTemplate( requestUtils: RequestUtils, pageId: number, template: string ) {
@@ -104,6 +115,35 @@ test.describe( 'Page canvases', () => {
 		await expect( page.locator( '.wp-block-post-title' ) ).toHaveCount( 0 )
 	} )
 
+	test( 'page with sidebar keeps page content primary and stacks cleanly on mobile', async ( {
+		page,
+		requestUtils,
+	} ) => {
+		await assignTemplate( requestUtils, fixture.id, 'page-with-sidebar' )
+		await page.setViewportSize( { width: 1440, height: 1000 } )
+		await page.goto( fixture.link )
+
+		await expect( page.getByRole( 'heading', { level: 1, name: 'Phase 5 Canvas Fixture' } ) ).toBeVisible()
+		await expect( page.locator( 'aside.wp-block-template-part' ) ).toBeVisible()
+		await expect( page.getByRole( 'heading', { level: 2, name: 'Latest posts' } ) ).toBeVisible()
+		await expect( page.getByRole( 'heading', { level: 2, name: 'Categories' } ) ).toBeVisible()
+		const columns = page.locator( 'main > .wp-block-columns > .wp-block-column' )
+		await expect( columns ).toHaveCount( 2 )
+		const contentBox = await columns.nth( 0 ).boundingBox()
+		const sidebarBox = await columns.nth( 1 ).boundingBox()
+		expect( contentBox ).not.toBeNull()
+		expect( sidebarBox ).not.toBeNull()
+		expect( contentBox!.width ).toBeGreaterThan( sidebarBox!.width )
+
+		await page.setViewportSize( { width: 375, height: 900 } )
+		const mobileContentBox = await columns.nth( 0 ).boundingBox()
+		const mobileSidebarBox = await columns.nth( 1 ).boundingBox()
+		expect( mobileContentBox ).not.toBeNull()
+		expect( mobileSidebarBox ).not.toBeNull()
+		expect( mobileSidebarBox!.y ).toBeGreaterThan( mobileContentBox!.y )
+		expect( await page.evaluate( () => document.documentElement.scrollWidth ) ).toBe( 375 )
+	} )
+
 	test( 'WordPress registers hidden canvas patterns and loads each template in Site Editor', async ( {
 		page,
 		admin,
@@ -112,6 +152,20 @@ test.describe( 'Page canvases', () => {
 		const patterns = await requestUtils.rest< BlockPattern[] >( {
 			path: '/wp/v2/block-patterns/patterns',
 		} )
+		const templates = await requestUtils.rest< BlockTemplate[] >( {
+			path: '/wp/v2/templates',
+			params: { context: 'edit', per_page: 100 },
+		} )
+		const fullWidthTemplate = templates.find(
+			( template ) => template.id === `${ THEME_SLUG }//full-width`
+		)
+		const sidebarTemplate = templates.find(
+			( template ) => template.id === `${ THEME_SLUG }//page-with-sidebar`
+		)
+		expect( fullWidthTemplate?.title?.raw || fullWidthTemplate?.title?.rendered ).toBe(
+			'Full Width, No Title'
+		)
+		expect( sidebarTemplate?.source ).toBe( 'theme' )
 		const canvasPatterns = patterns.filter( ( pattern ) => CANVAS_PATTERNS.includes( pattern.name ) )
 		expect( canvasPatterns.map( ( pattern ) => pattern.name ).sort() ).toEqual( CANVAS_PATTERNS )
 		expect( canvasPatterns.every( ( pattern ) => pattern.inserter === false ) ).toBe( true )
@@ -122,8 +176,13 @@ test.describe( 'Page canvases', () => {
 		expect( pagePatternContent.indexOf( '<!-- wp:post-title' ) ).toBeLessThan(
 			pagePatternContent.indexOf( '<!-- wp:post-featured-image' )
 		)
+		const sidebarPattern = canvasPatterns.find(
+			( pattern ) => pattern.name === 'start-stackable/template-page-with-sidebar'
+		)
+		expect( sidebarPattern?.content ).toContain( '<!-- wp:columns' )
+		expect( sidebarPattern?.content ).toContain( '<!-- wp:template-part {"slug":"sidebar"' )
 
-		for ( const templateSlug of [ 'page', 'full-width', 'blank' ] ) {
+		for ( const templateSlug of [ 'page', 'full-width', 'blank', 'page-with-sidebar' ] ) {
 			await admin.visitSiteEditor( {
 				postType: 'wp_template',
 				postId: `${ THEME_SLUG }//${ templateSlug }`,

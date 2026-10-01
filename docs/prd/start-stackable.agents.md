@@ -67,7 +67,9 @@ If a kit needs a new header or footer behavior, add it here and extend this list
 | Hide header / hide footer | Per-page via `blank` canvas and/or a page flag the plugin can set on import. |
 | `page` | Standard page: header, title allowed, footer. |
 | `full-width` | Marketing canvas: header + footer, **no** theme page title, **no** extra main padding that blocks `alignfull` heroes. |
+| `page-with-sidebar` | Editorial canvas: header + footer, page title, two-thirds main content, and the editable `sidebar` part. It stacks content before the sidebar on small screens. |
 | `blank` | Post content only. No header, no footer. |
+| `sidebar` | Editable core-block template part used by `page-with-sidebar`; ships with Search, Latest Posts, and Categories. |
 | `--stk-header-height` | CSS custom property on `:root` reflecting current header height (and a scrolled variant if the bar shrinks). |
 | Tokens | Palette slugs, font sizes, spacing sizes, `contentSize` `645px`, `wideSize` `1340px` stay aligned with Stackable inheritance. Default uses ink and pale blue surfaces, broad fluid display type, generous spacing, 20px large surfaces, and pill actions. Headings: Plus Jakarta Sans (bundled). Body: system UI stack. |
 | Style variations | Color files under `styles/colors/`, typography under `styles/typography/`, at least one dark. Same palette slugs, different values. |
@@ -98,12 +100,13 @@ Kit Home uses the page's `full-width` template.
 | `templates/home.html` | Posts index when a static front page is set (same grid) |
 | `templates/page.html` | Default page (title OK) |
 | `templates/full-width.html` | No title, full bleed (custom template) |
+| `templates/page-with-sidebar.html` | Title, content, and editable right sidebar (custom template) |
 | `templates/blank.html` | No header or footer |
 | `templates/single.html` | Post: terms, title, meta, featured image, content, comments, pagination |
 | `templates/archive.html` | Category/tag/date (grid) |
 | `templates/search.html` | Search results |
 | `templates/404.html` | Not found |
-| Woo templates | Shop archive, product search, single product, cart, checkout, and order confirmation; unused until Woo is active. My Account uses the standard page shell. |
+| Woo templates | Shop archive, product search, single product, cart, checkout, order confirmation, and Coming Soon; unused until Woo is active. My Account uses the standard page shell. |
 
 When finished, templates are thin `wp:pattern` includes of template patterns.
 Parts are thin includes of header/footer patterns.
@@ -115,7 +118,7 @@ Phase 5 page canvases now use hidden template patterns and thin template include
 If a pattern is required to reconstruct Default, it belongs here.
 If it would also be a Design Library section, it does not.
 
-Allowed: header/footer variants, post card, post meta, comments, template guts, **one** `page-home` starter (`Block Types: core/post-content`).
+Allowed: header/footer/sidebar parts, post card, post meta, comments, template guts, **one** `page-home` starter (`Block Types: core/post-content`).
 Not allowed: a section catalog of heroes, pricing, testimonials, team, FAQ, logos.
 
 ## Current repo gaps (matching phase only)
@@ -136,7 +139,7 @@ Then run that phase in [`start-stackable.check.md`](./start-stackable.check.md).
 2. Style variations.
 3. Header and footer parts + patterns (no `ref`, user copyright).
 4. Blog templates (index/home/archive/search/404/single).
-5. Canvases (`page`, `full-width`, `blank`).
+5. Canvases (`page`, `full-width`, `page-with-sidebar`, `blank`).
 6. Header flags and Navigation overflow.
 7. Shell pattern catalog + one `page-home`.
 8. Woo templates.
@@ -179,10 +182,10 @@ Do not add failing specs for an unfinished header or footer.
 | `e2e/tests/standalone-activate.spec.ts` | Theme activates; the missing-plugin notice points to the WordPress.org Stackable slug; `/` shows header + post grid + footer; no `stackable/` in markup; Navigation has no stale `ref`. |
 | `e2e/tests/tokens-and-variations.spec.ts` | Default palette slugs exist; switching a color or typography variation updates presets on the front. |
 | `e2e/tests/blog.spec.ts` | Create a post with featured image; `single` shows title, image, date, comments form; `home`/`archive` shows a grid card; `search` finds it; `404` shows search. |
-| `e2e/tests/canvases.spec.ts` | Page on `page` shows title; same page on `full-width` has no theme `h1` from Post Title and content can be `alignfull`; `blank` has no header/footer in the DOM. |
+| `e2e/tests/canvases.spec.ts` | Page on `page` shows title; same page on `full-width` has no theme `h1` from Post Title and content can be `alignfull`; `page-with-sidebar` renders primary content before an editable sidebar and stacks without overflow; `blank` has no header/footer in the DOM. |
 | `e2e/tests/header-flags.spec.ts` | Transparent header overlays a full-bleed first section; after scroll, header background is opaque; `--stk-header-height` is a non-zero px value; mobile menu opens above the hero; desktop Navigation moves only non-fitting trailing links into More and restores them for wide and mobile layouts. |
 | `e2e/tests/patterns.spec.ts` | The complete catalog registers with intended visibility; a new page offers exactly one Homepage starter; the starter renders cleanly on Full Width in Default and Dark. |
-| `e2e/tests/woocommerce.spec.ts` | With WooCommerce active: theme templates register and open without recovery UI; catalog, taxonomy, search, product, cart, checkout, My Account, and order confirmation render; mobile commerce views do not overflow. |
+| `e2e/tests/woocommerce.spec.ts` | With WooCommerce active: theme templates register and open without recovery UI; catalog, taxonomy, search, product, cart, checkout, My Account, order confirmation, and anonymous store-only Coming Soon render; mobile commerce views do not overflow. |
 | `e2e/tests/onboarding.spec.ts` | Theme activation creates no content; installed-inactive Stackable can be activated by the user; active Stackable receives the breakpoints and suppresses the notice; after deactivation and dismiss the notice stays gone. |
 | `e2e/tests/with-plugin-snap-in.spec.ts` | With Stackable active: `body` has `stk--is-stackable-theme`; a fixture kit import (plugin e2e) assigns `full-width` and transparent header without missing blocks. |
 

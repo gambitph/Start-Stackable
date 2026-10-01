@@ -48,7 +48,7 @@ Theme-owned header behavior that moves trailing desktop Navigation items into a 
 _Avoid_: fixed item limits, plugin-only menu CSS, a Site Kit overflow flag
 
 **Page canvas**:
-How a page’s main content is framed: default, full-bleed no-title, blank (no header/footer).
+How a page’s main content is framed: default, full-bleed no-title, page with editable sidebar, or blank (no header/footer).
 _Avoid_: Site Kit page (plugin content)
 
 **Shell pattern**:
