@@ -165,7 +165,7 @@ Then run that phase in [`start-stackable.check.md`](./start-stackable.check.md).
 | `assets/fonts/` | Plus Jakarta Sans (headings) |
 | `assets/images/` | CC0 pattern images |
 | `webpack.config.js` | `@wordpress/scripts` entry → `assets/build/` |
-| `screenshot.png` | Directory first paint of the Homepage starter on Full Width (must use Default styles) |
+| `screenshot.png` | Directory first paint of the Homepage starter hero and following section (must use Default styles) |
 | `readme.txt` | Directory listing, licenses |
 
 ## E2E (create these after the surface exists)

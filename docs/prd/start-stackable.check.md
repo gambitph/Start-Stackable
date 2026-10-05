@@ -155,7 +155,7 @@ Stop if law and the tree disagree; law wins.
 
 ## Phase 10 - Directory
 
-- [ ] `screenshot.png` is 1200×900 and depicts the Homepage starter on Full Width using Default styles, not a Site Kit.
+- [ ] `screenshot.png` is 1200×900 and depicts the Homepage starter using Default styles, with the hero and next section in frame, not a Site Kit.
 - [ ] `readme.txt` states the plugin is optional and starter sites are not in the zip.
 - [ ] Font and image licenses are listed.
 - [ ] `style.css` tags that are advertised are true (`block-patterns`, `style-variations`, `e-commerce` only if Woo templates shipped).
