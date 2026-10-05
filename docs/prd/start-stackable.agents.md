@@ -66,7 +66,7 @@ If a kit needs a new header or footer behavior, add it here and extend this list
 | Navigation overflow | At desktop widths, header Navigation stays on one line and moves only trailing items that do not fit into an accessible More disclosure. At mobile widths, core Navigation owns the overlay and receives every original item. |
 | Hide header / hide footer | Per-page via `blank` canvas and/or a page flag the plugin can set on import. |
 | `page` | Standard page: header, title allowed, footer. |
-| `full-width` | Marketing canvas: header + footer, **no** theme page title, **no** extra main padding that blocks `alignfull` heroes. |
+| `full-width` | Marketing canvas: header + footer, **no** theme page title, **no** gap between the header and `main`, and **no** extra main padding that blocks `alignfull` heroes. |
 | `page-with-sidebar` | Editorial canvas: header + footer, page title, two-thirds main content, and the editable `sidebar` part. It stacks content before the sidebar on small screens. |
 | `blank` | Post content only. No header, no footer. |
 | `sidebar` | Editable core-block template part used by `page-with-sidebar`; ships with Search, Latest Posts, and Categories. |
@@ -126,7 +126,8 @@ Not allowed: a section catalog of heroes, pricing, testimonials, team, FAQ, logo
 Do not take a later gap first.
 Each item is gone or explicitly deferred in an ADR.
 
-- Phase 10-11: no `screenshot.png`; snap-in contract on paper only.
+- Phase 10: directory packaging acceptance remains.
+- Phase 11: snap-in contract is on paper only.
 
 ## Implementation sequence
 
@@ -164,7 +165,7 @@ Then run that phase in [`start-stackable.check.md`](./start-stackable.check.md).
 | `assets/fonts/` | Plus Jakarta Sans (headings) |
 | `assets/images/` | CC0 pattern images |
 | `webpack.config.js` | `@wordpress/scripts` entry → `assets/build/` |
-| `screenshot.png` | Directory first paint (must match Default) |
+| `screenshot.png` | Directory first paint of the Homepage starter on Full Width (must use Default styles) |
 | `readme.txt` | Directory listing, licenses |
 
 ## E2E (create these after the surface exists)
@@ -180,11 +181,11 @@ Do not add failing specs for an unfinished header or footer.
 | Spec file (intended) | Assertions |
 | --- | --- |
 | `e2e/tests/standalone-activate.spec.ts` | Theme activates; the missing-plugin notice points to the WordPress.org Stackable slug; `/` shows header + post grid + footer; no `stackable/` in markup; Navigation has no stale `ref`. |
-| `e2e/tests/tokens-and-variations.spec.ts` | Default palette slugs exist; switching a color or typography variation updates presets on the front. |
+| `e2e/tests/tokens-and-variations.spec.ts` | Default palette slugs exist; switching a color or typography variation updates presets on the front; user block spacing overrides the theme default. |
 | `e2e/tests/blog.spec.ts` | Create a post with featured image; `single` shows title, image, date, comments form; `home`/`archive` shows a grid card; `search` finds it; `404` shows search. |
-| `e2e/tests/canvases.spec.ts` | Page on `page` shows title; same page on `full-width` has no theme `h1` from Post Title and content can be `alignfull`; `page-with-sidebar` renders primary content before an editable sidebar and stacks without overflow; `blank` has no header/footer in the DOM. |
+| `e2e/tests/canvases.spec.ts` | Page on `page` shows title; same page on `full-width` has no theme `h1` from Post Title, starts `main` directly after the header, and content can be `alignfull`; `page-with-sidebar` renders primary content before an editable sidebar and stacks without overflow; `blank` has no header/footer in the DOM. |
 | `e2e/tests/header-flags.spec.ts` | Transparent header overlays a full-bleed first section; after scroll, header background is opaque; `--stk-header-height` is a non-zero px value; mobile menu opens above the hero; desktop Navigation moves only non-fitting trailing links into More and restores them for wide and mobile layouts. |
-| `e2e/tests/patterns.spec.ts` | The complete catalog registers with intended visibility; a new page offers exactly one Homepage starter; the starter renders cleanly on Full Width in Default and Dark. |
+| `e2e/tests/patterns.spec.ts` | The complete catalog registers with intended visibility; a new page offers exactly one Homepage starter; the starter renders cleanly on Full Width in Default and Dark, with its Selected Work cards aligned on one desktop row. |
 | `e2e/tests/woocommerce.spec.ts` | With WooCommerce active: theme templates register and open without recovery UI; catalog, taxonomy, search, product, cart, checkout, My Account, order confirmation, and anonymous store-only Coming Soon render; mobile commerce views do not overflow. |
 | `e2e/tests/onboarding.spec.ts` | Theme activation creates no content; installed-inactive Stackable can be activated by the user; active Stackable receives the breakpoints and suppresses the notice; after deactivation and dismiss the notice stays gone. |
 | `e2e/tests/with-plugin-snap-in.spec.ts` | With Stackable active: `body` has `stk--is-stackable-theme`; a fixture kit import (plugin e2e) assigns `full-width` and transparent header without missing blocks. |

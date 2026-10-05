@@ -70,6 +70,7 @@ type ThemeGlobalStyles = {
 	}
 	styles: {
 		blocks: Record< string, unknown >
+		css?: string
 		elements: Record< string, unknown >
 		typography: {
 			fontFamily: string
@@ -180,7 +181,7 @@ test.describe( 'Tokens and style variations', () => {
 		designSystemCheckPage = await requestUtils.createRecord< RestRecord >( 'pages', {
 			title: 'Phase 2 Design System Check',
 			slug: `phase-2-design-system-check-${ Date.now() }`,
-			content: '<!-- wp:heading --><h2 class="wp-block-heading">Palette heading</h2><!-- /wp:heading --><!-- wp:paragraph --><p>Default body copy.</p><!-- /wp:paragraph --><!-- wp:buttons --><div class="wp-block-buttons"><!-- wp:button --><div class="wp-block-button"><a class="wp-block-button__link wp-element-button">Primary action</a></div><!-- /wp:button --></div><!-- /wp:buttons --><!-- wp:quote --><blockquote class="wp-block-quote"><!-- wp:paragraph --><p>Default quote.</p><!-- /wp:paragraph --><cite>Source</cite></blockquote><!-- /wp:quote --><!-- wp:search {"label":"Search","showLabel":false,"buttonText":"Search"} /-->',
+			content: '<!-- wp:heading --><h2 class="wp-block-heading">Palette heading</h2><!-- /wp:heading --><!-- wp:paragraph --><p>Default body copy.</p><!-- /wp:paragraph --><!-- wp:buttons --><div class="wp-block-buttons"><!-- wp:button --><div class="wp-block-button"><a class="wp-block-button__link wp-element-button">Primary action</a></div><!-- /wp:button --></div><!-- /wp:buttons --><!-- wp:quote --><blockquote class="wp-block-quote"><!-- wp:paragraph --><p>Default quote.</p><!-- /wp:paragraph --><cite>Source</cite></blockquote><!-- /wp:quote --><!-- wp:search {"label":"Search","showLabel":false,"buttonText":"Search"} /--><!-- wp:group {"className":"global-spacing-check","layout":{"type":"constrained"}} --><div class="wp-block-group global-spacing-check"><!-- wp:paragraph --><p>First spacing check.</p><!-- /wp:paragraph --><!-- wp:paragraph --><p>Second spacing check.</p><!-- /wp:paragraph --></div><!-- /wp:group -->',
 			status: 'publish',
 		} )
 		seededPost = await requestUtils.createRecord< RestRecord >( 'posts', {
@@ -284,6 +285,7 @@ test.describe( 'Tokens and style variations', () => {
 		expect( themeStyles.styles.typography.fontFamily ).toBe(
 			'var(--wp--preset--font-family--sans-serif)'
 		)
+		expect( themeStyles.styles.css ).toBeUndefined()
 		expect( Object.keys( themeStyles.styles.elements ) ).toEqual(
 			expect.arrayContaining( REQUIRED_ELEMENT_STYLES )
 		)
@@ -419,6 +421,34 @@ test.describe( 'Tokens and style variations', () => {
 			background: 'rgb(199, 210, 254)',
 			text: 'rgb(11, 17, 32)',
 		} )
+	} )
+
+	test( 'user block spacing overrides the theme spacing default', async ( {
+		page,
+		requestUtils,
+	} ) => {
+		await applyStyleVariation( requestUtils, {
+			title: 'Custom group spacing',
+			styles: {
+				blocks: {
+					'core/group': {
+						spacing: {
+							blockGap: '7px',
+						},
+					},
+				},
+			},
+		} )
+		await page.goto( new URL( designSystemCheckPage.link ).pathname )
+
+		const firstParagraph = page.getByText( 'First spacing check.', { exact: true } )
+		const secondParagraph = page.getByText( 'Second spacing check.', { exact: true } )
+		const firstBox = await firstParagraph.boundingBox()
+		const secondBox = await secondParagraph.boundingBox()
+
+		expect( firstBox ).not.toBeNull()
+		expect( secondBox ).not.toBeNull()
+		expect( secondBox!.y - ( firstBox!.y + firstBox!.height ) ).toBeCloseTo( 7, 0 )
 	} )
 
 	test( 'typography variations change visible front-end type', async ( {

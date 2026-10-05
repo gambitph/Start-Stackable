@@ -104,7 +104,7 @@ Stop if law and the tree disagree; law wins.
 ## Phase 5 - Canvases
 
 - [ ] `page` template shows a theme post title.
-- [ ] `full-width` has no Post Title block and no extra `main` padding that blocks `alignfull`.
+- [ ] `full-width` has no Post Title block, no gap between the header and `main`, and no extra `main` padding that blocks `alignfull`.
 - [ ] `page-with-sidebar` has a page title, two-thirds main content, an editable `sidebar` part, and stacks content before the sidebar without mobile overflow.
 - [ ] `blank` has no header or footer template parts.
 
@@ -155,7 +155,7 @@ Stop if law and the tree disagree; law wins.
 
 ## Phase 10 - Directory
 
-- [ ] `screenshot.png` exists and depicts Default, not a Site Kit.
+- [ ] `screenshot.png` is 1200×900 and depicts the Homepage starter on Full Width using Default styles, not a Site Kit.
 - [ ] `readme.txt` states the plugin is optional and starter sites are not in the zip.
 - [ ] Font and image licenses are listed.
 - [ ] `style.css` tags that are advertised are true (`block-patterns`, `style-variations`, `e-commerce` only if Woo templates shipped).

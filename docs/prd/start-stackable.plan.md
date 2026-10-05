@@ -900,14 +900,14 @@ Phase 9 is covered by the onboarding E2E profile and the matching acceptance che
 
 ### Implement the following
 
-1. **Screenshot of Default**
+1. **Screenshot of the Default Homepage starter**
 
-   What: 1200×900 image of `/` with sample posts, not a Site Kit.
+   What: 1200×900 image of the theme's Homepage starter on the Full Width template using Default styles, not a Site Kit.
 
-   How: capture the designed blog after Phase 4.
+   How: capture `start-stackable/page-home` after Phase 7 with user Global Styles reset to Default.
    Save as `screenshot.png` in the theme root.
 
-   Check: the file exists and matches what a fresh latest-posts site shows.
+   Check: the file exists and matches the Homepage starter inserted on a Full Width page using Default styles.
 
 2. **readme.txt for the listing**
 

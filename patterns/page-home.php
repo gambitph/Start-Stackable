@@ -92,8 +92,8 @@
 <!-- /wp:group --></div>
 <!-- /wp:column -->
 
-<!-- wp:column {"style":{"spacing":{"padding":{"top":"var:preset|spacing|xx-large"}}}} -->
-<div class="wp-block-column" style="padding-top:var(--wp--preset--spacing--xx-large)"><!-- wp:group {"backgroundColor":"primary-deep","textColor":"base","style":{"border":{"radius":"var:preset|border-radius|large"},"dimensions":{"minHeight":"560px"},"spacing":{"blockGap":"var:preset|spacing|medium","padding":{"top":"var:preset|spacing|x-large","right":"var:preset|spacing|x-large","bottom":"var:preset|spacing|x-large","left":"var:preset|spacing|x-large"}}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"space-between"}} -->
+<!-- wp:column -->
+<div class="wp-block-column"><!-- wp:group {"backgroundColor":"primary-deep","textColor":"base","style":{"border":{"radius":"var:preset|border-radius|large"},"dimensions":{"minHeight":"560px"},"spacing":{"blockGap":"var:preset|spacing|medium","padding":{"top":"var:preset|spacing|x-large","right":"var:preset|spacing|x-large","bottom":"var:preset|spacing|x-large","left":"var:preset|spacing|x-large"}}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"space-between"}} -->
 <div class="wp-block-group has-base-color has-primary-deep-background-color has-text-color has-background" style="border-radius:var(--wp--preset--border-radius--large);min-height:560px;padding-top:var(--wp--preset--spacing--x-large);padding-right:var(--wp--preset--spacing--x-large);padding-bottom:var(--wp--preset--spacing--x-large);padding-left:var(--wp--preset--spacing--x-large)"><!-- wp:paragraph {"fontSize":"small"} -->
 <p class="has-small-font-size"><?php esc_html_e( '02 · Strategy and experience', 'start-stackable' ); ?></p>
 <!-- /wp:paragraph -->

@@ -271,7 +271,6 @@
         "useRootPaddingAwareAlignments": true
     },
     "styles": {
-        "css": ":root :where(.is-layout-constrained) > * { margin-block-start: 0; margin-block-end: var(--wp--preset--spacing--large); }",
         "typography": {
             "fontFamily": "var:preset|font-family|sans-serif",
             "fontSize": "var:preset|font-size|medium",
