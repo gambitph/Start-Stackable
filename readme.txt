@@ -41,7 +41,7 @@ Yes. WooCommerce is optional, and its storefront views use the same theme styles
 
 == Copyright ==
 
-Start Stackable Theme, (C) 2025 Gambit Technologies Inc.
+Start Stackable WordPress Theme, Copyright 2026 Gambit Technologies Inc.
 Start Stackable is distributed under the terms of the GNU GPL.
 
 Theme screenshot
