@@ -81,9 +81,10 @@ function addSecurityIndexFiles( dir ) {
 			continue
 		}
 
-		const indexPath = path.join( itemPath, 'index.php' )
-		if ( ! fs.existsSync( indexPath ) ) {
-			fs.writeFileSync( indexPath, INDEX_PHP_CONTENT )
+		const indexPhpPath = path.join( itemPath, 'index.php' )
+		const indexHtmlPath = path.join( itemPath, 'index.html' )
+		if ( ! fs.existsSync( indexPhpPath ) && ! fs.existsSync( indexHtmlPath ) ) {
+			fs.writeFileSync( indexPhpPath, INDEX_PHP_CONTENT )
 		}
 
 		addSecurityIndexFiles( itemPath )
