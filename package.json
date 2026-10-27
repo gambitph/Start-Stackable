@@ -10,7 +10,7 @@
 	},
 	"scripts": {
 		"start": "wp-scripts start",
-		"compile": "wp-scripts build",
+		"compile": "node scripts/compile.js",
 		"package": "node scripts/package.js",
 		"build": "npm run compile && node scripts/package.js ${npm_config_suffix}",
 		"test": "npm run test:e2e",
