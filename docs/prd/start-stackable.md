@@ -69,7 +69,8 @@ If the files and this section disagree, trust the files and the [phase checklist
 **Phases 0-9 are complete.**
 The theme is a valid block theme that activates without a PHP fatal.
 `functions.php` enqueues `assets/build/frontend.*` and adds the body class `stk--is-stackable-theme`.
-`npm run start` compiles `src/` into `assets/build/`.
+`npm run start` compiles `src/` into the runtime assets in `assets/build/`.
+`npm run compile` also emits readable `frontend-source.*` counterparts.
 Template and part **files** exist.
 Color palette **slugs** and content/wide widths already match the token contract below.
 

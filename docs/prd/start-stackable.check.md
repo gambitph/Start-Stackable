@@ -43,7 +43,7 @@ Stop if law and the tree disagree; law wins.
 
 - [ ] Theme activates without a PHP fatal.
 - [ ] `style.css` has `Theme Name`, `Text Domain: start-stackable`, `Requires at least`.
-- [ ] `npm run start` / `npm run compile` emit `assets/build/frontend.js` and `frontend.css`.
+- [ ] `npm run start` emits `assets/build/frontend.js` and `frontend.css`; `npm run compile` also emits readable `frontend-source.js` and `frontend-source.css` counterparts.
 - [ ] `functions.php` enqueues that bundle when the `.asset.php` file exists.
 
 ---

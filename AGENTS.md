@@ -76,8 +76,8 @@ Skill: `add-changelog`.
 
 ### Packaging
 
-`npm run start` watches `src/` and compiles into `assets/build/` (`frontend.css`, `frontend.js`, `frontend.asset.php`).
-`npm run compile` is the production compile.
+`npm run start` watches `src/` and compiles the runtime assets into `assets/build/`.
+`npm run compile` produces the minified `frontend.*` runtime assets and readable `frontend-source.*`.
 `npm run build` compiles, then copies only Theme Directory files into `build/start-stackable/` and zips them to `dist/start-stackable-{version}.zip`.
 The zip root folder is `start-stackable/` so WordPress can install it.
 Extract `build/start-stackable/` (or the zip) for WordPress.org theme SVN.

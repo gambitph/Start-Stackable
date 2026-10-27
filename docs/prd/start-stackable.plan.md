@@ -1006,7 +1006,7 @@ start-stackable/
   readme.txt
   assets/fonts/          # Plus Jakarta Sans (headings) + license cited in readme
   assets/images/         # CC0 images used by patterns
-  assets/build/          # compiled frontend.css / .js / .asset.php
+  assets/build/          # minified frontend.* plus readable frontend-source.* counterparts
   templates/             # index, home, page, full-width, page-with-sidebar, blank, single,
                          # archive, search, 404, plus Woo files if Phase 8 shipped
   parts/                 # header, header-sticky, header-transparent, header-minimal,

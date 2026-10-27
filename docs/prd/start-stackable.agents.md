@@ -161,7 +161,7 @@ Then run that phase in [`start-stackable.check.md`](./start-stackable.check.md).
 | `patterns/*.php` | Shell patterns + one Homepage starter + hidden Woo template patterns |
 | `functions.php` | Supports, enqueue compiled extras, body class, notice, breakpoint filter, pattern categories if needed |
 | `src/` | Source for compiled extras (header flags and Navigation overflow). Not in the zip. |
-| `assets/build/` | Compiled `frontend.css` / `frontend.js` / `frontend.asset.php` |
+| `assets/build/` | Minified `frontend.*` runtime assets and readable `frontend-source.*` counterparts |
 | `assets/fonts/` | Plus Jakarta Sans (headings) |
 | `assets/images/` | CC0 pattern images |
 | `webpack.config.js` | `@wordpress/scripts` entry → `assets/build/` |

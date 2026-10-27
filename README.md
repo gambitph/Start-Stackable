@@ -31,7 +31,7 @@ npm run compile    # production compile
 npm run build      # compile + zip
 ```
 
-- `src/` is the edit surface for compiled extras. `assets/build/` is generated.
+- `src/` is the edit surface for compiled extras, and `assets/build/` contains minified `frontend.*` runtime assets and readable `frontend-source.*` counterparts.
 - `build/start-stackable/` is the theme tree (extract this for Theme Directory SVN).
 - `dist/start-stackable-{version}.zip` is the installable zip (root folder `start-stackable/`).
 - PR suffix: `npm run build --suffix=branch-name`.
