@@ -13,10 +13,6 @@ if ( process.argv.length === 3 ) {
 	folderSuffix = process.argv[ process.argv.length - 1 ]
 }
 
-const INDEX_PHP_CONTENT = `<?php
-// Silence is golden.
-`
-
 const INCLUDED_FILES = [
 	'style.css',
 	'theme.json',
@@ -67,27 +63,6 @@ function copyDir( src, dest ) {
 		} else {
 			copyFile( srcPath, destPath )
 		}
-	}
-}
-
-function addSecurityIndexFiles( dir ) {
-	if ( ! fs.existsSync( dir ) ) {
-		return
-	}
-
-	for ( const item of fs.readdirSync( dir ) ) {
-		const itemPath = path.join( dir, item )
-		if ( ! fs.statSync( itemPath ).isDirectory() ) {
-			continue
-		}
-
-		const indexPhpPath = path.join( itemPath, 'index.php' )
-		const indexHtmlPath = path.join( itemPath, 'index.html' )
-		if ( ! fs.existsSync( indexPhpPath ) && ! fs.existsSync( indexHtmlPath ) ) {
-			fs.writeFileSync( indexPhpPath, INDEX_PHP_CONTENT )
-		}
-
-		addSecurityIndexFiles( itemPath )
 	}
 }
 
@@ -202,9 +177,6 @@ async function packageTheme() {
 
 	applyVersionSuffix( BUILD_DIR, folderSuffix )
 	syncPackagedReadmeStableTag( BUILD_DIR )
-
-	console.log( 'Adding directory index.php files...' )
-	addSecurityIndexFiles( BUILD_DIR )
 
 	console.log( 'Creating zip package...' )
 	ensureDir( DIST_DIR )
