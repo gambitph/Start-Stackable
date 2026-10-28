@@ -7,7 +7,7 @@
 
 **Requires PHP:** 7.2
 
-**Stable tag:** 1.0.0
+**Stable tag:** 1.0.4
 
 **License:** GPLv2 or later
 
