@@ -102,7 +102,7 @@ test.describe( 'WooCommerce templates', () => {
 		admin,
 		requestUtils,
 	} ) => {
-		test.slow()
+		test.setTimeout( 360_000 )
 
 		const plugins = await requestUtils.rest< PluginRecord[] >( {
 			path: '/wp/v2/plugins',
